@@ -1,5 +1,6 @@
 const { create, checkUser } = require("./signup.service");
 const { genSaltSync,hashSync } = require("bcrypt");
+const {OAuth2Client} = require('google-auth-library');
 
 module.exports = {
     createUser: (req,res) => {
@@ -36,5 +37,11 @@ module.exports = {
                 });
             });
         });
+    },
+    gcreateUser:(req,res) => {
+        
+    },
+    increateUser:(req,res) => {
+        
     }
 }
