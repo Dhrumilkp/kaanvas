@@ -25,6 +25,7 @@ module.exports = {
             }
         );
     },
+    // Check if user exists
     checkUser:(data,callback) => {
         pool.query(
             `select * from ka_user WHERE u_email = ?`,
