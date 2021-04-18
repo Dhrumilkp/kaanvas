@@ -7,6 +7,7 @@ module.exports = {
         const salt = genSaltSync(10);
         body.u_password = hashSync(body.u_password, salt);
         body.current_ip = req.ip;
+        
         create(body,(err,results) => {
             if(err)
             {
