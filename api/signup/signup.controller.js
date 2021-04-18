@@ -1,4 +1,4 @@
-const { create } = require("./signup.service");
+const { create, checkUser } = require("./signup.service");
 const { genSaltSync,hashSync } = require("bcrypt");
 
 module.exports = {
@@ -7,19 +7,33 @@ module.exports = {
         const salt = genSaltSync(10);
         body.u_password = hashSync(body.u_password, salt);
         body.current_ip = req.ip;
-        
-        create(body,(err,results) => {
+        checkUser(body,(err,results) => {
             if(err)
             {
-                console.log(err);
                 return res.status(500).json({
                     status: "err",
-                    message: "Database connection error"
+                    message: "Internal server err, please reach out to our support team on support@kaanvas.art"
                 });
             }
-            return res.status(200).json({
-                status: "success",
-                data:results
+            if(results == false)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: "User already registered!"
+                });
+            }
+            create(body,(err,results) => {
+                if(err)
+                {
+                    return res.status(500).json({
+                        status: "err",
+                        message: "Database connection error"
+                    });
+                }
+                return res.status(200).json({
+                    status: "success",
+                    data:results
+                });
             });
         });
     }
