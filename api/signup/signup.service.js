@@ -30,15 +30,18 @@ module.exports = {
             `select * from ka_user WHERE u_email = ?`,
             [data.u_email],
             (error,results,fields) => {
-                if(results.length > 0)
-                {
-                    return callback(null,false);
-                }
                 if(error)
                 {
                     callback(error);
                 }
-                return callback(null,results)
+                if(results.length > 0)
+                {
+                    return callback(null,false);
+                }
+                else
+                {
+                    return callback(null,true);
+                }
             }
         )
     }
