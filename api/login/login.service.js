@@ -3,20 +3,20 @@ const pool = require("../../config/database");
 module.exports = {
     checkuserExists:(data,callback) => {
         pool.query(
-            `SELECT * FROM ka_user WHERE u_username=?`,
+            `SELECT * FROM ka_user WHERE u_email=?`,
             [data.u_email],
             (error,result,field) => {
                 if(error)
                 {
                     callback(error);
                 }
-                if(result.length < 0)
+                if(result.length > 0)
                 {
-                    return callback(null, false);
+                    return callback(null, true);
                 }
                 else
                 {
-                    return callback(null,true);
+                    return callback(null,false);
                 }
             }
         );
