@@ -1,10 +1,12 @@
-const {checkuserExists} = require('./login.service');
+const { checkuserExists } = require('./login.service');
+const { compareSync } = require("bcrypt");
+const { sign } = require("jsonwebtoken");
 
 module.exports = {
     login:(req,res) => {
         const body = req.body;
         const u_email = body.u_email;
-        checkuserExists(body,(err,results) => {
+        checkuserExists(u_email,(err,results) => {
             if(err)
             {
                 return res.status(500).json({
@@ -12,18 +14,31 @@ module.exports = {
                     message: "Internal server err, please reach out to our support team on support@kaanvas.art"
                 });
             }
-            if(results == false)
-            {   
+            if(!results)
+            {
                 return res.status(404).json({
-                    status: "err",
-                    message: "Cannot find a user with that email address"
+                    status : "err",
+                    message : "Invalid email or password"
+                });
+            }
+            const result = compareSync(body.u_password,results.u_password);
+            if(result)
+            {
+                result.u_password = undefined;
+                const jsontoken = sign({result:results},process.env.JWT_KEY,{
+                    expiresIn: "1h"
+                });
+                return res.status(200).json({
+                    status  :   "success",
+                    message :   "Login successful",
+                    token   :   jsontoken 
                 });
             }
             else
             {
-                return res.status(200).json({
-                    status: "success",
-                    message: "user do exists"
+                return res.status(500).json({
+                    status  :   "err",
+                    message :   "Invalid email or password"
                 });
             }
         });

@@ -35,14 +35,7 @@ module.exports = {
                 {
                     callback(error);
                 }
-                if(results.length > 0)
-                {
-                    return callback(null,false);
-                }
-                else
-                {
-                    return callback(null,true);
-                }
+                return callback(null,results[0]);
             }
         )
     }

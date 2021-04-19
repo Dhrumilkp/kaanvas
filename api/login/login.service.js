@@ -1,23 +1,16 @@
 const pool = require("../../config/database");
 
 module.exports = {
-    checkuserExists:(data,callback) => {
+    checkuserExists:(email,callback) => {
         pool.query(
             `SELECT * FROM ka_user WHERE u_email=?`,
-            [data.u_email],
-            (error,result,field) => {
+            [email],
+            (error,results,field) => {
                 if(error)
                 {
                     callback(error);
                 }
-                if(result.length > 0)
-                {
-                    return callback(null, true);
-                }
-                else
-                {
-                    return callback(null,false);
-                }
+                return callback(null,results[0]);
             }
         );
     },

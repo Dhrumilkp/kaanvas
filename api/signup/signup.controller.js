@@ -16,7 +16,7 @@ module.exports = {
                     message: "Internal server err, please reach out to our support team on support@kaanvas.art"
                 });
             }
-            if(results == false)
+            if(results)
             {
                 return res.status(500).json({
                     status: "err",

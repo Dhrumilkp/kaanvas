@@ -22,6 +22,7 @@
     "express": "^4.17.1",
     "express-rate-limit": "^5.2.6",
     "google-auth-library": "^7.0.4",
+    "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.7",
     "stripe": "^8.144.0"
