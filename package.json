@@ -24,7 +24,9 @@
     "google-auth-library": "^7.0.4",
     "jsonwebtoken": "^8.5.1",
     "mysql": "^2.18.1",
+    "node-mailjet": "^3.3.1",
     "nodemon": "^2.0.7",
+    "speakeasy": "^2.0.0",
     "stripe": "^8.144.0"
   }
 }
