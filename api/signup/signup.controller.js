@@ -1,6 +1,7 @@
 const { create, checkUser } = require("./signup.service");
 const { genSaltSync,hashSync } = require("bcrypt");
 const {OAuth2Client} = require('google-auth-library');
+const { sign } = require("jsonwebtoken");
 
 module.exports = {
     createUser: (req,res) => {
@@ -31,9 +32,14 @@ module.exports = {
                         message: "Database connection error"
                     });
                 }
+                // create web token for the user 
+                const jsontoken = sign({result:results},process.env.JWT_KEY,{
+                    expiresIn: "1h"
+                });
                 return res.status(200).json({
                     status: "success",
-                    data:results
+                    data:results,
+                    token   :   jsontoken 
                 });
             });
         });
