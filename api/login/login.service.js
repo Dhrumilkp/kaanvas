@@ -10,6 +10,14 @@ module.exports = {
                 {
                     callback(error);
                 }
+                if(results[0].mailverify_status == "0")
+                {
+                    results[0].email_verify_status = "false";
+                }
+                else
+                {
+                    results[0].email_verify_status = "true";
+                }
                 return callback(null,results[0]);
             }
         );

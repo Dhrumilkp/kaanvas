@@ -31,7 +31,8 @@ module.exports = {
                 return res.status(200).json({
                     status  :   "success",
                     message :   "Login successful",
-                    token   :   jsontoken 
+                    token   :   jsontoken,
+                    email_verify_status : results.email_verify_status
                 });
             }
             else
