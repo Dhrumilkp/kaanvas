@@ -68,7 +68,53 @@ module.exports = {
                     }
                 )
             }
-        )
-        
+        );   
+    },
+    verifyEmailuser: (data,callback) => {
+        pool.query(
+            `SELECT * FROM ka_emailvalidate WHERE u_email = ? AND u_otp = ? AND is_used = '0'`,
+            [
+                data.u_email,
+                data.u_otp
+            ],
+            (error,results,fields) => {
+                if(error)
+                {
+                    callback(error);
+                }
+                if(results[0])
+                {
+                    pool.query(
+                        `UPDATE ka_emailvalidate SET is_used = '1' WHERE u_email = ?`,
+                        [
+                            data.u_email
+                        ],
+                        (error,results,fields) => {
+                            if(error)
+                            {
+                                callback(error);
+                            }
+                            pool.query(
+                                `UPDATE ka_user SET mailverify_status = '1' WHERE u_email = ?`,
+                                [
+                                    data.u_email
+                                ],
+                                (error,results,fields) => {
+                                    if(error)
+                                    {
+                                        callback(error);
+                                    }
+                                    return callback(null,results);
+                                }
+                            )
+                        }
+                    );
+                }
+                if(!results[0])
+                {
+                    return callback(null,results);
+                }
+            }
+        );
     }
 }
