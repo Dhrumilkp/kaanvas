@@ -32,7 +32,7 @@ module.exports = {
                     status  :   "success",
                     message :   "Login successful",
                     token   :   jsontoken,
-                    email_verify_status : results.email_verify_status
+                    email_verify : results.email_verify_status
                 });
             }
             else
