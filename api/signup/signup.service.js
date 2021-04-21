@@ -1,6 +1,7 @@
 const pool = require("../../config/database");
 const mailjet = require ('node-mailjet').connect(process.env.MJ_APIKEY_PUBLIC, process.env.MJ_APIKEY_PRIVATE);
 var speakeasy = require("speakeasy");
+const stripe = require('stripe')(process.env.STRIP_SK);
 
 module.exports = {
     create: (data,callback) => {
@@ -65,10 +66,32 @@ module.exports = {
                         })
                         request
                             .then((result) => {
-                                console.log(result.body)
+                                // create customer in stripe
+                                let stripe_customer_id;
+                                stripe.customers.create({
+                                    description : 'RateFreelancer customer',
+                                    name        : ''+data.u_firstname+' '+data.u_lastname+'',
+                                    email       : data.u_email
+                                })
+                                .then(customer => {
+                                    // Update the customer id of the user
+                                    pool.query(
+                                        `UPDATE ka_user SET customer_id = ?`,
+                                        [
+                                            customer.id
+                                        ],
+                                        (error,results,fields) => {
+                                            if(error)
+                                            {
+                                                console.log(error);
+                                            }
+                                        }
+                                    )
+                                })
+                                .catch(error => console.error(error));
                             })
                             .catch((err) => {
-                                console.log(err.statusCode)
+                                console.log(err);
                             })
                     }
                 );
