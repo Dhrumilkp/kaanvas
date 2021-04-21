@@ -4,7 +4,7 @@ const express = require('express');
 const app = express();
 const signupRouter = require("./api/signup/signup.router");
 const loginRouter = require("./api/login/login.router");
-
+const emailRouter = require("./api/email/email.router");
 // SET JSON BODY AS DEFAULT
 app.use(express.json());
 
@@ -28,7 +28,7 @@ app.get("/api",(req,res) =>{
 // Routes
 app.use("/api/signup", signupRouter);
 app.use("/api/login",loginRouter);
-
+app.use("/api/resendemail",emailRouter);
 // Port
 const port = process.env.PORT || 3000;
 app.listen(port,() =>{
