@@ -9,5 +9,5 @@ const ResendEmailLimit = rateLimit({
     message: "Too many resend email otp request, try after sometime!"
 });
 
-router.post("/",checkToken,ResendEmailLimit,resendemail);
+router.post("/resend",checkToken,ResendEmailLimit,resendemail);
 module.exports = router;

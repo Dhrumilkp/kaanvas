@@ -28,7 +28,7 @@ app.get("/api",(req,res) =>{
 // Routes
 app.use("/api/signup", signupRouter);
 app.use("/api/login",loginRouter);
-app.use("/api/resendemail",emailRouter);
+app.use("/api/email",emailRouter);
 // Port
 const port = process.env.PORT || 3000;
 app.listen(port,() =>{
