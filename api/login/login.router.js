@@ -5,11 +5,7 @@ const rateLimit = require("express-rate-limit");
 const LoginrateLimiter = rateLimit({
     windowMs: 60 * 60 * 1000, // 1 hour window
     max: 10, // start blocking after 5 requests
-    message: "Too many login attemps, please try after sometime",
-    statusCode: 429,
-    handler: function(req, res /*, next*/) {
-        res.status(statusCode).send(message);
-    }
+    message: "Too many login attemps, please try after sometime"
 });
 
 router.post("/",LoginrateLimiter,login);
