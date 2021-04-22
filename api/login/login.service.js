@@ -14,10 +14,21 @@ module.exports = {
             }
         );
     },
-    loginauth:(data,callback) => {
+    LoginUpdate:(data,callback) => {
         pool.query(
-
-        );
+            `INSERT INTO ka_usersessioninfo (browser_name,operating_system)
+            values (?,?)`,
+            [
+                data['browser-name'],
+                data['operating-system']
+            ],
+            (error,results,field) => {
+                if(error)
+                {
+                    callback(error);
+                }
+            }
+        )
     },
     gloginauth:(data,callback) => {
 

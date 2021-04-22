@@ -1,4 +1,4 @@
-const { checkuserExists } = require('./login.service');
+const { checkuserExists,LoginUpdate } = require('./login.service');
 const { compareSync } = require("bcrypt");
 const { sign } = require("jsonwebtoken");
 
@@ -36,12 +36,19 @@ module.exports = {
                 {
                     results[0].email_verify_status = "true";
                 }
+                // Get users agent
+                LoginUpdate(req.headers,(err,results) => {
+                    if(err)
+                    {
+                        console.log(err);
+                    }
+                });
                 return res.status(200).json({
                     status  :   "success",
                     message :   "Login successful",
                     token   :   jsontoken,
-                    email_verify : results.email_verify_status,
-                    onboarding_status : results.onboarding_status
+                    email_verify : results[0].email_verify_status,
+                    onboarding_status : results[0].onboarding_status
                 });
             }
             else
