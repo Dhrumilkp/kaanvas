@@ -27,6 +27,7 @@
     "node-mailjet": "^3.3.1",
     "nodemon": "^2.0.7",
     "speakeasy": "^2.0.0",
-    "stripe": "^8.144.0"
+    "stripe": "^8.144.0",
+    "unique-names-generator": "^4.4.0"
   }
 }
