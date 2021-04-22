@@ -30,8 +30,18 @@ module.exports = {
             }
         )
     },
-    gloginauth:(data,callback) => {
-
+    gloginauth:(email,callback) => {
+        pool.query(
+            `SELECT * FROM ka_user WHERE u_email=?`,
+            [email],
+            (error,results,field) => {
+                if(error)
+                {
+                    callback(error);
+                }
+                return callback(null,results);
+            }
+        );
     },
     inloginauth:(data,callback) => {
 
