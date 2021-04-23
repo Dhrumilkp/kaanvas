@@ -12,13 +12,6 @@ app.use(express.json());
 app.use(cors({
     origin: process.env.FRONT_END_URL
 }));
-// SET RATE LIMITER DEFAULT FOR ALL API CALLS
-const limiter = rateLimit({
-    windowMs: 10 * 60 * 1000, // 10 minutes
-    max: 10, // limit each IP to 10 requests per windowMs,
-    message : "You are doing this too much, excedding our rate limit quota please come back after sometime"
-});  
-app.use(limiter);
 // SET JSON RESPONSE WHEN SOMEONE VISIT THE PAGE
 app.get("/api",(req,res) =>{
     res.json({
