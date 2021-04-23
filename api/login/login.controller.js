@@ -50,7 +50,8 @@ module.exports = {
                     message :   "Login successful",
                     token   :   jsontoken,
                     email_verify : results[0].email_verify_status,
-                    onboarding_status : results[0].onboarding_status
+                    onboarding_status : results[0].onboarding_status,
+                    u_uid : results[0].id
                 });
             }
             else
@@ -118,7 +119,8 @@ module.exports = {
                     message :   "Login successful",
                     token   :   jsontoken,
                     email_verify : results[0].email_verify_status,
-                    onboarding_status : results[0].onboarding_status
+                    onboarding_status : results[0].onboarding_status,
+                    u_uid : results[0].id
                 });
             });
 
