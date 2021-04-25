@@ -18,9 +18,10 @@ module.exports = {
     },
     Updateuserprofile:(data,callback) => {
         pool.query (
-            `SELECT * FROM ka_user WHERE u_username = ?`,
+            `SELECT * FROM ka_user WHERE u_username = ? AND id != ?`,
             [
-                data.u_username
+                data.u_username,
+                data.u_uid
             ],
             (error,results,fields) => {
                 if(error)
