@@ -38,7 +38,7 @@ module.exports = {
             }
             if(!results[0])
             {
-                return res.status(500).json({
+                return res.status(403).json({
                     status: "err",
                     message: "Invalid OTP"
                 });

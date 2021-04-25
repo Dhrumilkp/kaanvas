@@ -82,7 +82,7 @@ module.exports = {
                 {
                     callback(error);
                 }
-                if(results[0])
+                if(results)
                 {
                     pool.query(
                         `UPDATE ka_emailvalidate SET is_used = '1' WHERE u_email = ?`,
@@ -104,16 +104,12 @@ module.exports = {
                                     {
                                         callback(error);
                                     }
-                                    return callback(null,results);
                                 }
                             )
                         }
                     );
                 }
-                if(!results[0])
-                {
-                    return callback(null,results);
-                }
+                return callback(null,results);
             }
         );
     }
