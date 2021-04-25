@@ -5,10 +5,14 @@ const stripe = require('stripe')(process.env.STRIP_SK);
 
 module.exports = {
     create: (data,callback) => {
+        const max = 50;
+        const number = Math.floor(Math.random() * max) + 1;
+        var u_profilepic_webp = 'https://prefetch.ratefreelancer.com/avatars/'+number+'.jpg';
+        var u_profilepic_jpeg = 'https://prefetch.ratefreelancer.com/avatars/filters:format(jpeg)/'+number+'.jpg';
         pool.query(
             // Your query
-            `insert into ka_user(login_type,u_firstname,u_lastname,u_email,u_username,u_password,current_ip,current_useragent)
-            values(?,?,?,?,?,?,?,?)
+            `insert into ka_user(login_type,u_firstname,u_lastname,u_email,u_username,u_password,current_ip,current_useragent,u_profilepic_webp,u_profilepic_jpeg)
+            values(?,?,?,?,?,?,?,?,?,?)
             `,
             [
               data.login_type,
@@ -18,7 +22,10 @@ module.exports = {
               data.u_username,
               data.u_password,
               data.current_ip,
-              data.current_useragent
+              data.current_useragent,
+
+              u_profilepic_webp,
+              u_profilepic_jpeg
             ],
             (error,results,fields) => {
                 if(error)

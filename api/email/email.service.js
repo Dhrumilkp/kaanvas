@@ -82,7 +82,7 @@ module.exports = {
                 {
                     callback(error);
                 }
-                if(results)
+                if(results[0])
                 {
                     pool.query(
                         `UPDATE ka_emailvalidate SET is_used = '1' WHERE u_email = ?`,
