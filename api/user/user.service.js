@@ -15,5 +15,61 @@ module.exports = {
                 return callback(null,results);
             }
         )
+    },
+    Updateuserprofile:(data,callback) => {
+        pool.query (
+            `SELECT * FROM ka_user WHERE u_username = ?`,
+            [
+                data.u_username
+            ],
+            (error,results,fields) => {
+                if(error)
+                {
+                    callback(error);
+                }
+                if(results[0])
+                {
+                    return callback(null,false);
+                }
+                if(!results[0])
+                {
+                    pool.query (
+                        `UPDATE ka_user SET u_firstname = ?, u_lastname = ?, u_username = ?, u_city = ?, u_country = ? WHERE id = ?`,
+                        [
+                            data.u_firstname,
+                            data.u_lastname,
+                            data.u_username,
+                            data.u_city,
+                            data.u_country,
+                            data.u_uid  
+                        ],
+                        (error,results,fields) => {
+                            if(error)
+                            {
+                                callback(error);
+                            }
+                            return callback(null,results);
+                        }
+                    )
+                }
+            }
+        ) 
+    },
+    UpdateProfilePic:(data,callback) => {
+        pool.query(
+            `UPDATE ka_user SET u_profilepic_webp = ?, u_profilepic_jpeg = ? WHERE id = ?`,
+            [
+                data.u_profilepic_webp,
+                data.u_profilepic_jpeg,
+                data.u_uid
+            ],
+            (error,results,fields) =>{
+                if(error)
+                {
+                    callback(error);
+                }
+                return callback(null,results);
+            }
+        )
     }
 }
