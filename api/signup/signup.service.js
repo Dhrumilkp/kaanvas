@@ -7,11 +7,15 @@ module.exports = {
     create: (data,callback) => {
         const max = 50;
         const number = Math.floor(Math.random() * max) + 1;
+        const profile_bg_max = 5;
+        const profile_number = Math.floor(Math.random() * profile_bg_max) + 1;
+        var u_default_profile_bg = 'https://prefetch.ratefreelancer.com/profile-bg/01.jpg';
         var u_default_profile_pic = 'https://prefetch.ratefreelancer.com/avatars/'+number+'.jpg';
+        var bg_default_settings = 'background-size:cover;background-position:center;background-repeat:no-repeat;';
         pool.query(
             // Your query
-            `insert into ka_user(login_type,u_firstname,u_lastname,u_email,u_username,u_password,current_ip,current_useragent,u_default_profile_pic)
-            values(?,?,?,?,?,?,?,?,?)
+            `insert into ka_user(login_type,u_firstname,u_lastname,u_email,u_username,u_password,current_ip,current_useragent,u_default_profile_pic,u_profile_bg_default,u_profile_bg_settings)
+            values(?,?,?,?,?,?,?,?,?,?,?)
             `,
             [
               data.login_type,
@@ -22,9 +26,12 @@ module.exports = {
               data.u_password,
               data.current_ip,
               data.current_useragent,
-              u_default_profile_pic
+              u_default_profile_pic,
+              u_default_profile_bg,
+              bg_default_settings
             ],
             (error,results,fields) => {
+                console.log(error);
                 if(error)
                 {
                     callback(error);
