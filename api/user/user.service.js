@@ -49,6 +49,23 @@ module.exports = {
                             {
                                 callback(error);
                             }
+                            if(results)
+                            {
+                                pool.query(
+                                    `UPDATE ka_user SET onboarding_status = ? WHERE id = ?`,
+                                    [
+                                        1,
+                                        data.u_uid
+                                    ],
+                                    (error,results,fields) => {
+                                        console.log(results[0]);
+                                        if(error)
+                                        {
+                                            console.log(error);
+                                        }
+                                    }
+                                )
+                            }
                             return callback(null,results);
                         }
                     )
