@@ -89,5 +89,22 @@ module.exports = {
                 return callback(null,results);
             }
         )
+    },
+    CheckForProfile:(data,callback) => {
+        console.log(data.username);
+        pool.query(
+            `SELECT u_firstname,u_lastname,u_email,u_username,onboarding_status,mailverify_status,u_join,u_profilepic_webp,u_profilepic_jpeg,u_coverpic_webp,u_coverpic_jpeg,u_verified,u_country,u_city,is_profile_complete,u_level,is_pro,customer_id,u_website_url,u_dribbble_url,u_github_url,u_default_profile_pic FROM ka_user WHERE u_username = ?`,
+            [
+                data.username
+            ],
+            (error,results,fields) => {
+                console.log(results);
+                if(error)
+                {
+                    callback(error);
+                }
+                return callback(null,results);
+            }
+        )
     }
 }
