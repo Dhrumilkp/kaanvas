@@ -1,4 +1,4 @@
-const { GetUser,UpdateUser,UpdateUserProfilePic } = require('./user.controller');
+const { GetUser,UpdateUser,UpdateUserProfilePic,UpdateDefaultProfilepic } = require('./user.controller');
 const router = require("express").Router();
 const rateLimit = require("express-rate-limit");
 const {checkToken} = require("../../auth/token_validation");
