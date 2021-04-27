@@ -39,7 +39,9 @@ module.exports = {
                     results[0].email_verify_status = "true";
                 }
                 // Get users agent
-                LoginUpdate(req.headers,(err,results) => {
+                const lg_body = req.headers;
+                lg_body.u_username = results[0]['u_username'];
+                LoginUpdate(lg_body,(err,results) => {
                     if(err)
                     {
                         console.log(err);
@@ -107,8 +109,10 @@ module.exports = {
                 {
                     results[0].email_verify_status = "true";
                 }
+                const lg_body = req.headers;
+                lg_body.u_username = results[0]['u_username'];
                 // Get users agent
-                LoginUpdate(req.headers,(err,results) => {
+                LoginUpdate(lg_body,(err,results) => {
                     if(err)
                     {
                         console.log(err);

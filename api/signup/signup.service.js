@@ -17,8 +17,8 @@ module.exports = {
         const os_data = data.headers.operatingsystem;
         pool.query(
             // Your query
-            `insert into ka_user(login_type,u_firstname,u_lastname,u_email,u_username,u_password,current_ip,current_useragent,u_default_profile_pic,u_profile_bg_default,u_profile_bg_settings)
-            values(?,?,?,?,?,?,?,?,?,?,?)
+            `insert into ka_user(login_type,u_firstname,u_lastname,u_email,u_username,u_password,current_ip,current_useragent,u_default_profile_pic,u_profile_bg_default,u_profile_bg_settings,mailverify_status)
+            values(?,?,?,?,?,?,?,?,?,?,?,?)
             `,
             [
               data.login_type,
@@ -31,7 +31,8 @@ module.exports = {
               data.current_useragent,
               u_default_profile_pic,
               u_default_profile_bg,
-              bg_default_settings
+              bg_default_settings,
+              1
             ],
             (error,results,fields) => {
                 if(error)

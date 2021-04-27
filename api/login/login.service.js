@@ -16,9 +16,10 @@ module.exports = {
     },
     LoginUpdate:(data,callback) => {
         pool.query(
-            `INSERT INTO ka_usersessioninfo (browser_name,operating_system)
-            values (?,?)`,
+            `INSERT INTO ka_usersessioninfo (u_username,browser_name,operating_system)
+            values (?,?,?)`,
             [
+                data.u_username,
                 data['browser-name'],
                 data['operating-system']
             ],

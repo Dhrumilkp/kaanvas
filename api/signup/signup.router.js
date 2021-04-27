@@ -1,4 +1,4 @@
-const { createUser,gcreateUser,increateUser } = require("./signup.controller");
+const { createUser,gcreateUser } = require("./signup.controller");
 const router = require("express").Router();
 const rateLimit = require("express-rate-limit");
 
@@ -10,6 +10,5 @@ const Signuplimiter = rateLimit({
 
 router.post("/",Signuplimiter,createUser);
 router.post("/guser",Signuplimiter,gcreateUser);
-router.post('/inuser',Signuplimiter,increateUser);
 
 module.exports = router;
