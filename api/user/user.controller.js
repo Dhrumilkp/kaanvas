@@ -5,9 +5,9 @@ const {
     CheckForProfile,
     UpdateNewProfileBg,
     UpdateThemeForUser,
-    GetReferalData
+    GetReferalData,
+    GetPromoCouponCode
 } = require("./user.service");
-
 module.exports = {
     GetUser:(req,res) => {
         const body = req.body;
@@ -157,6 +157,7 @@ module.exports = {
         });
     },
     GetReferalSignupDate:(req,res) => {
+        const body = req.body;
         const u_username = req.params.username;
         GetReferalData(u_username,(err,results) => {
             if(err)
@@ -173,12 +174,35 @@ module.exports = {
                     message: "Profile not found"
                 });
             }
-            return res.status(200).json({
-                status  :   "success",
-                message :   "Fetched user ref list",
-                data : results,
-                ref_signup_count : results.length
-            });
+            if(results.length > 2)
+            {
+                GetPromoCouponCode(body,(err,coupondata) => {
+                    if(err)
+                    {
+                        return res.status(500).json({
+                            status: "err",
+                            message: "Internal server err, please reach out to our support team on support@ratefreelancer.com"
+                        });
+                    }
+                    return res.status(200).json({
+                        status  :   "success",
+                        message :   "Fetched user ref list",
+                        ref_signup_count : results.length,
+                        coupon_gen : "true",
+                        coupon_id : coupondata
+                    });
+                });
+            }
+            else
+            {
+                return res.status(200).json({
+                    status  :   "success",
+                    message :   "Fetched user ref list",
+                    data : results,
+                    ref_signup_count : results.length
+                });
+            }
+           
         });
     }
 }

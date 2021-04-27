@@ -17,5 +17,5 @@ router.post("/basicprofileupdate/:id",checkToken,UpdateUser);
 router.post("/profilepic/:id",checkToken,UpdateUserProfilePic);
 router.post("/profile/bg/:id",checkToken,UploadNewProfileBg);
 router.post("/profile/theme/:id",checkToken,UpdateProfileTheme);
-router.get("/refdata/:username",checkToken,GetReferalSignupDate);
+router.post("/refdata/:username",checkToken,GetReferalSignupDate);
 module.exports = router;

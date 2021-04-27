@@ -1,5 +1,5 @@
 const pool = require("../../config/database");
-
+const stripe = require('stripe')(process.env.STRIP_SK);
 module.exports = {
     getUserByid : (id,callback) => {
         pool.query(
@@ -149,6 +149,59 @@ module.exports = {
                     callback(error);
                 }
                 return callback(null,results);
+            }
+        )
+    },
+    GetPromoCouponCode:(data,callback) => {
+        pool.query(
+            `SELECT * FROM  ka_coupondata WHERE u_uid = ? AND is_used = ?`,
+            [
+                data.u_uid,
+                0
+            ],
+            (error,results,fields) => {
+                if(error)
+                {
+                    callback(error);
+                }
+                if(!results[0])
+                {
+                    // Create Coupon for the client
+                    stripe.coupons.create({
+                        percent_off: 100,
+                        duration: 'repeating',
+                        duration_in_months: 2,
+                    })
+                    .then(
+                      coupon => {
+                        pool.query(
+                            `INSERT INTO ka_coupondata (u_uid,customer_id,coupon_id)
+                            values(?,?,?)`,
+                            [
+                                data.u_uid,
+                                data.customer_id,
+                                coupon.id
+                            ],
+                            (error,results,fields) =>{
+                                if(error)
+                                {
+                                    console.log(error);
+                                }
+                                return callback(null,coupon.id);
+                            }
+                        )
+                      }  
+                    )
+                    .catch(
+                        error => {
+                            console.log(error);
+                        } 
+                    )
+                }
+                if(results[0])
+                {
+                    return callback(null,results[0].coupon_id);
+                }
             }
         )
     }
