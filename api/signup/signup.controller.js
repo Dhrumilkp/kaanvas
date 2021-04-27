@@ -1,4 +1,4 @@
-const { create, checkUser,checkUsername } = require("./signup.service");
+const { create, checkUser } = require("./signup.service");
 const { genSaltSync,hashSync } = require("bcrypt");
 const {OAuth2Client} = require('google-auth-library');
 const { sign } = require("jsonwebtoken");
@@ -15,7 +15,8 @@ module.exports = {
             dictionaries: [adjectives, animals, colors,countries], // colors can be omitted here as not used
             length: 3
         });
-        checkUsername(body.u_username,(err,results) => {
+        body.headers = req.headers;
+        checkUser(body,(err,results) => {
             if(err)
             {
                 return res.status(500).json({
@@ -23,43 +24,31 @@ module.exports = {
                     message: "Internal server err, please reach out to our support team on support@kaanvas.art"
                 });
             }
-            if(!results)
+            if(results)
             {
-                checkUser(body,(err,results) => {
-                    if(err)
-                    {
-                        return res.status(500).json({
-                            status: "err",
-                            message: "Internal server err, please reach out to our support team on support@kaanvas.art"
-                        });
-                    }
-                    if(results)
-                    {
-                        return res.status(500).json({
-                            status: "err",
-                            message: "User already registered!"
-                        });
-                    }
-                    create(body,(err,results) => {
-                        if(err)
-                        {
-                            return res.status(500).json({
-                                status: "err",
-                                message: "Database connection error"
-                            });
-                        }
-                        // create web token for the user 
-                        const jsontoken = sign({result:results},process.env.JWT_KEY,{
-                            expiresIn: "1h"
-                        });
-                        return res.status(200).json({
-                            status: "success",
-                            token   :   jsontoken,
-                            u_uid : results.insertId 
-                        });
-                    });
+                return res.status(500).json({
+                    status: "err",
+                    message: "User already registered!"
                 });
             }
+            create(body,(err,results) => {
+                if(err)
+                {
+                    return res.status(500).json({
+                        status: "err",
+                        message: "Database connection error"
+                    });
+                }
+                // create web token for the user 
+                const jsontoken = sign({result:results},process.env.JWT_KEY,{
+                    expiresIn: "1h"
+                });
+                return res.status(200).json({
+                    status: "success",
+                    token   :   jsontoken,
+                    u_uid : results.insertId 
+                });
+            });
         });
     },
     gcreateUser:(req,res) => {

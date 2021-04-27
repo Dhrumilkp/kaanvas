@@ -12,6 +12,9 @@ module.exports = {
         var u_default_profile_bg = 'https://prefetch.ratefreelancer.com/profile-bg/01.jpg';
         var u_default_profile_pic = 'https://prefetch.ratefreelancer.com/avatars/'+number+'.jpg';
         var bg_default_settings = 'background-size:cover;background-position:center;background-repeat:no-repeat;';
+        const refuser = data.headers.refuser;
+        const browser_data = data.headers.browsername;
+        const os_data = data.headers.operatingsystem;
         pool.query(
             // Your query
             `insert into ka_user(login_type,u_firstname,u_lastname,u_email,u_username,u_password,current_ip,current_useragent,u_default_profile_pic,u_profile_bg_default,u_profile_bg_settings)
@@ -31,11 +34,43 @@ module.exports = {
               bg_default_settings
             ],
             (error,results,fields) => {
-                console.log(error);
                 if(error)
                 {
                     callback(error);
                 }
+                if(refuser !== "0")
+                {
+                    pool.query(
+                        `INSERT INTO ka_user_referdata (u_username,acq_u_username)
+                        VALUES (?,?)`,
+                        [
+                            refuser,
+                            data.u_username
+                        ],
+                        (error,results,fields) =>{
+                            if(error)
+                            {
+                                console.log(error);
+                            }
+                        }
+                    )
+                }
+                pool.query(
+                    `INSERT INTO ka_usersessioninfo (u_username,browser_name,operating_system)
+                    values(?,?,?)
+                    `,
+                    [
+                        data.u_username,
+                        browser_data,
+                        os_data
+                    ],
+                    (error,results,fields) => {
+                        if(error)
+                        {
+                            console.log(error);
+                        }
+                    }
+                )
                 // generate a token
                 var secret = speakeasy.generateSecret({length: 20});
                 var otp = speakeasy.totp({
@@ -115,21 +150,6 @@ module.exports = {
         pool.query(
             `select * from ka_user WHERE u_email = ?`,
             [data.u_email],
-            (error,results,fields) => {
-                if(error)
-                {
-                    callback(error);
-                }
-                return callback(null,results[0]);
-            }
-        )
-    },
-    checkUsername:(data,callback) => {
-        pool.query(
-            `select * from ka_user where u_username = ?`,
-            [
-                data
-            ],
             (error,results,fields) => {
                 if(error)
                 {
