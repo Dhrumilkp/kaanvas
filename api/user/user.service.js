@@ -104,5 +104,21 @@ module.exports = {
                 return callback(null,results);
             }
         )
+    },
+    UpdateNewProfileBg:(data,callback) => {
+        pool.query(
+            `UPDATE ka_user SET u_profile_bg = ? WHERE id = ?`,
+            [
+                data.u_profile_bg,
+                data.u_uid
+            ],
+            (error,results,fields) => {
+                if(error)
+                {
+                    callback(error);
+                }
+                return callback(null,results);
+            }
+        )
     }
 }
