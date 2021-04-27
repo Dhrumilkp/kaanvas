@@ -30,6 +30,7 @@ module.exports = {
         const body = req.body;
         const id = req.params.id;
         body.u_uid = id;
+        console.log(body);
         Updateuserprofile(body,(err,results) => {
             if(err)
             {
