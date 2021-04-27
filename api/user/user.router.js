@@ -1,4 +1,12 @@
-const { GetUser,UpdateUser,UpdateUserProfilePic,CheckProfileExsist,UploadNewProfileBg,UpdateProfileTheme } = require('./user.controller');
+const { 
+    GetUser,
+    UpdateUser,
+    UpdateUserProfilePic,
+    CheckProfileExsist,
+    UploadNewProfileBg,
+    UpdateProfileTheme,
+    GetReferalSignupDate 
+} = require('./user.controller');
 const router = require("express").Router();
 const rateLimit = require("express-rate-limit");
 const {checkToken} = require("../../auth/token_validation");
@@ -9,4 +17,5 @@ router.post("/basicprofileupdate/:id",checkToken,UpdateUser);
 router.post("/profilepic/:id",checkToken,UpdateUserProfilePic);
 router.post("/profile/bg/:id",checkToken,UploadNewProfileBg);
 router.post("/profile/theme/:id",checkToken,UpdateProfileTheme);
+router.get("/refdata/:username",checkToken,GetReferalSignupDate);
 module.exports = router;

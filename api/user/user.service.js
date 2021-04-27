@@ -136,5 +136,20 @@ module.exports = {
                 return callback(null,results);
             }
         )
+    },
+    GetReferalData:(data,callback) => {
+        pool.query(
+            `SELECT * FROM ka_user_referdata WHERE u_username = ?`,
+            [
+                data
+            ],
+            (error,results,fields) => {
+                if(error)
+                {
+                    callback(error);
+                }
+                return callback(null,results);
+            }
+        )
     }
 }
