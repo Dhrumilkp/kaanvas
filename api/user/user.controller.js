@@ -6,7 +6,8 @@ const {
     UpdateNewProfileBg,
     UpdateThemeForUser,
     GetReferalData,
-    GetPromoCouponCode
+    GetPromoCouponCode,
+    InsertUniqueProfileVisitor 
 } = require("./user.service");
 module.exports = {
     GetUser:(req,res) => {
@@ -203,6 +204,30 @@ module.exports = {
                 });
             }
            
+        });
+    },
+    InsertUniqueProfileView:(req,res) => {
+        const u_username = req.params.username;
+        console.log(u_username);
+        InsertUniqueProfileVisitor(u_username,(err,results) => {
+            if(err)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: "Internal server err, please reach out to our support team on support@ratefreelancer.com"
+                });
+            }
+            if(!results)
+            {
+                return res.status(404).json({
+                    status: "err",
+                    message: "Profile not found"
+                });
+            }
+            return res.status(200).json({
+                status  :   "success",
+                message :   "Visitor logged"
+            });
         });
     }
 }

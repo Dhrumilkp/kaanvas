@@ -154,7 +154,7 @@ module.exports = {
     },
     GetPromoCouponCode:(data,callback) => {
         pool.query(
-            `SELECT * FROM  ka_coupondata WHERE u_uid = ? AND is_used = ?`,
+            `SELECT * FROM  ka_coupondata WHERE u_uid = ? AND is_used = ? LIMIT 3`,
             [
                 data.u_uid,
                 0
@@ -202,6 +202,21 @@ module.exports = {
                 {
                     return callback(null,results[0].coupon_id);
                 }
+            }
+        )
+    },
+    InsertUniqueProfileVisitor:(u_username,callback) => {
+        pool.query(
+            `INSERT INTO ka_userunique_visits (u_username) VALUES (?)`,
+            [
+                u_username
+            ],
+            (error,results,fields) => {
+                if(error)
+                {
+                    callback(error);
+                }
+                return callback(null,results);
             }
         )
     }

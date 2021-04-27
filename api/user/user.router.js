@@ -5,7 +5,8 @@ const {
     CheckProfileExsist,
     UploadNewProfileBg,
     UpdateProfileTheme,
-    GetReferalSignupDate 
+    GetReferalSignupDate,
+    InsertUniqueProfileView
 } = require('./user.controller');
 const router = require("express").Router();
 const rateLimit = require("express-rate-limit");
@@ -18,4 +19,5 @@ router.post("/profilepic/:id",checkToken,UpdateUserProfilePic);
 router.post("/profile/bg/:id",checkToken,UploadNewProfileBg);
 router.post("/profile/theme/:id",checkToken,UpdateProfileTheme);
 router.post("/refdata/:username",checkToken,GetReferalSignupDate);
+router.get("/profile/uniqueview/:username",InsertUniqueProfileView);
 module.exports = router;
