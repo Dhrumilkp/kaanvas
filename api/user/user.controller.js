@@ -208,7 +208,6 @@ module.exports = {
     },
     InsertUniqueProfileView:(req,res) => {
         const u_username = req.params.username;
-        console.log(u_username);
         InsertUniqueProfileVisitor(u_username,(err,results) => {
             if(err)
             {
