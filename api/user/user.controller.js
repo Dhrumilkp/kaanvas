@@ -7,7 +7,8 @@ const {
     UpdateThemeForUser,
     GetReferalData,
     GetPromoCouponCode,
-    InsertUniqueProfileVisitor 
+    InsertUniqueProfileVisitor,
+    GetUniqueViewCountdata
 } = require("./user.service");
 module.exports = {
     GetUser:(req,res) => {
@@ -226,6 +227,39 @@ module.exports = {
             return res.status(200).json({
                 status  :   "success",
                 message :   "Visitor logged"
+            });
+        });
+    },
+    GetUniqueViewCount:(req,res) => {
+        const u_username = req.params.username;
+        GetUniqueViewCountdata(u_username,(err,results) => {
+            if(err)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: "Internal server err, please reach out to our support team on support@ratefreelancer.com"
+                });
+            }
+            if(!results)
+            {
+                return res.status(404).json({
+                    status: "err",
+                    message: "No Profile Views"
+                });
+            }
+            function numFormatter(num) {
+                if(num > 999 && num < 1000000){
+                    return (num/1000).toFixed(1) + 'K'; // convert to K for number from > 1000 < 1 million 
+                }else if(num > 1000000){
+                    return (num/1000000).toFixed(1) + 'M'; // convert to M for number from > 1 million 
+                }else if(num < 900){
+                    return num; // if value < 1000, nothing to do
+                }
+            }
+            return res.status(200).json({
+                status  :   "success",
+                message :   "Visitor logged",
+                unique_view_count : numFormatter(results[0]['unique_counts'])
             });
         });
     }

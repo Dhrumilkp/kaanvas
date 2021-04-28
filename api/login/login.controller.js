@@ -23,6 +23,13 @@ module.exports = {
                     message : "Invalid email or password"
                 });
             }
+            if(results[0]['login_type'] == "Google")
+            {
+                return res.status(404).json({
+                    status : "err",
+                    message : "These email uses google login, use google login for signing in!"
+                });
+            }
             const result = compareSync(body.u_password,results[0].u_password);
             if(result)
             {

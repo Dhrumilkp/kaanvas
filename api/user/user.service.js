@@ -219,5 +219,20 @@ module.exports = {
                 return callback(null,results);
             }
         )
+    },
+    GetUniqueViewCountdata:(u_username,callback) => {
+        pool.query(
+            `SELECT count(*) as unique_counts FROM ka_userunique_visits WHERE u_username = ?`,
+            [
+                u_username
+            ],
+            (error,results,fields) => {
+                if(error)
+                {
+                    callback(error);
+                }
+                return callback(null,results);
+            }
+        )
     }
 }
