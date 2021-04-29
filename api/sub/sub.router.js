@@ -1,6 +1,7 @@
 const {
     CreateSub,
-    GetSubdetails
+    GetSubdetails,
+    CancelPro
 } = require('./sub.controller');
 const router = require("express").Router();
 const rateLimit = require("express-rate-limit");
@@ -12,4 +13,5 @@ const FetchInvoice = rateLimit({
 });
 router.post("/create_new/:id",checkToken,CreateSub);
 router.get("/subscription-details/:customerid",checkToken,FetchInvoice,GetSubdetails);
+router.post("/cancel-pro/:username",checkToken,CancelPro)
 module.exports = router;

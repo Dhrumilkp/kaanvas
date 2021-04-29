@@ -1,6 +1,7 @@
 const {
     createsubscription,
-    GetSubscriptionId
+    GetSubscriptionId,
+    DemoteUserToFree
 } = require('./sub.service');
 const stripe = require('stripe')(process.env.STRIP_SK);
 module.exports = {
@@ -165,6 +166,55 @@ module.exports = {
                     
                 }
             )
+            .catch(
+                error => {
+                    return res.status(500).json({
+                        status: "err",
+                        message: "Internal server error, please reach out to customer support on support@ratefreelancer.com"
+                    });
+                }
+            )
+        });
+    },
+    CancelPro:(req,res) => {
+        const u_username = req.params.username;
+        const body = req.body;
+        body.u_username = u_username;
+        const customerId = body.customer_id;
+        GetSubscriptionId(customerId,(err,results) => {
+            if(err)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: "Internal server error, please reach out to customer support on support@ratefreelancer.com"
+                });
+            }
+            if(!results[0])
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: "Internal server error, please reach out to customer support on support@ratefreelancer.com"
+                });
+            }
+            const subscription_id = results[0]['sub_id'];
+            stripe.subscriptions.del(
+                subscription_id
+            )
+            .then(cancel_obj => {
+                DemoteUserToFree(body,(err,results) => {
+                    if(err) 
+                    {
+                        return res.status(500).json({
+                            status: "err",
+                            message: "Internal server error, please reach out to customer support on support@ratefreelancer.com"
+                        });
+                    }
+                    return res.status(200).json({
+                        status: "success",
+                        message: "Subscription Ended"
+                    });
+                });
+            })
             .catch(
                 error => {
                     return res.status(500).json({

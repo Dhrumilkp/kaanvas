@@ -48,5 +48,36 @@ module.exports = {
                 return callback(null,results);
             }
         )
+    },
+    DemoteUserToFree:(data,callback) => {
+        pool.query(
+            `INSERT INTO ka_user_pro_cancel (u_uid,u_username,message)
+            VALUES (?,?,?)`,
+            [
+                data.u_uid,
+                data.u_username,
+                data.message
+            ],
+            (error,results,fields) => {
+                if(error)
+                {
+                    callback(error);
+                }
+                pool.query(
+                    `UPDATE ka_user SET is_pro = ? WHERE id = ?`,
+                    [
+                        1,
+                        data.u_uid
+                    ],
+                    (error,results,fields) => {
+                        if(error)
+                        {
+                            callback(error);
+                        }
+                        return callback(null,results);
+                    }
+                )
+            }
+        )
     }
 };
