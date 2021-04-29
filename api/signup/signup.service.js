@@ -123,9 +123,10 @@ module.exports = {
                                 .then(customer => {
                                     // Update the customer id of the user
                                     pool.query(
-                                        `UPDATE ka_user SET customer_id = ?`,
+                                        `UPDATE ka_user SET customer_id = ? WHERE u_email = ?`,
                                         [
-                                            customer.id
+                                            customer.id,
+                                            data.u_email
                                         ],
                                         (error,results,fields) => {
                                             if(error)

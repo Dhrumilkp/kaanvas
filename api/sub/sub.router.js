@@ -1,6 +1,6 @@
 const {
     CreateSub,
-    GetInvoices
+    GetSubdetails
 } = require('./sub.controller');
 const router = require("express").Router();
 const rateLimit = require("express-rate-limit");
@@ -11,5 +11,5 @@ const FetchInvoice = rateLimit({
     message: "Too many request, please dont abuse try after sometime!"
 });
 router.post("/create_new/:id",checkToken,CreateSub);
-router.get("/invoices/:customerid",checkToken,FetchInvoice,GetInvoices);
+router.get("/subscription-details/:customerid",checkToken,FetchInvoice,GetSubdetails);
 module.exports = router;

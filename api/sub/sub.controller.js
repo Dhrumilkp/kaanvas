@@ -1,5 +1,6 @@
 const {
-    createsubscription
+    createsubscription,
+    GetSubscriptionId
 } = require('./sub.service');
 const stripe = require('stripe')(process.env.STRIP_SK);
 module.exports = {
@@ -103,29 +104,75 @@ module.exports = {
             console.log(error); 
         })
     },
-    GetInvoices:(req,res) => {
+    GetSubdetails:(req,res) => {
         const customer_id = req.params.customerid;
-        stripe.invoices.list({
-            customer    : customer_id,
-            limit       : 10,
-            status      : 'paid'
-        })
-        .then(
-            invoice_data => {
-                return res.status(200).json({
-                    status: "success",
-                    message: "Your invoice data is fetched",
-                    data : invoice_data
-                });
-            }
-        )
-        .catch(
-            error => {
+        GetSubscriptionId(customer_id,(err,results) => {
+            if(err)
+            {
                 return res.status(500).json({
                     status: "err",
-                    message: "There was some error fetching your invoices, please reach out to customer support on support@ratefreelancer.com"
+                    message: "Internal server error, please reach out to customer support on support@ratefreelancer.com"
                 });
             }
-        )
+            if(!results[0])
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: "Internal server error, please reach out to customer support on support@ratefreelancer.com"
+                });
+            }
+            const subscription_id = results[0]['sub_id'];
+            stripe.subscriptions.retrieve(
+                subscription_id
+            )
+            .then(
+                subscription_object => {
+                    stripe.invoices.retrieveUpcoming({
+                        customer: customer_id,
+                    })
+                    .then(nextinvoice_data =>{
+                        stripe.invoices.list({
+                            customer    : customer_id,
+                            limit       : 10,
+                            status      : 'paid'
+                        })
+                        .then(
+                            invoice_data => {
+                                return res.status(200).json({
+                                    status: "success",
+                                    message: "Subscription object",
+                                    data : subscription_object,
+                                    data_invoice : nextinvoice_data,
+                                    invoice_list : invoice_data
+                                });
+                            }
+                        )
+                        .catch(
+                            error => {
+                                return res.status(500).json({
+                                    status: "err",
+                                    message: "There was some error fetching your invoices, please reach out to customer support on support@ratefreelancer.com"
+                                });
+                            }
+                        )
+                    })
+                    .catch(error => {
+                        return res.status(500).json({
+                            status: "err",
+                            message: "Internal server error, please reach out to customer support on support@ratefreelancer.com"
+                        });
+                    })
+                    
+                }
+            )
+            .catch(
+                error => {
+                    return res.status(500).json({
+                        status: "err",
+                        message: "Internal server error, please reach out to customer support on support@ratefreelancer.com"
+                    });
+                }
+            )
+        });
     }
 }
