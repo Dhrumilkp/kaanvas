@@ -102,5 +102,30 @@ module.exports = {
         .catch(error => {
             console.log(error); 
         })
+    },
+    GetInvoices:(req,res) => {
+        const customer_id = req.params.customerid;
+        stripe.invoices.list({
+            customer    : customer_id,
+            limit       : 10,
+            status      : 'paid'
+        })
+        .then(
+            invoice_data => {
+                return res.status(200).json({
+                    status: "success",
+                    message: "Your invoice data is fetched",
+                    data : invoice_data
+                });
+            }
+        )
+        .catch(
+            error => {
+                return res.status(500).json({
+                    status: "err",
+                    message: "There was some error fetching your invoices, please reach out to customer support on support@ratefreelancer.com"
+                });
+            }
+        )
     }
 }
