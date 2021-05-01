@@ -8,7 +8,7 @@ const Signuplimiter = rateLimit({
     message: "Too many accounts created from this IP, please try again after an hour"
 });
 
-router.post("/",Signuplimiter,createUser);
-router.post("/guser",Signuplimiter,gcreateUser);
+router.post("/",createUser);
+router.post("/guser",gcreateUser);
 
 module.exports = router;
