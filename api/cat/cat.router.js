@@ -7,5 +7,5 @@ const rateLimit = require("express-rate-limit");
 const {checkToken} = require("../../auth/token_validation");
 
 router.get('/',checkToken,GetMainCat);
-router.get('/subcat/:id',GetSubcat);
+router.get('/subcat/:id',checkToken,GetSubcat);
 module.exports = router;
