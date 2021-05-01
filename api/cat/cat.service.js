@@ -12,5 +12,20 @@ module.exports = {
                 return callback(null,results);
             }
         )
+    },
+    GetSubcatData:(id,callback) => {
+        pool.query(
+            `SELECT id,name as text FROM  ka_sub_cat WHERE cat_id = ?`,
+            [
+                id
+            ],
+            (error,results,fields) => {
+                if(error)
+                {
+                    callback(error);
+                }
+                return callback(null,results);
+            }
+        )
     }
 }
