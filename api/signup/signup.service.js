@@ -36,7 +36,7 @@ module.exports = {
                   bg_default_settings,
                   1
                 ],
-                (error,results,fields) => {
+                (error,newuserresult,fields) => {
                     if(error)
                     {
                         callback(error);
@@ -92,7 +92,7 @@ module.exports = {
                                 {
                                     console.log(error);
                                 }
-                                return callback(null,results);
+                                return callback(null,newuserresult);
                             }
                         )
                     })
@@ -121,7 +121,7 @@ module.exports = {
                   bg_default_settings,
                   0
                 ],
-                (error,results,fields) => {
+                (error,newuserresult,fields) => {
                     if(error)
                     {
                         callback(error);
@@ -220,7 +220,7 @@ module.exports = {
                                                 {
                                                     console.log(error);
                                                 }
-                                                return callback(null,results)
+                                                return callback(null,newuserresult)
                                             }
                                         )
                                     })
