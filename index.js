@@ -9,6 +9,7 @@ const emailRouter = require("./api/email/email.router");
 const getuserRoute = require("./api/user/user.router");
 const SubRouter = require('./api/sub/sub.router');
 const GenerateRouter = require('./api/generate/generate.router');
+const GetCat = require('./api/cat/cat.router');
 // SET JSON BODY AS DEFAULT
 app.use(express.json());
 app.use(cors({
@@ -30,6 +31,7 @@ app.use("/api/email",emailRouter);
 app.use("/api/user",getuserRoute);
 app.use("/api/sub",SubRouter);
 app.use("/api/gen",GenerateRouter);
+app.use("/api/cat/",GetCat);
 // Port
 const port = process.env.PORT || 3000;
 app.listen(port,() =>{
