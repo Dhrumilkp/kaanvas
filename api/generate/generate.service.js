@@ -1,8 +1,32 @@
 const pool = require('../../config/database');
-
+var uniqid = require('uniqid');
 module.exports = { 
     GenerateUniqueUrl:(body,callback) => {
-        
+        var uniqueid = uniqid('review-');
+        pool.query(
+            `INSERT INTO ka_collect_url (unique_uid,u_uid,project_title,project_description,industry_cat,industry_sub_cat,project_tags,skills_tags,project_duration,project_amount,project_folio)
+            values (?,?,?,?,?,?,?,?,?,?,?)`,
+            [
+                uniqueid,
+                body.u_uid,
+                body.project_title,
+                body.project_desc,
+                body.industry_cat,
+                body.industry_sub_cat,
+                body.project_tags,
+                body.skills_tags,
+                body.project_duration,
+                body.project_amount,
+                body.project_folio
+            ],
+            (error,results,fields) => {
+                if(error)
+                {
+                    console.log(error);
+                }
+                return callback(null,uniqueid);
+            }
+        )
     },
     GetCollectData:(u_uid,callback) => {
         pool.query(
