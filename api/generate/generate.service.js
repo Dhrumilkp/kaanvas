@@ -42,5 +42,20 @@ module.exports = {
                 return callback(null,results);
             }
         )
+    },
+    GetCollectURLdata:(u_uid,callback) => {
+        pool.query(
+            `SELECT * FROM ka_collect_url WHERE u_uid = ? AND is_used = 0 LIMIT 10`,
+            [
+                u_uid
+            ],
+            (error,results,fields) => {
+                if(error)
+                {
+                    callback(error);
+                }
+                return callback(null,results);
+            }
+        )
     }
 }
