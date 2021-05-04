@@ -13,7 +13,7 @@ module.exports = {
             {
                 return res.status(500).json({
                     status: "err",
-                    message: "Internal server err, please reach out to our support team on support@ratefreelancer.com"
+                    message: "Internal server err, please reach out to our support team on support@onelink.cards"
                 });
             }
             if(!results[0])
@@ -95,7 +95,7 @@ module.exports = {
                 {
                     return res.status(500).json({
                         status: "err",
-                        message: "Internal server err, please reach out to our support team on support@ratefreelancer.com"
+                        message: "Internal server err, please reach out to our support team on support@onelink.cards"
                     }); 
                 }
                 if(!results[0])

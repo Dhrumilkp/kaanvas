@@ -9,8 +9,8 @@ module.exports = {
         const number = Math.floor(Math.random() * max) + 1;
         const profile_bg_max = 5;
         const profile_number = Math.floor(Math.random() * profile_bg_max) + 1;
-        var u_default_profile_bg = 'https://prefetch.ratefreelancer.com/profile-bg/01.webp';
-        var u_default_profile_pic = 'https://prefetch.ratefreelancer.com/avatars/'+number+'.jpg';
+        var u_default_profile_bg = 'https://prefetch.onelink.cards/profile-bg/01.webp';
+        var u_default_profile_pic = 'https://prefetch.onelink.cards/avatars/'+number+'.jpg';
         var bg_default_settings = 'background-size:cover;background-position:center;background-repeat:no-repeat;';
         const refuser = data.headers.refuser;
         const browser_data = data.headers.browsername;
@@ -186,7 +186,7 @@ module.exports = {
                             .request({
                                 "Messages":[{
                                     "From": {
-                                        "Email": "security-noreply@ratefreelancer.com",
+                                        "Email": "security-noreply@onelink.cards",
                                         "Name": "Ratefreelancer Security"
                                     },
                                     "To": [{

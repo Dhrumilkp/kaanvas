@@ -44,7 +44,7 @@ module.exports = {
                         .request({
                             "Messages":[{
                                 "From": {
-                                    "Email": "security-noreply@ratefreelancer.com",
+                                    "Email": "security-noreply@onelink.cards",
                                     "Name": "Ratefreelancer Security"
                                 },
                                 "To": [{

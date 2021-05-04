@@ -42,7 +42,7 @@ module.exports = {
                                         {
                                             return res.status(500).json({
                                                 status: "err",
-                                                message: "Internal server err, please reach out to our support team on support@ratefreelancer.com"
+                                                message: "Internal server err, please reach out to our support team on support@onelink.cards"
                                             });
                                         }
                                         return res.status(200).json({
@@ -77,7 +77,7 @@ module.exports = {
                                         {
                                             return res.status(500).json({
                                                 status: "err",
-                                                message: "Internal server err, please reach out to our support team on support@ratefreelancer.com"
+                                                message: "Internal server err, please reach out to our support team on support@onelink.cards"
                                             });
                                         }
                                         return res.status(200).json({
@@ -112,14 +112,14 @@ module.exports = {
             {
                 return res.status(500).json({
                     status: "err",
-                    message: "Internal server error, please reach out to customer support on support@ratefreelancer.com"
+                    message: "Internal server error, please reach out to customer support on support@onelink.cards"
                 });
             }
             if(!results[0])
             {
                 return res.status(500).json({
                     status: "err",
-                    message: "Internal server error, please reach out to customer support on support@ratefreelancer.com"
+                    message: "Internal server error, please reach out to customer support on support@onelink.cards"
                 });
             }
             const subscription_id = results[0]['sub_id'];
@@ -152,7 +152,7 @@ module.exports = {
                             error => {
                                 return res.status(500).json({
                                     status: "err",
-                                    message: "There was some error fetching your invoices, please reach out to customer support on support@ratefreelancer.com"
+                                    message: "There was some error fetching your invoices, please reach out to customer support on support@onelink.cards"
                                 });
                             }
                         )
@@ -160,7 +160,7 @@ module.exports = {
                     .catch(error => {
                         return res.status(500).json({
                             status: "err",
-                            message: "Internal server error, please reach out to customer support on support@ratefreelancer.com"
+                            message: "Internal server error, please reach out to customer support on support@onelink.cards"
                         });
                     })
                     
@@ -170,7 +170,7 @@ module.exports = {
                 error => {
                     return res.status(500).json({
                         status: "err",
-                        message: "Internal server error, please reach out to customer support on support@ratefreelancer.com"
+                        message: "Internal server error, please reach out to customer support on support@onelink.cards"
                     });
                 }
             )
@@ -186,14 +186,14 @@ module.exports = {
             {
                 return res.status(500).json({
                     status: "err",
-                    message: "Internal server error, please reach out to customer support on support@ratefreelancer.com"
+                    message: "Internal server error, please reach out to customer support on support@onelink.cards"
                 });
             }
             if(!results[0])
             {
                 return res.status(500).json({
                     status: "err",
-                    message: "Internal server error, please reach out to customer support on support@ratefreelancer.com"
+                    message: "Internal server error, please reach out to customer support on support@onelink.cards"
                 });
             }
             const subscription_id = results[0]['sub_id'];
@@ -206,7 +206,7 @@ module.exports = {
                     {
                         return res.status(500).json({
                             status: "err",
-                            message: "Internal server error, please reach out to customer support on support@ratefreelancer.com"
+                            message: "Internal server error, please reach out to customer support on support@onelink.cards"
                         });
                     }
                     return res.status(200).json({
@@ -219,7 +219,7 @@ module.exports = {
                 error => {
                     return res.status(500).json({
                         status: "err",
-                        message: "Internal server error, please reach out to customer support on support@ratefreelancer.com"
+                        message: "Internal server error, please reach out to customer support on support@onelink.cards"
                     });
                 }
             )
