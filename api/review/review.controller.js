@@ -7,6 +7,7 @@ module.exports = {
     ReviewData:(req,res) => {
         const review_id = req.params.id;
         GetReviewData(review_id,(err,results) => {
+            console.log(results);
             if(err)
             {
                 return res.status(500).json({
@@ -28,7 +29,8 @@ module.exports = {
                 status: "success",
                 message: "Fetched review data",
                 temp_token : jsontoken,
-                data : results
+                data : results,
+                is_pro : results.is_pro
             });
         })
     }

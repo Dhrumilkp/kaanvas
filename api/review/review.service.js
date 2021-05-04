@@ -7,13 +7,26 @@ module.exports = {
             [
                 review_id
             ],
-            (error,results,fields) =>{
+            (error,reviewurlresult,fields) =>{
                 console.log(error);
                 if(error)
                 {
                     callback(error);
                 }
-                return callback(null,results);
+                pool.query(
+                    `SELECT is_pro FROM ka_user WHERE id = ?`,
+                    [
+                        reviewurlresult[0]['u_uid']
+                    ],
+                    (error,results,fields) => {
+                        if(error)
+                        {
+                            console.log(error);
+                        }
+                        reviewurlresult.is_pro = results[0]['is_pro'];
+                        return callback(null,reviewurlresult);
+                    }
+                )
             }
         )
     }
