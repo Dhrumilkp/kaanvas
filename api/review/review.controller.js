@@ -1,5 +1,6 @@
 const {
-    GetReviewData
+    GetReviewData,
+    UpdateReviewWithResponse
 } = require('./review.service');
 const { sign } = require("jsonwebtoken");
 
@@ -32,6 +33,24 @@ module.exports = {
                 is_pro : results.is_pro
             });
         })
+    },
+    UpdateReviewData:(req,res) => {
+        const review_id = req.params.id;
+        const body = req.body;
+        body.review_id = review_id;
+        UpdateReviewWithResponse(body,(err,results) => {
+            if(err)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: "Internal server err, please reach out to our support team on support@kaanvas.art"
+                });
+            }
+            return res.status(200).json({
+                status: "success",
+                message: "review updated !"
+            });
+        });
     }
 }
 
