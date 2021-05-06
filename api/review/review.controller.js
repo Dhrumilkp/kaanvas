@@ -7,7 +7,6 @@ module.exports = {
     ReviewData:(req,res) => {
         const review_id = req.params.id;
         GetReviewData(review_id,(err,results) => {
-            console.log(results);
             if(err)
             {
                 return res.status(500).json({

@@ -8,7 +8,6 @@ module.exports = {
                 review_id
             ],
             (error,reviewurlresult,fields) =>{
-                console.log(reviewurlresult);
                 if(error)
                 {
                     callback(error);
