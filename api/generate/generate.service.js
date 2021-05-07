@@ -20,6 +20,7 @@ module.exports = {
                 body.project_folio
             ],
             (error,results,fields) => {
+                console.log(results);
                 if(error)
                 {
                     console.log(error);
