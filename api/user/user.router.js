@@ -7,7 +7,8 @@ const {
     UpdateProfileTheme,
     GetReferalSignupDate,
     InsertUniqueProfileView,
-    GetUniqueViewCount
+    GetUniqueViewCount,
+    Getloginhistory
 } = require('./user.controller');
 const router = require("express").Router();
 const rateLimit = require("express-rate-limit");
@@ -22,4 +23,5 @@ router.post("/profile/theme/:id",checkToken,UpdateProfileTheme);
 router.post("/refdata/:username",checkToken,GetReferalSignupDate);
 router.get("/profile/uniqueview/:username",InsertUniqueProfileView);
 router.get("/profile/uniqueviewcount/:username",checkToken,GetUniqueViewCount);
+router.get("/loginhistory/:username",checkToken,Getloginhistory);
 module.exports = router;

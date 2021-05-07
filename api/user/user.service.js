@@ -234,5 +234,20 @@ module.exports = {
                 return callback(null,results);
             }
         )
+    },
+    Getloginhistorydata:(u_username,callback) => {
+        pool.query(
+            `SELECT * FROM ka_usersessioninfo WHERE u_username = ? ORDER BY id DESC LIMIT 10`,
+            [
+                u_username
+            ],
+            (error,results,fields) => {
+                if(error)
+                {
+                    callback(error);
+                }
+                return callback(null,results);
+            }
+        )
     }
 }

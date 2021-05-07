@@ -8,7 +8,8 @@ const {
     GetReferalData,
     GetPromoCouponCode,
     InsertUniqueProfileVisitor,
-    GetUniqueViewCountdata
+    GetUniqueViewCountdata,
+    Getloginhistorydata
 } = require("./user.service");
 module.exports = {
     GetUser:(req,res) => {
@@ -262,5 +263,22 @@ module.exports = {
                 unique_view_count : numFormatter(results[0]['unique_counts'])
             });
         });
+    },
+    Getloginhistory:(req,res) => {
+        const username = req.params.username;
+        Getloginhistorydata(username,(err,results) => {
+            if(err)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: "Internal server err, please reach out to our support team on support@onelink.cards"
+                });
+            }
+            return res.status(200).json({
+                status  :   "success",
+                message :   "Fetched session data",
+                data : results
+            });
+        })
     }
 }
