@@ -75,7 +75,7 @@ module.exports = {
                         }
                     )
                     stripe.customers.create({
-                        description : 'RateFreelancer customer',
+                        description : 'Onelink.cards customer',
                         name        : ''+data.u_firstname+' '+data.u_lastname+'',
                         email       : data.u_email
                     })

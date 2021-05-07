@@ -39,7 +39,7 @@ module.exports = {
                 {
                     res.status(500).json({
                         status  : "err",
-                        message : "Something went wrong, reach out to our support executive on support@ratefreelancer.com"
+                        message : "Something went wrong, reach out to our support executive on support@Onelink.cards.com"
                     });
                 }
                 if(!results[0])
@@ -56,7 +56,7 @@ module.exports = {
                             {
                                 res.status(500).json({
                                     status  : "err",
-                                    message : "Something went wrong, reach out to our support executive on support@ratefreelancer.com"
+                                    message : "Something went wrong, reach out to our support executive on support@Onelink.cards.com"
                                 });
                             }
                             if(results[0])
