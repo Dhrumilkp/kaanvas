@@ -187,15 +187,15 @@ module.exports = {
                                 "Messages":[{
                                     "From": {
                                         "Email": "security-noreply@onelink.cards",
-                                        "Name": "Ratefreelancer Security"
+                                        "Name": "Onelink.cards"
                                     },
                                     "To": [{
                                         "Email": data.u_email,
                                         "Name": data.u_firstname +' '+ data.u_lastname
                                     }],
-                                    "Subject": otp +" is your verification otp for ratefreelancer",
+                                    "Subject": otp +" is your verification otp for Onelink",
                                     "TextPart": "Hi "+data.u_firstname+" "+data.u_lastname+" "+otp+" is your verification otp use this in the next 6 minutes",
-                                    "HTMLPart": "<h1 style='font-color:#343a40;'>Welcome To RateFreelancer</h1><br>your verification otp is <b>"+otp+"</b>, use this otp to verify your email <br><br/> Cheers,<br>Ratefreelancer Team"
+                                    "HTMLPart": "<h1 style='font-color:#343a40;'>Welcome To Onelink</h1><br>your verification otp is <b>"+otp+"</b>, use this otp to verify your email <br><br/> Cheers,<br>Onelink Team"
                                 }]
                             })
                             request
@@ -203,7 +203,7 @@ module.exports = {
                                     // create customer in stripe
                                     let stripe_customer_id;
                                     stripe.customers.create({
-                                        description : 'RateFreelancer customer',
+                                        description : 'Onelink customer',
                                         name        : ''+data.u_firstname+' '+data.u_lastname+'',
                                         email       : data.u_email
                                     })
