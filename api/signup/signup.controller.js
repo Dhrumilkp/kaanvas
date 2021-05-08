@@ -1,5 +1,5 @@
 const { create, checkUser } = require("./signup.service");
-const { genSaltSync,hashSync } = require("bcrypt");
+const { genSaltSync,hashSync } = require("bcryptjs");
 const {OAuth2Client} = require('google-auth-library');
 const { sign } = require("jsonwebtoken");
 const { uniqueNamesGenerator, adjectives, colors, animals,countries } = require('unique-names-generator');

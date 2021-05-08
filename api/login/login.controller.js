@@ -1,5 +1,5 @@
 const { checkuserExists,LoginUpdate,gloginauth } = require('./login.service');
-const { compareSync } = require("bcrypt");
+const { compareSync } = require("bcryptjs");
 const { sign } = require("jsonwebtoken");
 const {OAuth2Client} = require('google-auth-library');
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
