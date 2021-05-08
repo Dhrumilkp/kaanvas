@@ -20,18 +20,12 @@ app.use(cors({
 app.get("/",(req,res) =>{
     res.json({
         status      : "success",
-        eventCode   :   "200",
-        message     : "api framework working"
+        eventCode   : "200",
+        message     : "api framework working",
+        origins     : "Origins set",
+        encrption   : "true"
     }); 
 });
-app.get("/api",(req,res) =>{
-    res.json({
-        status      : "success",
-        eventCode   :   "200",
-        message     : "api framework working"
-    }); 
-});
-
 // Routes
 app.use("/api/signup", signupRouter);
 app.use("/api/login",loginRouter);
