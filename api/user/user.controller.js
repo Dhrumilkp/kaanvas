@@ -9,7 +9,8 @@ const {
     GetPromoCouponCode,
     InsertUniqueProfileVisitor,
     GetUniqueViewCountdata,
-    Getloginhistorydata
+    Getloginhistorydata,
+    Getreviewdata
 } = require("./user.service");
 module.exports = {
     GetUser:(req,res) => {
@@ -280,5 +281,33 @@ module.exports = {
                 data : results
             });
         })
+    },
+    GetotalReviewCount:(req,res) => {
+        const u_uid = req.params.id;
+        Getreviewdata(u_uid,(err,results) => {
+            if(err)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: "Internal server err, please reach out to our support team on support@onelink.cards"
+                });
+            }
+            if(!results[0])
+            {
+                return res.status(200).json({
+                    status  :   "success",
+                    message :   "Count fetched",
+                    data : 0
+                });
+            }
+            else
+            {
+                return res.status(200).json({
+                    status  :   "success",
+                    message :   "Count fetched",
+                    data : results[0]['count_review']
+                });
+            }
+        });
     }
 }

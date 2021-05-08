@@ -249,5 +249,20 @@ module.exports = {
                 return callback(null,results);
             }
         )
+    },
+    Getreviewdata:(u_uid,callback) => {
+        pool.query(
+            `SELECT count(*) as count_review FROM ka_collect_url WHERE u_uid = ? AND is_used = 1`,
+            [
+                u_uid
+            ],
+            (error,results,fields) =>{
+                if(error)
+                {
+                    callback(error);
+                }
+                return callback(null,results);
+            }
+        )
     }
 }

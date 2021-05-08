@@ -8,7 +8,8 @@ const {
     GetReferalSignupDate,
     InsertUniqueProfileView,
     GetUniqueViewCount,
-    Getloginhistory
+    Getloginhistory,
+    GetotalReviewCount
 } = require('./user.controller');
 const router = require("express").Router();
 const rateLimit = require("express-rate-limit");
@@ -24,4 +25,5 @@ router.post("/refdata/:username",checkToken,GetReferalSignupDate);
 router.get("/profile/uniqueview/:username",InsertUniqueProfileView);
 router.get("/profile/uniqueviewcount/:username",checkToken,GetUniqueViewCount);
 router.get("/loginhistory/:username",checkToken,Getloginhistory);
+router.get("/reviewcount/:id",checkToken,GetotalReviewCount);
 module.exports = router;
