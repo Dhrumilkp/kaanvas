@@ -17,6 +17,13 @@ app.use(cors({
     origin: process.env.FRONT_END_URL
 }));
 // SET JSON RESPONSE WHEN SOMEONE VISIT THE PAGE
+app.get("/",(req,res) =>{
+    res.json({
+        status      : "success",
+        eventCode   :   "200",
+        message     : "api framework working"
+    }); 
+});
 app.get("/api",(req,res) =>{
     res.json({
         status      : "success",
