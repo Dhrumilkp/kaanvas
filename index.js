@@ -13,9 +13,9 @@ const GetCat = require('./api/cat/cat.router');
 const ReviewRouter = require('./api/review/review.router');
 // SET JSON BODY AS DEFAULT
 app.use(express.json());
-app.use(cors({
-    origin: process.env.FRONT_END_URL
-}));
+// app.use(cors({
+//     origin: process.env.FRONT_END_URL
+// }));
 // SET JSON RESPONSE WHEN SOMEONE VISIT THE PAGE
 app.get("/",(req,res) =>{
     res.json({
