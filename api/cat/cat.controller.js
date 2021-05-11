@@ -6,7 +6,7 @@ const {
 module.exports = {
     GetMainCat:(req,res) => {
         const body = req.body;
-        GetIndustrycat(body,(err,results) => {
+        GetIndustrycat(body,(err,fetch_results) => {
             if(err)
             {
                 return res.status(500).json({
@@ -15,9 +15,7 @@ module.exports = {
                 });
             }
             return res.status(200).json({
-                status  :   "success",
-                message :   "Industry Category Fetched",
-                data : results
+                results :   fetch_results
             });
         });
     },

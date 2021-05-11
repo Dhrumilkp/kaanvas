@@ -3,7 +3,7 @@ const pool  = require('../../config/database');
 module.exports = {
     GetIndustrycat:(data,callback) => {
         pool.query(
-            `SELECT * FROM ka_industry_cat`,
+            `SELECT id,name as text FROM ka_industry_cat`,
             (error,results,fields) => {
                 if(error)
                 {
