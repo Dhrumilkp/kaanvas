@@ -14,21 +14,9 @@ const GetCat = require('./api/cat/cat.router');
 const ReviewRouter = require('./api/review/review.router');
 // SET JSON BODY AS DEFAULT
 app.use(express.json());
-var con = mysql.createConnection({
-    port    :   process.env.RDS_PORT,
-    host    :   process.env.RDS_HOSTNAME,
-    user    :   process.env.RDS_USERNAME,
-    password:   process.env.RDS_PASSWORD,
-    database:   process.env.RDS_DB_NAME
-});
-  
-con.connect(function(err) {
-    if (err) throw err;
-    console.log("Connected!");
-});
-// app.use(cors({
-//     origin: process.env.FRONT_END_URL
-// }));
+app.use(cors({
+    origin: process.env.FRONT_END_URL
+}));
 // SET JSON RESPONSE WHEN SOMEONE VISIT THE PAGE
 app.get("/",(req,res) =>{
     res.json({
