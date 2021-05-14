@@ -19,6 +19,10 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
+    res.setHeader('accept-ranges','bytes');
+    res.setHeader('content-type','application/json');
+    res.setHeader('referrer-policy','origin-when-cross-origin');
+    res.setHeader('referrer-policy','strict-origin-when-cross-origin');
     // Pass to next layer of middleware
     next();
 });
