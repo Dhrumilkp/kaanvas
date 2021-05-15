@@ -2,7 +2,7 @@ const {
     UpdateDbFlag
 } = require('./cron.service');
 
-modules.export = {
+module.export = {
     UpdateCloudSyncFlag:(req,res) =>{
         const body = req.body;
         UpdateDbFlag(body,(err,results) => {

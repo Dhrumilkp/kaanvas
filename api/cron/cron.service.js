@@ -1,6 +1,6 @@
 const pool = require('../../config/database');
 
-modules.export = { 
+module.export = { 
     UpdateDbFlag: (data,callback) => {
         pool.query(
             'UPDATE ka_collect SET is_pushed_cloud = ? WHERE is_pushed_cloud = ?',
