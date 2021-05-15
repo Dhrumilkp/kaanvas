@@ -26,6 +26,20 @@ module.exports = {
             });
         }
     },
+    checkapi:(req,res,next) => {
+       const api_key = req.params.apikey;
+       if(api_key == process.env.api_key)
+        {
+            next();
+        }
+        else
+        {
+            res.status(500).json({
+                status  : "err",
+                message : "Wrong api key"
+            }); 
+        }
+    },
     checkPro:(req,res,next) => {
         const u_uid = req.params.id;
         pool.query(
