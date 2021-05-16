@@ -11,5 +11,5 @@ const runcronlimit = rateLimit({
     max: 1, // start blocking after 5 requests
     message: "Cron job cannot run more then one day in a time"
 });
-router.get("/s3sync/:apikey",checkapi,runcronlimit,UpdateCloudSyncFlag);
+router.get("/s3sync/:apikey",checkapi,UpdateCloudSyncFlag);
 module.exports = router;
