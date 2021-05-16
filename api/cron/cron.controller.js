@@ -14,7 +14,7 @@ module.exports = {
                 });
             }
             return res.status(200).json({
-                status: "err",
+                status: "success",
                 message: "Cloud Flag Updated"
             });
         });
