@@ -69,13 +69,6 @@ module.exports = {
                     message: err
                 });
             }
-            if(!results[0]['data'])
-            {
-                return res.status(404).json({
-                    status: "err",
-                    message: "Cannot find any review associated with this account"
-                });
-            }
             return res.status(200).json({
                 status: "success",
                 message: "Fetch success",
