@@ -69,13 +69,6 @@ module.exports = {
                     message: err
                 });
             }
-            if(!results[0])
-            {
-                return res.status(404).json({
-                    status: "err",
-                    message: "No results were found"
-                });
-            }
             return res.status(200).json({
                 status: "success",
                 message: "Fetch success",
