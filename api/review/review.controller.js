@@ -61,25 +61,20 @@ module.exports = {
         body.u_username = u_username;
         body.page = page;
         body.limit = limit;
-        return res.status(200).json({
-            status: "success",
-            message: "Fetch success",
-            data : body
+        GetallreviewUserData(body,(err,results) =>{
+            if(err)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: err
+                });
+            }
+            return res.status(200).json({
+                status: "success",
+                message: "Fetch success",
+                data : results
+            });
         });
-        // GetallreviewUserData(body,(err,results) =>{
-        //     if(err)
-        //     {
-        //         return res.status(500).json({
-        //             status: "err",
-        //             message: err
-        //         });
-        //     }
-        //     return res.status(200).json({
-        //         status: "success",
-        //         message: "Fetch success",
-        //         data : results
-        //     });
-        // });
     }
 }
 
