@@ -1,3 +1,4 @@
+const rateLimit = require('express-rate-limit');
 const pool = require('../../config/database');
 
 module.exports = {
@@ -52,9 +53,46 @@ module.exports = {
             {
                 if(error)
                 {
-                    console.log(error);
+                    callback(error);
                 }
                 return callback(null,results);
+            }
+        )
+    },
+    GetallreviewUserData:(body,callback) => {
+        const startIndex = (body.page - 1) * body.limit;
+        const endIndex = body.page * body.limit;
+        const returnresults = {};
+        pool.query(
+            `SELECT * FROM ka_collect_url WHERE u_uid = ? AND is_used = ? ORDER BY id`,
+            [
+                body.u_uid,
+                1,
+                startIndex,
+                endIndex
+            ],
+            (error,results,fields) =>{
+                if(error)
+                {
+                   callback(error);
+                }
+                const resultUsers = results.slice(startIndex,endIndex);
+                returnresults.data = resultUsers;
+                if(endIndex < resultUsers.length)
+                {
+                    returnresults.next = {
+                        page : page + 1,
+                        limit : body.limit
+                    }
+                }
+                if(startIndex > 0)
+                {
+                    returnresults.previous = {
+                        page : page - 1,
+                        limit : body.limit
+                    }
+                }
+                return callback(null,returnresults);
             }
         )
     }

@@ -1,6 +1,7 @@
 const {
     GetReviewData,
-    UpdateReviewWithResponse
+    UpdateReviewWithResponse,
+    GetallreviewUserData
 } = require('./review.service');
 const { sign } = require("jsonwebtoken");
 
@@ -49,6 +50,29 @@ module.exports = {
             return res.status(200).json({
                 status: "success",
                 message: "review updated !"
+            });
+        });
+    },
+    GetallreviewUser:(req,res) => {
+        const u_uid = req.params.id;
+        const page = parseInt(req.query.page);
+        const limit = parseInt(req.query.limit);
+        const body = req.body;
+        body.u_uid = u_uid;
+        body.page = page;
+        body.limit = limit;
+        GetallreviewUserData(body,(err,results) =>{
+            if(err)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: "Internal server err, please reach out to our support team on support@kaanvas.art"
+                });
+            }
+            return res.status(200).json({
+                status: "success",
+                message: "Fetch success",
+                data : results
             });
         });
     }
