@@ -64,36 +64,53 @@ module.exports = {
         const endIndex = body.page * body.limit;
         const returnresults = {};
         pool.query(
-            `SELECT *,ka_industry_cat.name as industry_cat_name ,ka_sub_cat.name as industry_sub_cat_name FROM ka_collect_url LEFT JOIN ka_industry_cat ON ka_collect_url.industry_cat = ka_industry_cat.id LEFT JOIN ka_sub_cat ON ka_collect_url.industry_sub_cat = ka_sub_cat.id WHERE ka_collect_url.u_uid = ? AND ka_collect_url.is_used = ? ORDER BY ka_collect_url.id`,
+            `SELECT id FROM ka_users WHERE u_username = ?`,
             [
-                body.u_uid,
-                1,
-                startIndex,
-                endIndex
+                body.u_username
             ],
             (error,results,fields) =>{
                 if(error)
                 {
-                   callback(error);
+                    callback(error)
                 }
-                const resultUsers = results.slice(startIndex,endIndex);
-                returnresults.data = resultUsers;
-                if(endIndex < resultUsers.length)
+                if(!results[0])
                 {
-                    returnresults.next = {
-                        page : page + 1,
-                        limit : body.limit
-                    }
+                    callback(error);
                 }
-                if(startIndex > 0)
-                {
-                    returnresults.previous = {
-                        page : page - 1,
-                        limit : body.limit
+                const u_uid = results[0]['id'];
+                pool.query(
+                    `SELECT *,ka_industry_cat.name as industry_cat_name ,ka_sub_cat.name as industry_sub_cat_name FROM ka_collect_url LEFT JOIN ka_industry_cat ON ka_collect_url.industry_cat = ka_industry_cat.id LEFT JOIN ka_sub_cat ON ka_collect_url.industry_sub_cat = ka_sub_cat.id WHERE ka_collect_url.u_uid = ? AND ka_collect_url.is_used = ? ORDER BY ka_collect_url.id`,
+                    [
+                        u_uid,
+                        1,
+                        startIndex,
+                        endIndex
+                    ],
+                    (error,results,fields) =>{
+                        if(error)
+                        {
+                           callback(error);
+                        }
+                        const resultUsers = results.slice(startIndex,endIndex);
+                        returnresults.data = resultUsers;
+                        if(endIndex < resultUsers.length)
+                        {
+                            returnresults.next = {
+                                page : page + 1,
+                                limit : body.limit
+                            }
+                        }
+                        if(startIndex > 0)
+                        {
+                            returnresults.previous = {
+                                page : page - 1,
+                                limit : body.limit
+                            }
+                        }
+                        return callback(null,returnresults);
                     }
-                }
-                return callback(null,returnresults);
+                )
             }
-        )
+        )  
     }
 }

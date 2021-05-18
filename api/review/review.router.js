@@ -8,5 +8,5 @@ const {checkToken} = require("../../auth/token_validation");
 
 router.get("/:id",ReviewData);
 router.post("/update/:id",checkToken,UpdateReviewData);
-router.get("/all/:id",checkToken,GetallreviewUser);
+router.get("/all/:username",checkToken,GetallreviewUser);
 module.exports = router;

@@ -54,11 +54,11 @@ module.exports = {
         });
     },
     GetallreviewUser:(req,res) => {
-        const u_uid = req.params.id;
+        const u_username = req.params.username;
         const page = parseInt(req.query.page);
         const limit = parseInt(req.query.limit);
         const body = req.body;
-        body.u_uid = u_uid;
+        body.u_username = u_username;
         body.page = page;
         body.limit = limit;
         GetallreviewUserData(body,(err,results) =>{
