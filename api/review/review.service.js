@@ -64,7 +64,7 @@ module.exports = {
         const endIndex = body.page * body.limit;
         const returnresults = {};
         pool.query(
-            `SELECT id FROM ka_users WHERE u_username = ?`,
+            `SELECT id FROM ka_user WHERE u_username = ?`,
             [
                 body.u_username
             ],
