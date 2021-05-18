@@ -69,7 +69,7 @@ module.exports = {
                     message: err
                 });
             }
-            if(!results[0])
+            if(!results[0]['data'])
             {
                 return res.status(404).json({
                     status: "err",
