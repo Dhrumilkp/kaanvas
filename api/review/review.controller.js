@@ -72,7 +72,7 @@ module.exports = {
             return res.status(200).json({
                 status: "success",
                 message: "Fetch success",
-                data : results
+                results : results
             });
         });
     }
