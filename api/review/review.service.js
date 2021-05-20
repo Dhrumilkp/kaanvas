@@ -111,7 +111,7 @@ module.exports = {
     },
     GetReviewsAvgRating:(u_uid,callback) => {
         pool.query(
-            `SELECT avg(rating_score) FROM ka_collect_url WHERE is_used = ? AND u_uid = ?`,
+            `SELECT avg(rating_score) as rating_score FROM ka_collect_url WHERE is_used = ? AND u_uid = ?`,
             [
                 1,
                 u_uid
