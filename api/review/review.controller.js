@@ -113,7 +113,7 @@ module.exports = {
             });
         });
     },
-    GetallTestimonialdata:(req,res) => {
+    GetallTestimonial:(req,res) => {
         const u_username = req.params.username;
         const page = parseInt(req.query.page);
         const limit = parseInt(req.query.limit);
