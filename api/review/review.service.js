@@ -109,6 +109,56 @@ module.exports = {
             }
         )  
     },
+    GetallTestimonialdatafromdb:(body,callback) => {
+        const startIndex = (body.page - 1) * body.limit;
+        const endIndex = body.page * body.limit;
+        const returnresults = {};
+        pool.query(
+            `SELECT id FROM ka_user WHERE u_username = ?`,
+            [
+                body.u_username
+            ],
+            (error,results,fields) =>{
+                if(error)
+                {
+                    callback(error)
+                }
+                const u_uid = results[0]['id'];
+                pool.query(
+                    `SELECT *,ka_industry_cat.name as industry_cat_name ,ka_sub_cat.name as industry_sub_cat_name FROM ka_collect_url LEFT JOIN ka_industry_cat ON ka_collect_url.industry_cat = ka_industry_cat.id LEFT JOIN ka_sub_cat ON ka_collect_url.industry_sub_cat = ka_sub_cat.id WHERE ka_collect_url.u_uid = ? AND ka_collect_url.is_used = ? ORDER BY ka_collect_url.id`,
+                    [
+                        u_uid,
+                        1,
+                        startIndex,
+                        endIndex
+                    ],
+                    (error,results,fields) =>{
+                        if(error)
+                        {
+                           callback(error);
+                        }
+                        const resultUsers = results.slice(startIndex,endIndex);
+                        returnresults.data = resultUsers;
+                        if(endIndex < resultUsers.length)
+                        {
+                            returnresults.next = {
+                                page : page + 1,
+                                limit : body.limit
+                            }
+                        }
+                        if(startIndex > 0)
+                        {
+                            returnresults.previous = {
+                                page : page - 1,
+                                limit : body.limit
+                            }
+                        }
+                        return callback(null,returnresults);
+                    }
+                )
+            }
+        )  
+    },
     GetReviewsAvgRating:(u_uid,callback) => {
         pool.query(
             `SELECT avg(rating_score) as rating_score FROM ka_collect_url WHERE is_used = ? AND u_uid = ?`,

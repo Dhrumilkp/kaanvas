@@ -3,7 +3,8 @@ const {
     UpdateReviewWithResponse,
     GetallreviewUserData,
     GetReviewsAvgRating,
-    Getratingforuserbyusername
+    Getratingforuserbyusername,
+    GetallTestimonialdatafromdb
 } = require('./review.service');
 const { sign } = require("jsonwebtoken");
 
@@ -109,6 +110,29 @@ module.exports = {
                 status: "success",
                 message: "Fetch success",
                 rating : results
+            });
+        });
+    },
+    GetallTestimonialdata:(req,res) => {
+        const u_username = req.params.username;
+        const page = parseInt(req.query.page);
+        const limit = parseInt(req.query.limit);
+        const body = req.body;
+        body.u_username = u_username;
+        body.page = page;
+        body.limit = limit;
+        GetallTestimonialdatafromdb(body,(err,results) =>{
+            if(err)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: err
+                });
+            }
+            return res.status(200).json({
+                status: "success",
+                message: "Fetch success",
+                results : results
             });
         });
     }

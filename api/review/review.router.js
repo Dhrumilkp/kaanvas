@@ -3,7 +3,8 @@ const {
     UpdateReviewData,
     GetallreviewUser,
     GetratingAvg,
-    GetratingAvgbyusername
+    GetratingAvgbyusername,
+    GetallTestimonial
 } = require('./review.controller');
 const router = require("express").Router();
 const {checkToken} = require("../../auth/token_validation");
@@ -13,4 +14,5 @@ router.post("/update/:id",checkToken,UpdateReviewData);
 router.get("/all/:username",GetallreviewUser);
 router.get("/ratingavg/:id",GetratingAvg);
 router.get("/ratingavg-user/:username",GetratingAvgbyusername);
+router.get("/gettestimonial/:username",GetallTestimonial);
 module.exports = router;
