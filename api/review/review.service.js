@@ -124,5 +124,34 @@ module.exports = {
                 return callback(null,results);
             }
         )
+    },
+    Getratingforuserbyusername:(u_username,callback) => {
+        pool.query(
+            `SELECT id FROM ka_user WHERE u_username = ?`,
+            [
+                u_username
+            ],
+            (err,results,fields) => {
+                if(err)
+                {
+                    callback(err)
+                }
+                var u_uid = results[0]['id'];
+                pool.query(
+                    `SELECT avg(rating_score) as rating_score FROM ka_collect_url WHERE is_used = ? AND u_uid = ?`,
+                    [
+                        1,
+                        u_uid
+                    ],
+                    (error,results,fields) => {
+                        if(error)
+                        {
+                            callback(error);
+                        }
+                        return callback(null,results);
+                    }
+                )
+            }
+        )
     }
 }

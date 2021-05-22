@@ -2,7 +2,8 @@ const {
     GetReviewData,
     UpdateReviewWithResponse,
     GetallreviewUserData,
-    GetReviewsAvgRating
+    GetReviewsAvgRating,
+    Getratingforuserbyusername
 } = require('./review.service');
 const { sign } = require("jsonwebtoken");
 
@@ -80,6 +81,23 @@ module.exports = {
     GetratingAvg:(req,res) => {
         const u_uid  = req.params.id;
         GetReviewsAvgRating(u_uid,(err,results) =>{ 
+            if(err)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: err
+                });
+            }
+            return res.status(200).json({
+                status: "success",
+                message: "Fetch success",
+                rating : results
+            });
+        });
+    },
+    GetratingAvgbyusername:(req,res) => {
+        const u_username = req.params.username;
+        Getratingforuserbyusername(u_username,(err,results) => {
             if(err)
             {
                 return res.status(500).json({
