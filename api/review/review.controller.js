@@ -4,7 +4,8 @@ const {
     GetallreviewUserData,
     GetReviewsAvgRating,
     Getratingforuserbyusername,
-    GetallTestimonialdatafromdb
+    GetallTestimonialdatafromdb,
+    GetReviewDataInDetail
 } = require('./review.service');
 const { sign } = require("jsonwebtoken");
 
@@ -122,6 +123,23 @@ module.exports = {
         body.page = page;
         body.limit = limit;
         GetallTestimonialdatafromdb(body,(err,results) =>{
+            if(err)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: err
+                });
+            }
+            return res.status(200).json({
+                status: "success",
+                message: "Fetch success",
+                results : results
+            });
+        });
+    },
+    GetReviewReaddata:(req,res) => {
+        const unique_id = req.params.id;
+        GetReviewDataInDetail(unique_id,(err,results) => {
             if(err)
             {
                 return res.status(500).json({

@@ -203,5 +203,20 @@ module.exports = {
                 )
             }
         )
+    },
+    GetReviewDataInDetail:(unique_id,callback) =>{
+        pool.query(
+            `SELECT * From ka_collect_url WHERE unique_uid = ?`,
+            [
+                unique_id
+            ],
+            (error,results,fields) => {
+                if(error)
+                {
+                    callback(error);
+                }
+                return callback(null,results);
+            }
+        )
     }
 }

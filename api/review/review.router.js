@@ -4,7 +4,8 @@ const {
     GetallreviewUser,
     GetratingAvg,
     GetratingAvgbyusername,
-    GetallTestimonial
+    GetallTestimonial,
+    GetReviewReaddata
 } = require('./review.controller');
 const router = require("express").Router();
 const {checkToken} = require("../../auth/token_validation");
@@ -15,4 +16,5 @@ router.get("/all/:username",GetallreviewUser);
 router.get("/ratingavg/:id",GetratingAvg);
 router.get("/ratingavg-user/:username",GetratingAvgbyusername);
 router.get("/gettestimonial/:username",GetallTestimonial);
+router.get("/read/:id",GetReviewReaddata);
 module.exports = router;
