@@ -326,7 +326,7 @@ module.exports = {
             if(!results[0])
             {
                 return res.status(404).json({
-                    status  :   "success",
+                    status  :   "err",
                     message :   "No Such User"
                 });
             }
