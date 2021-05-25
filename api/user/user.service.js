@@ -274,7 +274,7 @@ module.exports = {
                 body.project_details,
                 body.project_budget,
                 body.client_email,
-                body.client_attachment
+                body.client_attachment 
             ],
             (error,results,fields) => {
                 if(error)

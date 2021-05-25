@@ -31,5 +31,5 @@ router.get("/profile/uniqueview/:username",InsertUniqueProfileView);
 router.get("/profile/uniqueviewcount/:username",checkToken,GetUniqueViewCount);
 router.get("/loginhistory/:username",checkToken,Getloginhistory);
 router.get("/reviewcount/:id",checkToken,GetotalReviewCount);
-router.post("/new-message/:id",message_ratelimit,SendMessageToUser);
+router.post("/new-message/:id",SendMessageToUser);
 module.exports = router;
