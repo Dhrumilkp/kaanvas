@@ -267,7 +267,7 @@ module.exports = {
     },
     PostMessageToUser:(body,callback) => {
         pool.query(
-            `INSERT INTO ka_user_message (u_uid,project_title,project_details,project_budget,client_email,client_attachment) VALUES ?,?,?,?,?`,
+            `INSERT INTO ka_user_message (u_uid,project_title,project_details,project_budget,client_email,client_attachment) VALUES (?,?,?,?,?,?)`,
             [
                 body.u_uid,
                 body.project_title,
