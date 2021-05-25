@@ -264,5 +264,39 @@ module.exports = {
                 return callback(null,results);
             }
         )
+    },
+    PostMessageToUser:(body,callback) => {
+        pool.query(
+            `SELECT id FROM ka_user WHERE u_username = ?`,
+            [
+                body.u_username
+            ],
+            (error,results,fields) => {
+                if(error)
+                {
+                    callback(error)
+                }
+                var u_uid = results[0]['id'];
+                pool.query(
+                    `INSERT INTO ka_user_message (u_uid,project_title,project_details,project_budget,client_email,client_attachment) VALUES ?,?,?,?,?`,
+                    [
+                        u_uid,
+                        body.project_title,
+                        body.project_details,
+                        body.project_budget,
+                        body.client_email,
+                        body.client_attachment
+                    ],
+                    (error,results,fields) => {
+                        if(error)
+                        {
+                            callback(error);
+                        }
+                        return callback(null,results);
+                    }
+                )
+            }
+        )
+       
     }
 }

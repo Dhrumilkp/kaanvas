@@ -10,7 +10,8 @@ const {
     InsertUniqueProfileVisitor,
     GetUniqueViewCountdata,
     Getloginhistorydata,
-    Getreviewdata
+    Getreviewdata,
+    PostMessageToUser
 } = require("./user.service");
 module.exports = {
     GetUser:(req,res) => {
@@ -308,6 +309,31 @@ module.exports = {
                     data : results[0]['count_review']
                 });
             }
+        });
+    },
+    SendMessageToUser:(req,res) => {
+        var body = req.body;
+        var username = req.param.username;
+        body.u_username = username;
+        PostMessageToUser(body,(err,results) => {
+            if(err)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: "Internal server err, please reach out to our support team on support@onelink.cards"
+                });
+            }
+            if(!results[0])
+            {
+                return res.status(404).json({
+                    status  :   "success",
+                    message :   "No Such User"
+                });
+            }
+            return res.status(200).json({
+                status  :   "success",
+                message :   "Message sent, they will get back to you on your email!"
+            });
         });
     }
 }
