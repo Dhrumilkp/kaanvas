@@ -320,7 +320,7 @@ module.exports = {
             {
                 return res.status(500).json({
                     status: "err",
-                    message: "Internal server err, please reach out to our support team on support@onelink.cards"
+                    message: err
                 });
             }
             if(!results[0])
