@@ -313,8 +313,8 @@ module.exports = {
     },
     SendMessageToUser:(req,res) => {
         var body = req.body;
-        var username = req.param.username;
-        body.u_username = username;
+        var u_uid = req.param.id;
+        body.u_uid = u_uid;
         PostMessageToUser(body,(err,results) => {
             if(err)
             {
