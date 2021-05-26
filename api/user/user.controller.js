@@ -316,24 +316,28 @@ module.exports = {
         var u_uid = req.param.id;
         body.u_uid = u_uid;
         PostMessageToUser(body,(err,results) => {
-            if(err)
-            {
-                return res.status(500).json({
-                    status: "err",
-                    message: err
-                });
-            }
-            if(!results[0])
-            {
-                return res.status(404).json({
-                    status  :   "err",
-                    message :   "No Such User"
-                });
-            }
             return res.status(200).json({
                 status  :   "success",
-                message :   "Message sent, they will get back to you on your email!"
+                message :   body
             });
+            // if(err)
+            // {
+            //     return res.status(500).json({
+            //         status: "err",
+            //         message: err
+            //     });
+            // }
+            // if(!results[0])
+            // {
+            //     return res.status(404).json({
+            //         status  :   "err",
+            //         message :   "No Such User"
+            //     });
+            // }
+            // return res.status(200).json({
+            //     status  :   "success",
+            //     message :   "Message sent, they will get back to you on your email!"
+            // });
         });
     }
 }
