@@ -47,7 +47,7 @@ module.exports = {
                                         }
                                         return res.status(200).json({
                                             status: "success",
-                                            message: "Your subscription was created, please wait while we upgrade you.."
+                                            message: subscription_object
                                         });
                                     });
                                 }
