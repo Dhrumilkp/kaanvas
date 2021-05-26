@@ -1,5 +1,7 @@
 const pool = require("../../config/database");
 const stripe = require('stripe')(process.env.STRIP_SK);
+const mailjet = require ('node-mailjet').connect(process.env.MJ_APIKEY_PUBLIC, process.env.MJ_APIKEY_PRIVATE);
+
 module.exports = {
     getUserByid : (id,callback) => {
         pool.query(
@@ -267,20 +269,23 @@ module.exports = {
     },
     PostMessageToUser:(body,callback) => {
         pool.query(
-            `INSERT INTO ka_user_message (u_uid,project_title,project_details,project_budget,client_email,client_attachment) VALUES (?,?,?,?,?,?)`,
+            `INSERT INTO ka_user_message (u_uid,project_title,project_details,project_budget,client_name,client_email,client_attachment,created_on) VALUES (?,?,?,?,?,?,?,?)`,
             [
                 body.u_uid,
                 body.project_title,
                 body.project_details,
                 body.project_budget,
+                body.client_name,
                 body.client_email,
-                body.client_attachment 
+                body.client_attachment,
+                body.created_on
             ],
             (error,results,fields) => {
                 if(error)
                 {
                     callback(error);
                 }
+
                 return callback(null,results);
             }
         )
