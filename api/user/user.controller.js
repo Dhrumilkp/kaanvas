@@ -316,6 +316,10 @@ module.exports = {
         var u_uid = req.param.id;
         body.u_uid = u_uid;
         PostMessageToUser(body,(err,results) => {
+            return res.status(200).json({
+                status  :   "success",
+                message :   u_uid
+            });
             if(err)
             {
                 return res.status(500).json({
@@ -330,10 +334,7 @@ module.exports = {
                     message :   "No Such User"
                 });
             }
-            return res.status(200).json({
-                status  :   "success",
-                message :   "Message sent, they will get back to you on your email!"
-            });
+
         });
     }
 }
