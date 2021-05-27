@@ -232,11 +232,13 @@ module.exports = {
     UpdateStripeCustomer:(req,res) => {
         var customer_id = req.params.id;
         var CountryCodeIso = req.params.CountryCode;
+        var City = req.params.City;
         stripe.customers.update(
             customer_id,
             {
                 address: {
-                    country: CountryCodeIso
+                    country: CountryCodeIso,
+                    city:City
                 }
             }
         )
