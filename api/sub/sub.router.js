@@ -2,7 +2,8 @@ const {
     CreateSub,
     GetSubdetails,
     CancelPro,
-    CreatePaymentIntent
+    CreatePaymentIntent,
+    UpdateStripeCustomer
 } = require('./sub.controller');
 const router = require("express").Router();
 const rateLimit = require("express-rate-limit");
@@ -12,6 +13,7 @@ const FetchInvoice = rateLimit({
     max: 5, // start blocking after 5 requests
     message: "Too many request, please dont abuse try after sometime!"
 });
+router.get("/profile/update/CountryCodeIso/:id/:CountryCode",checkToken,UpdateStripeCustomer);
 router.post("/create_new/:id",checkToken,CreateSub);
 router.post("/payment_intent/:id",checkToken,CreatePaymentIntent);
 router.get("/subscription-details/:customerid",checkToken,FetchInvoice,GetSubdetails);

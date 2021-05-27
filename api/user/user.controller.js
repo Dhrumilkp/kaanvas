@@ -317,10 +317,6 @@ module.exports = {
         var u_uid = req.param.id;
         body.u_uid = u_uid;
         PostMessageToUser(body,(err,results) => {
-            return res.status(200).json({
-                status  :   "success",
-                message :   u_uid
-            });
             if(err)
             {
                 return res.status(500).json({
@@ -335,36 +331,10 @@ module.exports = {
                     message :   "No Such User"
                 });
             }
-
+            return res.status(200).json({
+                status  :   "success",
+                message :   results
+            });
         });
-    },
-    UpdateStripeCustomer:(req,res) => {
-        var customer_id = req.param.id;
-        var CountryCodeIso = req.params.CountryCode;
-        stripe.customers.update(
-            customer_id,
-            {
-                address: {
-                    country: CountryCodeIso
-                }
-            }
-        )
-        .then(
-            result => {
-                return res.status(200).json({
-                    status  :   "success",
-                    message :   result,
-                    display_message: "Customer Updated"
-                });
-            }
-        )
-        .catch(
-            error => {
-                return res.status(500).json({
-                    status: "err",
-                    message: error
-                });
-            }
-        )
     }
 }
