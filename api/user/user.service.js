@@ -20,8 +20,9 @@ module.exports = {
     },
     Updateuserprofile:(data,callback) => {
         pool.query (
-            `SELECT * FROM ka_user WHERE id = ?`,
+            `SELECT * FROM ka_user WHERE u_username = ? AND id != ?`,
             [
+                data.u_username,
                 data.u_uid
             ],
             (error,results,fields) => {
@@ -42,8 +43,8 @@ module.exports = {
                             results[0]['customer_id'],
                             {
                                 address: {
-                                    line1: data.u_line1_add,
-                                    line2: data.u_line2_add
+                                    line1:data.u_line1_add,
+                                    line2:data.u_line2_add
                                 }
                             }
                         )
@@ -54,7 +55,7 @@ module.exports = {
                         )
                         .catch(
                             error => {
-                                console.log(error);
+                               console.log(error);
                             }
                         )
                     }
@@ -67,8 +68,8 @@ module.exports = {
                             data.u_city,
                             data.u_country,
                             data.u_uid,
-                            data.u_line1_add ,
-                            data.u_line2_add 
+                            data.u_line1_add,
+                            data.u_line2_add  
                         ],
                         (error,results,fields) => {
                             if(error)
