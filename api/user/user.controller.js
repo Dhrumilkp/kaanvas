@@ -44,6 +44,11 @@ module.exports = {
         const id = req.params.id;
         body.u_uid = id;
         Updateuserprofile(body,(err,results) => {
+            return res.status(200).json({
+                status  :   "success",
+                message :   "Users data",
+                data   :    body
+            });
             if(err)
             {
                 return res.status(500).json({
