@@ -232,11 +232,6 @@ module.exports = {
     UpdateStripeCustomer:(req,res) => {
         var customer_id = req.params.id;
         var CountryCodeIso = req.params.CountryCode;
-        return res.status(200).json({
-            status  :   "success",
-            customer_id :   customer_id,
-            CountryCodeIso: CountryCodeIso
-        });
         stripe.customers.update(
             customer_id,
             {
