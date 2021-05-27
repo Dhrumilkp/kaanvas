@@ -48,7 +48,7 @@ module.exports = {
         if(body.new_add == "true")
         {
             stripe.customers.update(
-                customer_id,
+                body.customer_id,
                 {
                     address: {
                         line1:body.u_line1_add,
