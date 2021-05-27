@@ -13,7 +13,6 @@ const {
     Getreviewdata,
     PostMessageToUser
 } = require("./user.service");
-const stripe = require('stripe')(process.env.STRIP_SK);
 module.exports = {
     GetUser:(req,res) => {
         const body = req.body;
@@ -62,7 +61,7 @@ module.exports = {
             return res.status(200).json({
                 status  :   "success",
                 message :   "Users data updated",
-                data   :    results
+                data   :    body
             });
         });
     },
