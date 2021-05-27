@@ -12,7 +12,7 @@ module.exports = {
             amount: body.amount,
             currency: 'USD',
             payment_method: body.paymentMethodId,
-            customerId: body.customerId
+            customer: body.customerId
         })
         .then(
             paymentIntentObj => {
