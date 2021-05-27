@@ -13,8 +13,7 @@ module.exports = {
             currency: 'USD',
             payment_method: body.paymentMethodId,
             customer: body.customerId,
-            description: 'Buying software service subscription for pro access on onelink.cards platform',
-            return_url: "https://onelink.cards/activate/pro"
+            description: 'Buying software service subscription for pro access on onelink.cards platform'
         })
         .then(
             paymentIntentObj => {
