@@ -121,8 +121,8 @@ module.exports = {
             [
                 data.city,
                 data.country,
-                data.postal_code,
-                data.country,
+                data.zipcode,
+                data.countryiso,
                 data.customer_id
             ],
             (error,results,fields) => {
