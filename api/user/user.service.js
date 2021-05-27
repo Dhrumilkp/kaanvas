@@ -5,7 +5,7 @@ const mailjet = require ('node-mailjet').connect(process.env.MJ_APIKEY_PUBLIC, p
 module.exports = {
     getUserByid : (id,callback) => {
         pool.query(
-            `SELECT u_line2_add,u_line1_add,u_postal_code,u_country_iso,u_firstname,u_lastname,u_email,u_username,onboarding_status,mailverify_status,u_join,u_profilepic_webp,u_profilepic_jpeg,u_coverpic_webp,u_coverpic_jpeg,u_verified,u_country,u_city,is_profile_complete,u_level,is_pro,customer_id,u_website_url,u_dribbble_url,u_github_url,u_default_profile_pic,u_profile_bg_default,u_profile_bg,u_profile_bg_settings,u_profileroot_code FROM ka_user WHERE id = ?`,
+            `SELECT u_line2_add,u_line1_add,u_firstname,u_lastname,u_email,u_username,onboarding_status,mailverify_status,u_join,u_profilepic_webp,u_profilepic_jpeg,u_coverpic_webp,u_coverpic_jpeg,u_verified,u_country,u_city,is_profile_complete,u_level,is_pro,customer_id,u_website_url,u_dribbble_url,u_github_url,u_default_profile_pic,u_profile_bg_default,u_profile_bg,u_profile_bg_settings,u_profileroot_code FROM ka_user WHERE id = ?`,
             [
                 id
             ],
@@ -36,106 +36,41 @@ module.exports = {
                 }
                 if(!results[0])
                 {
-                    callback(null,results[0]['u_line1_add']);
-                    if(results[0]['u_line1_add'] == "0")
-                    {
-                        // Stripe update customer data
-                        stripe.customers.update(
-                            results[0]['customer_id'],
+                    pool.query (
+                        `UPDATE ka_user SET u_firstname = ?, u_lastname = ?, u_username = ?, u_city = ?, u_country = ? WHERE id = ?`,
+                        [
+                            data.u_firstname,
+                            data.u_lastname,
+                            data.u_username,
+                            data.u_city,
+                            data.u_country,
+                            data.u_uid  
+                        ],
+                        (error,results,fields) => {
+                            if(error)
                             {
-                                address: {
-                                    line1:data.u_line1_add,
-                                    line2:data.u_line2_add
-                                }
+                                callback(error);
                             }
-                        )
-                        .then(
-                            result => {
-                                pool.query (
-                                    `UPDATE ka_user SET u_firstname = ?, u_lastname = ?, u_username = ?, u_city = ?, u_country = ?,u_line1_add = ?,u_line2_add = ? WHERE id = ?`,
+                            if(results)
+                            {
+                                pool.query(
+                                    `UPDATE ka_user SET onboarding_status = ? WHERE id = ?`,
                                     [
-                                        data.u_firstname,
-                                        data.u_lastname,
-                                        data.u_username,
-                                        data.u_city,
-                                        data.u_country,
-                                        data.u_uid,
-                                        data.u_line1_add,
-                                        data.u_line2_add  
+                                        1,
+                                        data.u_uid
                                     ],
                                     (error,results,fields) => {
+                                        console.log(results[0]);
                                         if(error)
                                         {
-                                            callback(error);
+                                            console.log(error);
                                         }
-                                        if(results)
-                                        {
-                                            pool.query(
-                                                `UPDATE ka_user SET onboarding_status = ? WHERE id = ?`,
-                                                [
-                                                    1,
-                                                    data.u_uid
-                                                ],
-                                                (error,results,fields) => {
-                                                    console.log(results[0]);
-                                                    if(error)
-                                                    {
-                                                        console.log(error);
-                                                    }
-                                                }
-                                            )
-                                        }
-                                        return callback(null,results);
                                     }
                                 )
                             }
-                        )
-                        .catch(
-                            error => {
-                               console.log(error);
-                            }
-                        )
-                    }
-                    else
-                    {
-                        pool.query (
-                            `UPDATE ka_user SET u_firstname = ?, u_lastname = ?, u_username = ?, u_city = ?, u_country = ?,u_line1_add = ?,u_line2_add = ? WHERE id = ?`,
-                            [
-                                data.u_firstname,
-                                data.u_lastname,
-                                data.u_username,
-                                data.u_city,
-                                data.u_country,
-                                data.u_uid,
-                                data.u_line1_add,
-                                data.u_line2_add  
-                            ],
-                            (error,results,fields) => {
-                                if(error)
-                                {
-                                    callback(error);
-                                }
-                                if(results)
-                                {
-                                    pool.query(
-                                        `UPDATE ka_user SET onboarding_status = ? WHERE id = ?`,
-                                        [
-                                            1,
-                                            data.u_uid
-                                        ],
-                                        (error,results,fields) => {
-                                            console.log(results[0]);
-                                            if(error)
-                                            {
-                                                console.log(error);
-                                            }
-                                        }
-                                    )
-                                }
-                                return callback(null,results);
-                            }
-                        )
-                    } 
+                            return callback(null,results);
+                        }
+                    )
                 }
             }
         ) 
