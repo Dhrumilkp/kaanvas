@@ -44,26 +44,27 @@ module.exports = {
         const id = req.params.id;
         body.u_uid = id;
         Updateuserprofile(body,(err,results) => {
-            if(err)
-            {
-                return res.status(500).json({
-                    status: "err",
-                    erorreport : err,
-                    message: "Internal server err, please reach out to our support team on support@onelink.cards"
-                });
-            }
-            if(results == false)
-            {
-                return res.status(500).json({
-                    status: "err",
-                    message: "Username already taken!"
-                });
-            }
             return res.status(200).json({
                 status  :   "success",
                 message :   "Users data updated",
                 data   :    results
             });
+            // if(err)
+            // {
+            //     return res.status(500).json({
+            //         status: "err",
+            //         erorreport : err,
+            //         message: "Internal server err, please reach out to our support team on support@onelink.cards"
+            //     });
+            // }
+            // // if(results == false)
+            // // {
+            // //     return res.status(500).json({
+            // //         status: "err",
+            // //         message: "Username already taken!"
+            // //     });
+            // // }
+           
         });
     },
     UpdateUserProfilePic:(req,res) => {
