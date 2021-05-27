@@ -1,7 +1,8 @@
 const {
     CreateSub,
     GetSubdetails,
-    CancelPro
+    CancelPro,
+    CreatePaymentIntent
 } = require('./sub.controller');
 const router = require("express").Router();
 const rateLimit = require("express-rate-limit");
@@ -12,6 +13,7 @@ const FetchInvoice = rateLimit({
     message: "Too many request, please dont abuse try after sometime!"
 });
 router.post("/create_new/:id",checkToken,CreateSub);
+router.post("/payment_intent/:id",checkToken,CreatePaymentIntent);
 router.get("/subscription-details/:customerid",checkToken,FetchInvoice,GetSubdetails);
 router.post("/cancel-pro/:username",checkToken,CancelPro)
 module.exports = router;

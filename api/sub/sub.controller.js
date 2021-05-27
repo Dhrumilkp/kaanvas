@@ -5,6 +5,34 @@ const {
 } = require('./sub.service');
 const stripe = require('stripe')(process.env.STRIP_SK);
 module.exports = {
+    CreatePaymentIntent:(req,res) => {
+        let body = req.body;
+        const u_uid = req.params.id;
+        stripe.paymentIntents.create({
+            amount: body.amount,
+            currency: 'USD',
+            payment_method: body.paymentMethodId,
+            customerId: body.customerId
+        })
+        .then(
+            paymentIntentObj => {
+                return res.status(200).json({
+                    status: "success",
+                    IntentObj: paymentIntentObj,
+                    display_message:"Payment intent created, await confirmation!!"
+                });
+            }
+        )
+        .catch(
+            error => {
+                return res.status(500).json({
+                    status: "err",
+                    message: error,
+                    display_message:"We cannot create your subscription, please reach out to support on support@onelink.cards"
+                });
+            }
+        )
+    },
     CreateSub:(req,res) => {
         let body = req.body;
         const u_uid = req.params.id;
