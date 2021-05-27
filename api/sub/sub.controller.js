@@ -12,7 +12,8 @@ module.exports = {
             amount: body.amount,
             currency: 'USD',
             payment_method: body.paymentMethodId,
-            customer: body.customerId
+            customer: body.customerId,
+            description: 'Buying software service subscription for pro access on onelink.cards platform'
         })
         .then(
             paymentIntentObj => {
