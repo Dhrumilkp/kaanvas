@@ -1,7 +1,8 @@
 const {
     createsubscription,
     GetSubscriptionId,
-    DemoteUserToFree
+    DemoteUserToFree,
+    UpdateStripeCustomerInDatabase
 } = require('./sub.service');
 const stripe = require('stripe')(process.env.STRIP_SK);
 module.exports = {
@@ -232,6 +233,7 @@ module.exports = {
     UpdateStripeCustomer:(req,res) => {
         var customer_id = req.params.id;
         const body = req.body;
+        body.customer_id = customer_id;
         stripe.customers.update(
             customer_id,
             {
@@ -245,10 +247,27 @@ module.exports = {
         )
         .then(
             result => {
-                return res.status(200).json({
-                    status  :   "success",
-                    message :   result,
-                    display_message: "Customer Updated"
+                UpdateStripeCustomerInDatabase(body,(err,results) => {
+                    if(err)
+                    {
+                        return res.status(500).json({
+                            status: "err",
+                            message: err,
+                            display_message : "Internal server error, reach out to support on support@onelink.cards"
+                        }); 
+                    }
+                    if(!result[0])
+                    {
+                        return res.status(404).json({
+                            status: "err",
+                            display_message : "Cannot find any user with stated customer id, reach out to support"
+                        }); 
+                    }
+                    return res.status(200).json({
+                        status  :   "success",
+                        message :   result,
+                        display_message: "Customer Updated"
+                    });
                 });
             }
         )
@@ -256,7 +275,8 @@ module.exports = {
             error => {
                 return res.status(500).json({
                     status: "err",
-                    message: error
+                    message: error,
+                    display_message : "Internal server error,please reach out to support team on support@onelink.cards"
                 });
             }
         )

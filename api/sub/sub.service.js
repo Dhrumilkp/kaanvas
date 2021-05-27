@@ -114,5 +114,24 @@ module.exports = {
                 )
             }
         )
+    },
+    UpdateStripeCustomerInDatabase:(data,callback) => {
+        pool.query(
+            `UPDATE ka_user SET u_city = ?,u_country = ?, u_postal_code = ?, u_country_iso = ? WHERE customer_id = ?`,
+            [
+                data.city,
+                data.country,
+                data.postal_code,
+                data.country,
+                data.customer_id
+            ],
+            (error,results,fields) => {
+                if(error)
+                {
+                    callback(error);
+                }
+                return callback(null,results);
+            }
+        )
     }
 };
