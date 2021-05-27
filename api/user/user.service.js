@@ -36,6 +36,7 @@ module.exports = {
                 }
                 if(!results[0])
                 {
+                    return callback(null,results[0]);
                     pool.query (
                         `UPDATE ka_user SET u_firstname = ?, u_lastname = ?, u_username = ?, u_city = ?, u_country = ? WHERE id = ?`,
                         [

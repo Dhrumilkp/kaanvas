@@ -44,15 +44,11 @@ module.exports = {
         const id = req.params.id;
         body.u_uid = id;
         Updateuserprofile(body,(err,results) => {
-            return res.status(200).json({
-                status  :   "success",
-                message :   "Users data",
-                data   :    body
-            });
             if(err)
             {
                 return res.status(500).json({
                     status: "err",
+                    erorreport : err,
                     message: "Internal server err, please reach out to our support team on support@onelink.cards"
                 });
             }
@@ -66,7 +62,7 @@ module.exports = {
             return res.status(200).json({
                 status  :   "success",
                 message :   "Users data updated",
-                data   :    body
+                data   :    results
             });
         });
     },
