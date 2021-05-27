@@ -13,6 +13,7 @@ const {
     Getreviewdata,
     PostMessageToUser
 } = require("./user.service");
+const stripe = require('stripe')(process.env.STRIP_SK);
 module.exports = {
     GetUser:(req,res) => {
         const body = req.body;
@@ -336,5 +337,34 @@ module.exports = {
             }
 
         });
+    },
+    UpdateStripeCustomer:(req,res) => {
+        var customer_id = req.param.id;
+        var CountryCodeIso = req.params.CountryCode;
+        stripe.customers.update(
+            customer_id,
+            {
+                address: {
+                    country: CountryCodeIso
+                }
+            }
+        )
+        .then(
+            result => {
+                return res.status(200).json({
+                    status  :   "success",
+                    message :   result,
+                    display_message: "Customer Updated"
+                });
+            }
+        )
+        .catch(
+            error => {
+                return res.status(500).json({
+                    status: "err",
+                    message: error
+                });
+            }
+        )
     }
 }

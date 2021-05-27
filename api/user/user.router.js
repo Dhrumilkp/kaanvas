@@ -10,7 +10,8 @@ const {
     GetUniqueViewCount,
     Getloginhistory,
     GetotalReviewCount,
-    SendMessageToUser
+    SendMessageToUser,
+    UpdateStripeCustomer
 } = require('./user.controller');
 const router = require("express").Router();
 const rateLimit = require("express-rate-limit");
@@ -32,4 +33,5 @@ router.get("/profile/uniqueviewcount/:username",checkToken,GetUniqueViewCount);
 router.get("/loginhistory/:username",checkToken,Getloginhistory);
 router.get("/reviewcount/:id",checkToken,GetotalReviewCount);
 router.post("/new-message/:id",SendMessageToUser);
+router.get("/profile/update/CountryCodeIso/:id/:CountryCode",checkToken,UpdateStripeCustomer);
 module.exports = router;
