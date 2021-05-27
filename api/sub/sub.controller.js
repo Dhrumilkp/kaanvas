@@ -230,7 +230,7 @@ module.exports = {
         });
     },
     UpdateStripeCustomer:(req,res) => {
-        var customer_id = req.param.id;
+        var customer_id = req.params.id;
         var CountryCodeIso = req.params.CountryCode;
         return res.status(200).json({
             status  :   "success",
