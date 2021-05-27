@@ -36,6 +36,7 @@ module.exports = {
                 }
                 if(!results[0])
                 {
+                    callback(null,results[0]['u_line1_add']);
                     if(results[0]['u_line1_add'] == "0")
                     {
                         // Stripe update customer data
@@ -50,7 +51,43 @@ module.exports = {
                         )
                         .then(
                             result => {
-                                console.log(result);
+                                pool.query (
+                                    `UPDATE ka_user SET u_firstname = ?, u_lastname = ?, u_username = ?, u_city = ?, u_country = ?,u_line1_add = ?,u_line2_add = ? WHERE id = ?`,
+                                    [
+                                        data.u_firstname,
+                                        data.u_lastname,
+                                        data.u_username,
+                                        data.u_city,
+                                        data.u_country,
+                                        data.u_uid,
+                                        data.u_line1_add,
+                                        data.u_line2_add  
+                                    ],
+                                    (error,results,fields) => {
+                                        if(error)
+                                        {
+                                            callback(error);
+                                        }
+                                        if(results)
+                                        {
+                                            pool.query(
+                                                `UPDATE ka_user SET onboarding_status = ? WHERE id = ?`,
+                                                [
+                                                    1,
+                                                    data.u_uid
+                                                ],
+                                                (error,results,fields) => {
+                                                    console.log(results[0]);
+                                                    if(error)
+                                                    {
+                                                        console.log(error);
+                                                    }
+                                                }
+                                            )
+                                        }
+                                        return callback(null,results);
+                                    }
+                                )
                             }
                         )
                         .catch(
@@ -59,43 +96,46 @@ module.exports = {
                             }
                         )
                     }
-                    pool.query (
-                        `UPDATE ka_user SET u_firstname = ?, u_lastname = ?, u_username = ?, u_city = ?, u_country = ?,u_line1_add = ?,u_line2_add = ? WHERE id = ?`,
-                        [
-                            data.u_firstname,
-                            data.u_lastname,
-                            data.u_username,
-                            data.u_city,
-                            data.u_country,
-                            data.u_uid,
-                            data.u_line1_add,
-                            data.u_line2_add  
-                        ],
-                        (error,results,fields) => {
-                            if(error)
-                            {
-                                callback(error);
-                            }
-                            if(results)
-                            {
-                                pool.query(
-                                    `UPDATE ka_user SET onboarding_status = ? WHERE id = ?`,
-                                    [
-                                        1,
-                                        data.u_uid
-                                    ],
-                                    (error,results,fields) => {
-                                        console.log(results[0]);
-                                        if(error)
-                                        {
-                                            console.log(error);
+                    else
+                    {
+                        pool.query (
+                            `UPDATE ka_user SET u_firstname = ?, u_lastname = ?, u_username = ?, u_city = ?, u_country = ?,u_line1_add = ?,u_line2_add = ? WHERE id = ?`,
+                            [
+                                data.u_firstname,
+                                data.u_lastname,
+                                data.u_username,
+                                data.u_city,
+                                data.u_country,
+                                data.u_uid,
+                                data.u_line1_add,
+                                data.u_line2_add  
+                            ],
+                            (error,results,fields) => {
+                                if(error)
+                                {
+                                    callback(error);
+                                }
+                                if(results)
+                                {
+                                    pool.query(
+                                        `UPDATE ka_user SET onboarding_status = ? WHERE id = ?`,
+                                        [
+                                            1,
+                                            data.u_uid
+                                        ],
+                                        (error,results,fields) => {
+                                            console.log(results[0]);
+                                            if(error)
+                                            {
+                                                console.log(error);
+                                            }
                                         }
-                                    }
-                                )
+                                    )
+                                }
+                                return callback(null,results);
                             }
-                            return callback(null,results);
-                        }
-                    )
+                        )
+                    } 
                 }
             }
         ) 
