@@ -256,13 +256,6 @@ module.exports = {
                             display_message : "Internal server error, reach out to support on support@onelink.cards"
                         }); 
                     }
-                    if(!result[0])
-                    {
-                        return res.status(404).json({
-                            status: "err",
-                            display_message : "Cannot find any user with stated customer id, reach out to support"
-                        }); 
-                    }
                     return res.status(200).json({
                         status  :   "success",
                         message :   result,
