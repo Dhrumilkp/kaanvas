@@ -13,6 +13,7 @@ const {
     Getreviewdata,
     PostMessageToUser
 } = require("./user.service");
+const stripe = require('stripe')(process.env.STRIP_SK);
 module.exports = {
     GetUser:(req,res) => {
         const body = req.body;
@@ -43,28 +44,50 @@ module.exports = {
         const body = req.body;
         const id = req.params.id;
         body.u_uid = id;
+        // Stripe update users address 
+        if(body.new_add == "true")
+        {
+            stripe.customers.update(
+                customer_id,
+                {
+                    address: {
+                        line1:body.u_line1_add,
+                        line2:body.u_line2_add
+                    }
+                }
+            )
+            .then(
+                result => {
+                   console.log(result);
+                }
+            )
+            .catch(
+                error => {
+                    console.log(error);
+                }
+            )
+        }
         Updateuserprofile(body,(err,results) => {
+            if(err)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    erorreport : err,
+                    message: "Internal server err, please reach out to our support team on support@onelink.cards"
+                });
+            }
+            if(results == false)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: "Username already taken!"
+                });
+            }
             return res.status(200).json({
                 status  :   "success",
                 message :   "Users data updated",
                 data   :    results
             });
-            // if(err)
-            // {
-            //     return res.status(500).json({
-            //         status: "err",
-            //         erorreport : err,
-            //         message: "Internal server err, please reach out to our support team on support@onelink.cards"
-            //     });
-            // }
-            // // if(results == false)
-            // // {
-            // //     return res.status(500).json({
-            // //         status: "err",
-            // //         message: "Username already taken!"
-            // //     });
-            // // }
-           
         });
     },
     UpdateUserProfilePic:(req,res) => {

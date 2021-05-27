@@ -1,5 +1,4 @@
 const pool = require("../../config/database");
-const stripe = require('stripe')(process.env.STRIP_SK);
 const mailjet = require ('node-mailjet').connect(process.env.MJ_APIKEY_PUBLIC, process.env.MJ_APIKEY_PRIVATE);
 
 module.exports = {
@@ -36,16 +35,17 @@ module.exports = {
                 }
                 if(!results[0])
                 {
-                    return callback(null,results);
                     pool.query (
-                        `UPDATE ka_user SET u_firstname = ?, u_lastname = ?, u_username = ?, u_city = ?, u_country = ? WHERE id = ?`,
+                        `UPDATE ka_user SET u_firstname = ?, u_lastname = ?, u_username = ?, u_city = ?, u_country = ?, u_line1_add = ?, u_line2_add = ? WHERE id = ?`,
                         [
                             data.u_firstname,
                             data.u_lastname,
                             data.u_username,
                             data.u_city,
                             data.u_country,
-                            data.u_uid  
+                            data.u_uid,
+                            data.u_line1_add,
+                            data.u_line2_add  
                         ],
                         (error,results,fields) => {
                             if(error)
