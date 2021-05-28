@@ -129,6 +129,25 @@ module.exports = {
             }
         )
     },
+    CreateNewSubscription:(req,res) => {
+        const body = req.body;
+        var u_uid = req.params.id;
+        body.u_uid = u_uid;
+        UpdateSubscriptionUser(body,(err,results) => {
+            if(err)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    error_code : err,
+                    message: "Internal server error, please reach out to customer support on support@onelink.cards"
+                });
+            }
+            return res.status(200).json({
+                status: "success",
+                message: "Subscription Created"
+            });
+        });
+    },
     GetSubdetails:(req,res) => {
         const customer_id = req.params.customerid;
         GetSubscriptionId(customer_id,(err,results) => {

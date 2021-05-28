@@ -2,7 +2,7 @@ const pool = require('../../config/database');
 const stripe = require('stripe')(process.env.STRIP_SK);
 
 module.exports = {
-    createsubscription:(data,callback) => {
+    UpdateSubscriptionUser:(body,callback) => {
         // Update subscription if past was there
         pool.query(
             `SELECT * FROM ka_usersubscription_info WHERE u_uid = ?`,
@@ -18,9 +18,15 @@ module.exports = {
                     
                     // Update
                     pool.query(
-                        `UPDATE ka_usersubscription_info SET sub_id = ? WHERE u_uid = ?`,
+                        `UPDATE ka_usersubscription_info SET subscription_id = ?,price_id = ?,created_on = ?,pay_id = ?,amount = ?,currency = ?, customer_id = ? WHERE u_uid = ?`,
                         [
-                            data.id,
+                            data.subscription_id,
+                            data.priceId,
+                            data.created_on,
+                            data.pay_id,
+                            data.amount,
+                            data.currency,
+                            data.customerId,
                             data.u_uid
                         ],
                         (error,results,fields) => {
@@ -35,13 +41,17 @@ module.exports = {
                 if(!results[0]){
                     // Insert
                     pool.query(
-                        `INSERT INTO ka_usersubscription_info (u_uid,sub_id,customer_id,price_id)
-                        VALUES (?,?,?,?)`,
+                        `INSERT INTO ka_usersubscription_info (customer_id,subscription_id,u_uid,price_id,created_on,pay_id,amount,currency)
+                        VALUES (?,?,?,?,?,?,?,?)`,
                         [
+                            data.customerId,
+                            data.subscription_id,
                             data.u_uid,
-                            data.id,
-                            data.customer,
-                            data.price_id_pass
+                            data.priceId,
+                            data.created_on,
+                            data.pay_id,
+                            data.amount,
+                            data.currency
                         ],
                         (error,results,fields) => {
                             if(error)
@@ -67,7 +77,6 @@ module.exports = {
                 }
             }
         )
-      
     },
     GetSubscriptionId:(customer_id,callback) => {
         pool.query (

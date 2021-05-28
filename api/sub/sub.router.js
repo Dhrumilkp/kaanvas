@@ -3,7 +3,8 @@ const {
     GetSubdetails,
     CancelPro,
     CreatePaymentIntent,
-    UpdateStripeCustomer
+    UpdateStripeCustomer,
+    CreateNewSubscription
 } = require('./sub.controller');
 const router = require("express").Router();
 const rateLimit = require("express-rate-limit");
@@ -17,5 +18,6 @@ router.post("/profile/update/stripecustomer/:id",checkToken,UpdateStripeCustomer
 router.post("/create_new/:id",checkToken,CreateSub);
 router.post("/payment_intent/:id",checkToken,CreatePaymentIntent);
 router.get("/subscription-details/:customerid",checkToken,FetchInvoice,GetSubdetails);
-router.post("/cancel-pro/:username",checkToken,CancelPro)
+router.post("/cancel-pro/:username",checkToken,CancelPro);
+router.post("/new/:id",checkToken,CreateNewSubscription);
 module.exports = router;
