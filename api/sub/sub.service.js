@@ -7,7 +7,7 @@ module.exports = {
         pool.query(
             `SELECT * FROM ka_usersubscription_info WHERE u_uid = ?`,
             [
-                data.u_uid
+                body.u_uid
             ],
             (error,results,fields) => {
                 if(error)
@@ -20,14 +20,14 @@ module.exports = {
                     pool.query(
                         `UPDATE ka_usersubscription_info SET subscription_id = ?,price_id = ?,created_on = ?,pay_id = ?,amount = ?,currency = ?, customer_id = ? WHERE u_uid = ?`,
                         [
-                            data.subscription_id,
-                            data.priceId,
-                            data.created_on,
-                            data.pay_id,
-                            data.amount,
-                            data.currency,
-                            data.customerId,
-                            data.u_uid
+                            body.subscription_id,
+                            body.priceId,
+                            body.created_on,
+                            body.pay_id,
+                            body.amount,
+                            body.currency,
+                            body.customerId,
+                            body.u_uid
                         ],
                         (error,results,fields) => {
                             if(error)
@@ -44,14 +44,14 @@ module.exports = {
                         `INSERT INTO ka_usersubscription_info (customer_id,subscription_id,u_uid,price_id,created_on,pay_id,amount,currency)
                         VALUES (?,?,?,?,?,?,?,?)`,
                         [
-                            data.customerId,
-                            data.subscription_id,
-                            data.u_uid,
-                            data.priceId,
-                            data.created_on,
-                            data.pay_id,
-                            data.amount,
-                            data.currency
+                            body.customerId,
+                            body.subscription_id,
+                            body.u_uid,
+                            body.priceId,
+                            body.created_on,
+                            body.pay_id,
+                            body.amount,
+                            body.currency
                         ],
                         (error,results,fields) => {
                             if(error)
