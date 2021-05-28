@@ -166,7 +166,7 @@ module.exports = {
                     message: "Internal server error, please reach out to customer support on support@onelink.cards"
                 });
             }
-            const subscription_id = results[0]['sub_id'];
+            const subscription_id = results[0]['subscription_id'];
             stripe.subscriptions.retrieve(
                 subscription_id
             )
@@ -240,7 +240,7 @@ module.exports = {
                     message: "Internal server error, please reach out to customer support on support@onelink.cards"
                 });
             }
-            const subscription_id = results[0]['sub_id'];
+            const subscription_id = results[0]['subscription_id'];
             stripe.subscriptions.del(
                 subscription_id
             )
