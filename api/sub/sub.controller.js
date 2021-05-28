@@ -11,7 +11,7 @@ module.exports = {
         const u_uid = req.params.id;
         stripe.paymentIntents.create({
             amount: body.amount,
-            currency: 'USD',
+            currency: body.currency,
             payment_method: body.paymentMethodId,
             customer: body.customerId,
             description: 'Buying software service subscription for pro access on onelink.cards platform'
