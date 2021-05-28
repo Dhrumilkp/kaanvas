@@ -45,36 +45,33 @@ module.exports = {
         const id = req.params.id;
         body.u_uid = id;
         // Stripe update users address 
-        if(body.new_add == "true")
-        {
-            stripe.customers.update(
-                body.customer_id,
-                {
-                    address: {
-                        line1: body.u_line1_add,
-                        line2: body.u_line2_add,
-                        postal_code: body.u_postal_code,
-                        city: body.u_city,
-                        state: body.u_state,
-                        country: body.u_country_iso,                    
-                    }
+        stripe.customers.update(
+            body.customer_id,
+            {
+                address: {
+                    line1: body.u_line1_add,
+                    line2: body.u_line2_add,
+                    postal_code: body.u_postal_code,
+                    city: body.u_city,
+                    state: body.u_state,
+                    country: body.u_country_iso,                    
                 }
-            )
-            .then(
-                result => {
-                   console.log(result);
-                }
-            )
-            .catch(
-                error => {
-                    return res.status(500).json({
-                        status: "err",
-                        erorreport : error,
-                        message: "Internal server err, please reach out to our support team on support@onelink.cards"
-                    });
-                }
-            )
-        }
+            }
+        )
+        .then(
+            result => {
+               console.log(result);
+            }
+        )
+        .catch(
+            error => {
+                return res.status(500).json({
+                    status: "err",
+                    erorreport : error,
+                    message: "Internal server err, please reach out to our support team on support@onelink.cards"
+                });
+            }
+        )
         Updateuserprofile(body,(err,results) => {
             if(err)
             {
