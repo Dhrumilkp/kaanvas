@@ -91,7 +91,7 @@ module.exports = {
             return res.status(200).json({
                 status  :   "success",
                 message :   "Users data updated",
-                data   :    results
+                data   :    body
             });
         });
     },
