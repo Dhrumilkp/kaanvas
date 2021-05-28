@@ -2,7 +2,8 @@ const {
     createsubscription,
     GetSubscriptionId,
     DemoteUserToFree,
-    UpdateStripeCustomerInDatabase
+    UpdateStripeCustomerInDatabase,
+    UpdateSubscriptionUser
 } = require('./sub.service');
 const stripe = require('stripe')(process.env.STRIP_SK);
 module.exports = {
