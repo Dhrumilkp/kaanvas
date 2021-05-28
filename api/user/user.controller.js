@@ -44,6 +44,11 @@ module.exports = {
         const body = req.body;
         const id = req.params.id;
         body.u_uid = id;
+        return res.status(200).json({
+            status  :   "success",
+            message :   "Users data updated",
+            data   :    body
+        });
         // Stripe update users address 
         if(body.new_add == "true")
         {
