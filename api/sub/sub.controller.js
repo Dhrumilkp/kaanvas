@@ -38,102 +38,84 @@ module.exports = {
     CreateSub:(req,res) => {
         let body = req.body;
         const u_uid = req.params.id;
-        stripe.paymentMethods.attach(
-            body.paymentMethodId,
-            {customer: body.customerId}
+        stripe.customers.update(
+            body.customerId,
+            {invoice_settings: {default_payment_method: body.paymentMethodId}}
         )
         .then(
-            payment_intent_object => {
-                // Update customer payment as default
-                stripe.customers.update(
-                    body.customerId,
-                    {invoice_settings: {default_payment_method: body.paymentMethodId}}
-                )
-                .then(
-                    // Check if coupon is there or not 
-                    response_data => {
-                        if(body.coupon_code !== "0")
-                        {
-                            // With coupon
-                            stripe.subscriptions.create({
-                                customer: body.customerId,
-                                items: [
-                                    {price: body.priceId},
-                                ],
-                                expand : ['latest_invoice.payment_intent'],
-                                coupon : body.coupon_code
-                            })
-                            .then(
-                                subscription_object =>{
-                                    subscription_object.u_uid = u_uid;
-                                    subscription_object.price_id_pass = body.priceId;
-                                    createsubscription(subscription_object,(err,results) => {
-                                        if(err)
-                                        {
-                                            return res.status(500).json({
-                                                status: "err",
-                                                message: "Internal server err, please reach out to our support team on support@onelink.cards"
-                                            });
-                                        }
-                                        return res.status(200).json({
-                                            status: "success",
-                                            message: subscription_object
-                                        });
+            // Check if coupon is there or not 
+            response_data => {
+                if(body.coupon_code !== "0")
+                {
+                    // With coupon
+                    stripe.subscriptions.create({
+                        customer: body.customerId,
+                        items: [
+                            {price: body.priceId},
+                        ],
+                        expand : ['latest_invoice.payment_intent'],
+                        coupon : body.coupon_code
+                    })
+                    .then(
+                        subscription_object =>{
+                            subscription_object.u_uid = u_uid;
+                            subscription_object.price_id_pass = body.priceId;
+                            createsubscription(subscription_object,(err,results) => {
+                                if(err)
+                                {
+                                    return res.status(500).json({
+                                        status: "err",
+                                        message: "Internal server err, please reach out to our support team on support@onelink.cards"
                                     });
                                 }
-                            )
-                            .catch(
-                                error => {
-                                    console.log(error);
-                                }
-                            )
+                                return res.status(200).json({
+                                    status: "success",
+                                    message: subscription_object
+                                });
+                            });
                         }
-                        else
-                        {
-                            // Without Coupon
-                            stripe.subscriptions.create({
-                                customer: body.customerId,
-                                items: [
-                                    {price: body.priceId},
-                                ],
-                                expand : ['latest_invoice.payment_intent']
-                            })
-                            .then(
-                                subscription_object =>{
-                                    subscription_object.u_uid = u_uid;
-                                    subscription_object.price_id_pass = body.priceId;
-                                    createsubscription(subscription_object,(err,results) => {
-                                        if(err)
-                                        {
-                                            return res.status(500).json({
-                                                status: "err",
-                                                message: "Internal server err, please reach out to our support team on support@onelink.cards"
-                                            });
-                                        }
-                                        return res.status(200).json({
-                                            status: "success",
-                                            message: subscription_object
-                                        });
+                    )
+                    .catch(
+                        error => {
+                            console.log(error);
+                        }
+                    )
+                }
+                else
+                {
+                    // Without Coupon
+                    stripe.subscriptions.create({
+                        customer: body.customerId,
+                        items: [
+                            {price: body.priceId},
+                        ],
+                        expand : ['latest_invoice.payment_intent']
+                    })
+                    .then(
+                        subscription_object =>{
+                            subscription_object.u_uid = u_uid;
+                            subscription_object.price_id_pass = body.priceId;
+                            createsubscription(subscription_object,(err,results) => {
+                                if(err)
+                                {
+                                    return res.status(500).json({
+                                        status: "err",
+                                        message: "Internal server err, please reach out to our support team on support@onelink.cards"
                                     });
                                 }
-                            )
-                            .catch(
-                                error =>{
-                                    console.log(error);
-                                }
-                            )
+                                return res.status(200).json({
+                                    status: "success",
+                                    message: subscription_object
+                                });
+                            });
                         }
-                    }
-                )
-                .catch(
-                    error => {
-                        return res.status(500).json({
-                            status: "err",
-                            error_obj : error,
-                            message: "Internal server err, please reach out to our support team on support@onelink.cards"
-                        });
-                    }
-                )
+                    )
+                    .catch(
+                        error =>{
+                            console.log(error);
+                        }
+                    )
+                }
             }
         )
         .catch(
