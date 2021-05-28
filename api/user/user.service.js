@@ -36,13 +36,16 @@ module.exports = {
                 if(!results[0])
                 {
                     pool.query (
-                        `UPDATE ka_user SET u_firstname = ?, u_lastname = ?, u_username = ?, u_city = ?, u_country = ?, u_line1_add = ?, u_line2_add = ? WHERE id = ?`,
+                        `UPDATE ka_user SET u_firstname = ?, u_lastname = ?, u_username = ?,u_state = ?, u_city = ?, u_country = ?, u_country_iso = ?,u_postal_code = ?,u_line1_add = ?, u_line2_add = ? WHERE id = ?`,
                         [
                             data.u_firstname,
                             data.u_lastname,
                             data.u_username,
+                            data.u_state,
                             data.u_city,
                             data.u_country,
+                            data.u_country_iso,
+                            data.u_postal_code,
                             data.u_line1_add,
                             data.u_line2_add,  
                             data.u_uid
