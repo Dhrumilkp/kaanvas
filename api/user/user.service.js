@@ -43,9 +43,9 @@ module.exports = {
                             data.u_username,
                             data.u_city,
                             data.u_country,
-                            data.u_uid,
                             data.u_line1_add,
-                            data.u_line2_add  
+                            data.u_line2_add,  
+                            data.u_uid
                         ],
                         (error,results,fields) => {
                             if(error)
