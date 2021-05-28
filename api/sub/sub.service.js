@@ -62,7 +62,7 @@ module.exports = {
                                 `UPDATE ka_user SET is_pro = ? WHERE id =?`,
                                 [
                                     1,
-                                    data.u_uid
+                                    body.u_uid
                                 ],
                                 (error,results,fields) => {
                                     if(error)
