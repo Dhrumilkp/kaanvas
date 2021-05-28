@@ -45,6 +45,10 @@ module.exports = {
         )
         .then(
             payment_intent_object => {
+                return res.status(200).json({
+                    status: "success",
+                    message: payment_intent_object
+                });
                 // Update customer payment as default
                 stripe.customers.update(
                     body.customerId,
