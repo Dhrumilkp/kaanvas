@@ -343,7 +343,7 @@ module.exports = {
     },
     SendMessageToUser:(req,res) => {
         const body = req.body;
-        var u_uid = req.param.id;
+        var u_uid = req.params.id;
         body.u_uid = u_uid;
         return res.status(200).json({
             status  :   "success",
