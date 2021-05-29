@@ -40,30 +40,37 @@ module.exports = {
                         }
                         // Send email with email template
                         const request = mailjet
-                        .post("send", {'version': 'v3.1'})
-                        .request({
-                            "Messages":[{
-                                "From": {
-                                    "Email": "security-noreply@onelink.cards",
-                                    "Name": "Onelink.cards"
-                                },
-                                "To": [{
-                                    "Email": resultsuser[0].u_email,
-                                    "Name": resultsuser[0].u_firstname +' '+ resultsuser[0].u_lastname
-                                }],
-                                "Subject": otp +" is your verification otp for onelink",
-                                "TextPart": "Hi "+resultsuser[0].u_firstname+" "+resultsuser[0].u_lastname+" "+otp+" is your verification otp use this in the next 6 minutes",
-                                "HTMLPart": "<h1 style='font-color:#343a40;'>Welcome To Onelink</h1><br>your verification otp is <b>"+otp+"</b>, use this otp to verify your email <br><br/> Cheers,<br>Onelink Team"
-                            }]
-                        })
-                        request
-                            .then((result) => {
-                                console.log(result.body)
-                                return callback(null,result.body);
+                            .post("send", {'version': 'v3.1'})
+                            .request({
+                                "Messages":[
+                                    {
+                                        "From": {
+                                            "Email": "security-noreply@onelink.cards",
+                                            "Name": "Email verification onelink.cards"
+                                        },
+                                        "To": [
+                                            {
+                                                "Email": resultsuser[0].u_email,
+                                                "Name": resultsuser[0].u_firstname +' '+ resultsuser[0].u_lastname
+                                            }
+                                        ],
+                                        "TemplateID": 2922706,
+                                        "TemplateLanguage": true,
+                                        "Subject": "[[data:firstname:"+resultsuser[0].u_firstname+"]] , your verification code is [[data:OTP:"+otp+"]]",
+                                        "Variables": {
+                                            "OTP": otp
+                                        }
+                                    }
+                                ]
                             })
-                            .catch((err) => {
-                                console.log(err.statusCode)
-                            })
+                            request
+                                .then((result) => {
+                                    console.log(result.body)
+                                    return callback(null,result.body);
+                                })
+                                .catch((err) => {
+                                    console.log(err.statusCode)
+                                })
                         
                     }
                 )
