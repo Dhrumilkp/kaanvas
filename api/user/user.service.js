@@ -289,7 +289,6 @@ module.exports = {
                 {
                     callback(error);
                 }
-
                 return callback(null,results);
             }
         )

@@ -353,13 +353,6 @@ module.exports = {
                     message: err
                 });
             }
-            if(!results[0])
-            {
-                return res.status(404).json({
-                    status  :   "err",
-                    message :   "No Such User"
-                });
-            }
             return res.status(200).json({
                 status  :   "success",
                 message :   results
