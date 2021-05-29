@@ -207,6 +207,37 @@ module.exports = {
                             })
                         request
                             .then((result) => {
+                                const request = mailjet
+                                .post("send", {'version': 'v3.1'})
+                                .request({
+                                    "Messages":[
+                                        {
+                                            "From": {
+                                                "Email": "security-noreply@onelink.cards",
+                                                "Name": "Onelink.cards"
+                                            },
+                                            "To": [
+                                                {
+                                                    "Email": data.u_email,
+                                                    "Name": data.u_firstname +' '+ data.u_lastname
+                                                }
+                                            ],
+                                            "TemplateID": 2922728,
+                                            "TemplateLanguage": true,
+                                            "Subject": "[[data:firstname:"+data.u_firstname+"]],Welcome to onelink.cards Family",
+                                            "Variables": {
+                                                "firstname": "data.u_firstname"
+                                            }
+                                        }
+                                    ]
+                                })
+                                request
+                                    .then((result) => {
+                                        console.log(result.body)
+                                    })
+                                    .catch((err) => {
+                                        console.log(err.statusCode)
+                                    })
                                 //create customer in stripe
                                 let stripe_customer_id;
                                 stripe.customers.create({
