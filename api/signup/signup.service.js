@@ -226,7 +226,7 @@ module.exports = {
                                             "TemplateLanguage": true,
                                             "Subject": "[[data:firstname:"+data.u_firstname+"]],Welcome to onelink.cards Family",
                                             "Variables": {
-                                                "firstname": "data.u_firstname"
+                                                "firstname": data.u_firstname
                                             }
                                         }
                                     ]
