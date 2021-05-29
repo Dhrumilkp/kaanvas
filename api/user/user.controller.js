@@ -345,6 +345,10 @@ module.exports = {
         const body = req.body;
         var u_uid = req.param.id;
         body.u_uid = u_uid;
+        return res.status(200).json({
+            status  :   "success",
+            message :   body
+        });
         PostMessageToUser(body,(err,results) => {
             if(err)
             {
