@@ -184,51 +184,58 @@ module.exports = {
                             const request = mailjet
                             .post("send", {'version': 'v3.1'})
                             .request({
-                                "Messages":[{
-                                    "From": {
-                                        "Email": "security-noreply@onelink.cards",
-                                        "Name": "Onelink.cards"
-                                    },
-                                    "To": [{
-                                        "Email": data.u_email,
-                                        "Name": data.u_firstname +' '+ data.u_lastname
-                                    }],
-                                    "Subject": otp +" is your verification otp for Onelink",
-                                    "TextPart": "Hi "+data.u_firstname+" "+data.u_lastname+" "+otp+" is your verification otp use this in the next 6 minutes",
-                                    "HTMLPart": "<h1 style='font-color:#343a40;'>Welcome To Onelink</h1><br>your verification otp is <b>"+otp+"</b>, use this otp to verify your email <br><br/> Cheers,<br>Onelink Team"
-                                }]
-                            })
-                            request
-                                .then((result) => {
-                                    // create customer in stripe
-                                    let stripe_customer_id;
-                                    stripe.customers.create({
-                                        description : 'Onelink customer',
-                                        name        : ''+data.u_firstname+' '+data.u_lastname+'',
-                                        email       : data.u_email
-                                    })
-                                    .then(customer => {
-                                        // Update the customer id of the user
-                                        pool.query(
-                                            `UPDATE ka_user SET customer_id = ? WHERE u_email = ?`,
-                                            [
-                                                customer.id,
-                                                data.u_email
-                                            ],
-                                            (error,results,fields) => {
-                                                if(error)
-                                                {
-                                                    console.log(error);
-                                                }
-                                                return callback(null,newuserresult)
+                                "Messages":[
+                                    {
+                                        "From": {
+                                            "Email": "security-noreply@onelink.cards",
+                                            "Name": "Email verification onelink.cards"
+                                        },
+                                        "To": [
+                                            {
+                                                "Email": data.u_email,
+                                                "Name": data.u_firstname +' '+ data.u_lastname
                                             }
-                                        )
-                                    })
-                                    .catch(error => console.error(error));
+                                        ],
+                                        "TemplateID": 2922706,
+                                        "TemplateLanguage": true,
+                                        "Subject": "[[data:firstname:"+data.u_firstname+"]] , your verification code is [[data:OTP:"+otp+"]]",
+                                        "Variables": {
+                            "OTP": otp
+                            }
+                                    }
+                                ]
+                            })
+                        request
+                            .then((result) => {
+                                //create customer in stripe
+                                let stripe_customer_id;
+                                stripe.customers.create({
+                                    description : 'Onelink customer',
+                                    name        : ''+data.u_firstname+' '+data.u_lastname+'',
+                                    email       : data.u_email
                                 })
-                                .catch((err) => {
-                                    console.log(err);
+                                .then(customer => {
+                                    // Update the customer id of the user
+                                    pool.query(
+                                        `UPDATE ka_user SET customer_id = ? WHERE u_email = ?`,
+                                        [
+                                            customer.id,
+                                            data.u_email
+                                        ],
+                                        (error,results,fields) => {
+                                            if(error)
+                                            {
+                                                console.log(error);
+                                            }
+                                            return callback(null,newuserresult)
+                                        }
+                                    )
                                 })
+                                .catch(error => console.error(error));
+                            })
+                            .catch((err) => {
+                                console.log(err.statusCode)
+                            })
                         }
                     );    
                 }
