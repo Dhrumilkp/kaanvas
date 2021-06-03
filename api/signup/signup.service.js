@@ -15,7 +15,7 @@ module.exports = {
         const refuser = data.headers.refuser;
         const browser_data = data.headers.browsername;
         const os_data = data.headers.operatingsystem;
-        var default_root_code = '--body-bg: #1F2128;--profile-title-color: #fff;--profile-sub-title: #fff;--rating-color: #6C5DD3;--nav-border-bottom: #6C5DD3;--link-color: #fff;--link-color-active: #6C5DD3;--scroll-color: #fff;--location-color: #9e9ea7;--nav-part-lines: #6C5DD3;--card-border: #6C5DD3;--card-title: #fff;--pill-bg: #6C5DD3;--pill-color: #fff;--pill-bg-invserse: #191B20;--pill-color-inverse: #6C5DD3;--review-title: #6C5DD3;--card-line-height: 1.2em;--card-padding: 1em;--card-radius: 0.5em;--color-green: #6C5DD3;--color-gray: #6C5DD3;--color-dark-gray: #6C5DD3;--radio-border-width: 2px;--radio-size: 1.5em;';
+        var default_root_code = '--body-bg: #1F2128;--profile-title-color: #fff;--profile-sub-title: #fff;--rating-color: #6C5DD3;--nav-border-bottom: #6C5DD3;--link-color: #fff;--link-color-active: #6C5DD3;--scroll-color: #fff;--location-color: #9e9ea7;--nav-part-lines: #6C5DD3;--card-border: #6C5DD3;--card-title: #fff;--pill-bg: #6C5DD3;--pill-color: #fff;--pill-bg-invserse: #191B20;--pill-color-inverse: #6C5DD3;--review-title: #6C5DD3;--card-line-height: 1.2em;--card-padding: 1em;--card-radius: 0.5em;--color-green: #6C5DD3;--color-gray: #6C5DD3;--color-dark-gray: #6C5DD3;--radio-border-width: 2px;--radio-size: 1.5em;--card-border:#6C5DD3;';
         if(data.login_type == "Google")
         {
             pool.query(
