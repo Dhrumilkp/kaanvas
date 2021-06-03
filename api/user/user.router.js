@@ -10,7 +10,8 @@ const {
     GetUniqueViewCount,
     Getloginhistory,
     GetotalReviewCount,
-    SendMessageToUser
+    SendMessageToUser,
+    GetreviewCountbyUsername
 } = require('./user.controller');
 const router = require("express").Router();
 const rateLimit = require("express-rate-limit");
@@ -31,5 +32,6 @@ router.get("/profile/uniqueview/:username",InsertUniqueProfileView);
 router.get("/profile/uniqueviewcount/:username",checkToken,GetUniqueViewCount);
 router.get("/loginhistory/:username",checkToken,Getloginhistory);
 router.get("/reviewcount/:id",checkToken,GetotalReviewCount);
+router.get("/reviewusername/:username",GetreviewCountbyUsername);
 router.post("/new-message/:id",SendMessageToUser);
 module.exports = router;

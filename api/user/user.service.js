@@ -271,6 +271,34 @@ module.exports = {
             }
         )
     },
+    GetReviewCount:(u_username,callback) => {
+        pool.query(
+            `SELECT id FROM ka_user WHERE u_username = ?`,
+            [
+                u_username
+            ],
+            (error,results,fields) => {
+                if(error)
+                {
+                    callback(error);
+                }
+                var u_uid = results[0]['id'];
+                pool.query(
+                    `SELECT count(*) as count_review FROM ka_collect_url WHERE u_uid = ? AND is_used = 1`,
+                    [
+                        u_uid
+                    ],
+                    (error,results,fields) =>{
+                        if(error)
+                        {
+                            callback(error);
+                        }
+                        return callback(null,results);
+                    }
+                )
+            }
+        )
+    },
     PostMessageToUser:(body,callback) => {
         pool.query(
             `INSERT INTO ka_user_message (u_uid,project_title,project_details,project_budget,client_name,client_email,client_attachment,created_on) VALUES (?,?,?,?,?,?,?,?)`,
