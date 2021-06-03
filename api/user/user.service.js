@@ -129,7 +129,7 @@ module.exports = {
     },
     UpdateThemeForUser:(data,callback) => {
         pool.query(
-            `UPDATE ka_user SET u_profileroot_code = ?,u_profile_bg = ?,tag_line WHERE id = ?`,
+            `UPDATE ka_user SET u_profileroot_code = ?,u_profile_bg = ?,tag_line = ? WHERE id = ?`,
             [
                 data.u_profileroot_code,
                 data.cover_url,
