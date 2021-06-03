@@ -360,14 +360,11 @@ module.exports = {
                     data : 0
                 });
             }
-            else
-            {
-                return res.status(200).json({
-                    status  :   "success",
-                    message :   "Count fetched",
-                    data : results[0]['count_review']
-                });
-            }
+            return res.status(200).json({
+                status  :   "success",
+                message :   "Count fetched",
+                data : results[0]['count_review']
+            });
         });
     },
     SendMessageToUser:(req,res) => {
