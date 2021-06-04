@@ -359,11 +359,14 @@ module.exports = {
                     data : 0
                 });
             }
-            return res.status(200).json({
-                status  :   "success",
-                message :   "Count fetched",
-                data : results[0]['count_review']
-            });
+            else
+            {
+                return res.status(200).json({
+                    status  :   "success",
+                    message :   "Count fetched",
+                    data : results[0]['count_review']
+                });
+            }
         });
     },
     SendMessageToUser:(req,res) => {
