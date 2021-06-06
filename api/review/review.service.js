@@ -47,7 +47,8 @@ module.exports = {
                 data.client_profilepic,
                 data.client_name,
                 data.reviewed_on,
-                data.review_id
+                data.review_id,
+                data.referr_header
             ],
             (error,results,fields) =>
             {
