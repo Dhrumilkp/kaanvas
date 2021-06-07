@@ -266,7 +266,7 @@ module.exports = {
                                 }
                                 else
                                 {
-                                    returnresults.folio_count = results.returnresults.length;
+                                    returnresults.folio_count = results.length;
                                 }
 
                                 pool.query(
