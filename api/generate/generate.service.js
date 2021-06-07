@@ -20,6 +20,9 @@ module.exports = {
             ],
             (error,results,fields) => {
                 var folio_data = body.project_folio;
+                folio_data.forEach(element => {
+                    return callback(null,element.file_name);
+                });
                 return callback(null,folio_data);
                 folio_data.forEach(element => {
                     pool.query(
