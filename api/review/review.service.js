@@ -221,6 +221,7 @@ module.exports = {
         )
     },
     GetallCountsDataUser:(u_username,callback) => {
+        const returnresults = {};
         pool.query(
             `SELECT id FROM ka_user WHERE u_username = ?`,
             [
@@ -232,7 +233,6 @@ module.exports = {
                     callback(err)
                 }
                 var u_uid = results[0]['id'];
-                var counts_data = [];
                 pool.query(
                     `SELECT count(*) as review_count from ka_collect_url where u_uid = ? and is_used = ?`,
                     [
@@ -244,7 +244,7 @@ module.exports = {
                         {
                             callback(error);
                         }
-                        counts_data.review_counts = results[0]['review_count'];
+                        returnresults.review_counts = results[0]['review_count'];
                         pool.query(
                             `SELECT project_folio from ka_collect_url where u_uid = ? and is_used = ?`,
                             [
@@ -256,14 +256,13 @@ module.exports = {
                                     callback(error);
                                 }
                                 results.forEach(element => {
-                                    var converted_json = JSON.parse(element.project_folio);
-                                    counts_data.folio_count = converted_json; 
+                                    returnresults.folio_data = element; 
                                 });
+                                return callback(null,returnresults);
                             }
                         );
                     }
                 )
-                return callback(null,counts_data);
             }
         );
     }
