@@ -91,7 +91,7 @@ module.exports = {
                         const resultUsers = results.slice(startIndex,endIndex);
                         if(!resultUsers[0])
                         {
-                            return callback(null,returnresults); 
+                            return callback(null,"false"); 
                         }
                         returnresults.data = resultUsers;
                         if(endIndex < resultUsers.length)

@@ -91,7 +91,7 @@ module.exports = {
                     message: err
                 });
             }
-            if(!results[0])
+            if(results == "false")
             {
                 return res.status(200).json({
                     status: "reachedmax-results",
