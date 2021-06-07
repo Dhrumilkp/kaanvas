@@ -18,7 +18,7 @@ module.exports = {
             {
                 return res.status(500).json({
                     status: "err",
-                    message: "Internal server err, please reach out to our support team on support@kaanvas.art"
+                    message: "Internal server err, please reach out to our support team on support@onelink.cards"
                 }); 
             }
             return res.status(200).json({
@@ -35,7 +35,7 @@ module.exports = {
             {
                 return res.status(500).json({
                     status: "err",
-                    message: "Internal server err, please reach out to our support team on support@kaanvas.art"
+                    message: "Internal server err, please reach out to our support team on support@onelink.cards"
                 });
             }
             if(!results[0])
@@ -66,7 +66,7 @@ module.exports = {
             {
                 return res.status(500).json({
                     status: "err",
-                    message: "Internal server err, please reach out to our support team on support@kaanvas.art"
+                    message: "Internal server err, please reach out to our support team on support@onelink.cards"
                 });
             }
             return res.status(200).json({
