@@ -4,8 +4,8 @@ module.exports = {
     GenerateUniqueUrl:(body,callback) => {
         var uniqueid = uniqid('review-');
         pool.query(
-            `INSERT INTO ka_collect_url (unique_uid,u_uid,project_title,project_description,industry_cat,industry_sub_cat,project_tags,skills_tags,project_duration,project_amount,project_folio)
-            values (?,?,?,?,?,?,?,?,?,?,?)`,
+            `INSERT INTO ka_collect_url (unique_uid,u_uid,project_title,project_description,industry_cat,industry_sub_cat,project_tags,skills_tags,project_duration,project_amount)
+            values (?,?,?,?,?,?,?,?,?,?)`,
             [
                 uniqueid,
                 body.u_uid,
@@ -16,11 +16,29 @@ module.exports = {
                 body.project_tags,
                 body.skills_tags,
                 body.project_duration,
-                body.project_amount,
-                body.project_folio
+                body.project_amount
             ],
             (error,results,fields) => {
-                console.log(results);
+                var folio_data = body.project_folio;
+                folio_data.forEach(element => {
+                    pool.query(
+                        `INSERT INTO ka_collect_folios (unique_id,folio_url,folio_type,created_on,u_uid)
+                        values (?,?,?,?,?)`,
+                        [
+                            uniqueid,
+                            element.file_name,
+                            element.type,
+                            Date.now(),
+                            body.u_uid
+                        ],
+                        (error,results,fields) => {
+                            if(error)
+                            {
+                                console.log(error);
+                            }
+                        }
+                    )
+                });
                 if(error)
                 {
                     console.log(error);
