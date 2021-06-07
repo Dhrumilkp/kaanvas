@@ -21,6 +21,7 @@ module.exports = {
             (error,results,fields) => {
                 var folio_data = body.project_folio;
                 folio_data.forEach(element => {
+                    return callback(null,element);
                     pool.query(
                         `INSERT INTO ka_collect_folios (unique_id,folio_url,folio_type,created_on,u_uid)
                         values (?,?,?,?,?)`,
