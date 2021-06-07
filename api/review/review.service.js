@@ -260,10 +260,17 @@ module.exports = {
                                 {
                                     callback(error);
                                 }
-                                results.forEach(element => {
-                                    var convert_to_json = JSON.parse(element.project_folio);
-                                    returnresults.folio_count = convert_to_json.length; 
-                                });
+                                if(!results[0])
+                                {
+                                    returnresults.folio_count = 0;
+                                }
+                                else
+                                {
+                                    results.forEach(element => {
+                                        var convert_to_json = JSON.parse(element.project_folio);
+                                        returnresults.folio_count = convert_to_json.length; 
+                                    });
+                                }
                                 pool.query(
                                     `SELECT count(*) as testimonial_count from ka_collect_url where u_uid = ? and is_used = ? AND testimonial_path != ?`,
                                     [
