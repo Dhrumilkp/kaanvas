@@ -16,7 +16,7 @@ const CronRouter = require('./api/cron/cron.router');
 app.use(express.json());
 app.use(function (req, res, next) {
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'onelink.cards');
+    res.setHeader('Access-Control-Allow-Origin', 'https://onelink.cards');
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
