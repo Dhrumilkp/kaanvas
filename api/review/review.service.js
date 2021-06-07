@@ -219,5 +219,52 @@ module.exports = {
                 return callback(null,results);
             }
         )
+    },
+    GetallCountsDataUser:(u_username,callback) => {
+        pool.query(
+            `SELECT id FROM ka_user WHERE u_username = ?`,
+            [
+                u_username
+            ],
+            (err,results,fields) => {
+                if(err)
+                {
+                    callback(err)
+                }
+                var u_uid = results[0]['id'];
+                var counts_data = [];
+                pool.query(
+                    `SELECT count(*) as review_count from ka_collect_url where u_uid = ? and is_used = ?`,
+                    [
+                        u_uid,
+                        1
+                    ],
+                    (error,results,fields) => {
+                        if(error)
+                        {
+                            callback(error);
+                        }
+                        counts_data.review_counts = results[0]['review_count'];
+                        pool.query(
+                            `SELECT project_folio from ka_collect_url where u_uid = ? and is_used = ?`,
+                            [
+
+                            ],
+                            (error,results,fields) => {
+                                if(error)
+                                {
+                                    callback(error);
+                                }
+                                results.forEach(element => {
+                                    var converted_json = JSON.parse(element.project_folio);
+                                    counts_data.folio_count = converted_json; 
+                                });
+                            }
+                        );
+                        return callback(null,counts_data);
+                    }
+                )
+            }
+        );
     }
 }
