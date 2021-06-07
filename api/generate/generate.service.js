@@ -16,11 +16,12 @@ module.exports = {
                 body.project_tags,
                 body.skills_tags,
                 body.project_duration,
-                body.project_amount,
-                body.project_folio
+                body.project_amount
             ],
             (error,results,fields) => {
-                console.log(results);
+                console.log(body.project_folio);
+                var portfolio_parsed = JSON.parse(body.project_folio);
+                console.log(portfolio_parsed);
                 if(error)
                 {
                     console.log(error);
