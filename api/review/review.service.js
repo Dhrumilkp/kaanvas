@@ -248,7 +248,8 @@ module.exports = {
                         pool.query(
                             `SELECT project_folio from ka_collect_url where u_uid = ? and is_used = ?`,
                             [
-
+                                u_uid,
+                                1
                             ],
                             (error,results,fields) => {
                                 if(error)
@@ -256,9 +257,25 @@ module.exports = {
                                     callback(error);
                                 }
                                 results.forEach(element => {
-                                    returnresults.folio_data = element; 
+                                    var convert_to_json = JSON.parse(element.project_folio);
+                                    returnresults.folio_count = convert_to_json.length; 
                                 });
-                                return callback(null,returnresults);
+                                pool.query(
+                                    `SELECT count(*) as testimonial_count from ka_collect_url where u_uid = ? and is_used = ? AND testimonial_path != ?`,
+                                    [
+                                        u_uid,
+                                        1,
+                                        0
+                                    ],
+                                    (error,results,fields) => {
+                                        if(error)
+                                        {
+                                            callback(error);
+                                        }
+                                        returnresults.testi_count = results[0]['testimonial_count'];
+                                        return callback(null,returnresults);
+                                    }
+                                )
                             }
                         );
                     }
