@@ -250,7 +250,7 @@ module.exports = {
                         }
                         returnresults.review_counts = results[0]['review_count'];
                         pool.query(
-                            `SELECT count(*) as folio_count from ka_collect_folio where u_uid = ? and is_verified = ?`,
+                            `SELECT count(*) as folio_count from ka_collect_folio where u_uid = ?`,
                             [
                                 u_uid,
                                 1
