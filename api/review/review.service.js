@@ -261,9 +261,9 @@ module.exports = {
                                 });
                             }
                         );
-                        return callback(null,counts_data);
                     }
                 )
+                return callback(null,counts_data);
             }
         );
     }
