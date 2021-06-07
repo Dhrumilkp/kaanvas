@@ -19,12 +19,8 @@ module.exports = {
                 body.project_amount
             ],
             (error,results,fields) => {
-                var folio_data = body.project_folio;
-                folio_data.forEach(element => {
-                    return callback(null,element.file_name);
-                });
-                return callback(null,folio_data);
-                folio_data.forEach(element => {
+                var parse_json = JSON.parse(body.project_folio);
+                parse_json.forEach(element => {
                     pool.query(
                         `INSERT INTO ka_collect_folios (unique_id,folio_url,folio_type,created_on,u_uid)
                         values (?,?,?,?,?)`,
