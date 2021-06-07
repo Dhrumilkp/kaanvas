@@ -91,6 +91,13 @@ module.exports = {
                     message: err
                 });
             }
+            if(!results[0])
+            {
+                return res.status(200).json({
+                    status: "reachedmax-results",
+                    message: "No more results to show!"
+                });  
+            }
             return res.status(200).json({
                 status: "success",
                 message: "Fetch success",

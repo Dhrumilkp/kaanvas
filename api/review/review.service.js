@@ -89,6 +89,10 @@ module.exports = {
                            callback(error);
                         }
                         const resultUsers = results.slice(startIndex,endIndex);
+                        if(!resultUsers[0])
+                        {
+                            return callback(null,returnresults); 
+                        }
                         returnresults.data = resultUsers;
                         if(endIndex < resultUsers.length)
                         {
