@@ -250,7 +250,7 @@ module.exports = {
                         }
                         returnresults.review_counts = results[0]['review_count'];
                         pool.query(
-                            `SELECT project_folio from ka_collect_url where u_uid = ? and is_used = ?`,
+                            `SELECT count(*) as folio_count from ka_collect_folio where u_uid = ? and is_verified = ?`,
                             [
                                 u_uid,
                                 1
@@ -260,15 +260,7 @@ module.exports = {
                                 {
                                     callback(error);
                                 }
-                                if(!results[0])
-                                {
-                                    returnresults.folio_count = 0
-                                }
-                                else
-                                {
-                                    returnresults.folio_count = results.length;
-                                }
-
+                                returnresults.folio_count = results[0]['folio_count'];
                                 pool.query(
                                     `SELECT count(*) as testimonial_count from ka_collect_url where u_uid = ? and is_used = ? AND testimonial_path != ?`,
                                     [
