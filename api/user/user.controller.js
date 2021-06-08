@@ -118,10 +118,6 @@ module.exports = {
         const body = req.body;
         const username = req.params.username;
         body.username = username;
-        return res.status(200).json({
-            status: "success",
-            data:body
-        });
         CheckForProfile(body,(err,results) => {
             if(err)
             {
@@ -174,6 +170,10 @@ module.exports = {
         const body = req.body;
         const id = req.params.id;
         body.u_uid = id;
+        return res.status(200).json({
+            status  :   "success",
+            message :   body
+        });
         UpdateThemeForUser(body,(err,results) => {
             if(err)
             {
