@@ -118,6 +118,10 @@ module.exports = {
         const body = req.body;
         const username = req.params.username;
         body.username = username;
+        return res.status(200).json({
+            status: "success",
+            data:body
+        });
         CheckForProfile(body,(err,results) => {
             if(err)
             {
