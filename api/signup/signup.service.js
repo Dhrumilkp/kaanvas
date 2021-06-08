@@ -106,13 +106,14 @@ module.exports = {
         {
             pool.query(
                 // Your query
-                `insert into ka_user(login_type,u_firstname,u_lastname,u_email,u_username,u_password,current_ip,current_useragent,u_default_profile_pic,u_profile_bg_default,u_profile_bg_settings,mailverify_status)
+                `insert into ka_user(login_type,u_firstname,u_lastname,u_profileroot_code,u_email,u_username,u_password,current_ip,current_useragent,u_default_profile_pic,u_profile_bg_default,u_profile_bg_settings,mailverify_status)
                 values(?,?,?,?,?,?,?,?,?,?,?,?)
                 `,
                 [
                   data.login_type,
                   data.u_firstname,
                   data.u_lastname,
+                  data.default_root_code,
                   data.u_email,
                   data.u_username,
                   data.u_password,
