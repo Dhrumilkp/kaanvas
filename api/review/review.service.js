@@ -51,10 +51,9 @@ module.exports = {
     },
     UpdateReviewWithResponse:(data,callback) => {
         pool.query(
-            `UPDATE ka_collect_url SET is_used = ?, project_folio_status = ?, testimonial_type = ?, testimonial_path = ?, rating_score = ?, rating_summary = ?, client_profilepic = ?, client_name = ?, reviewed_on = ? WHERE unique_uid = ?`,
+            `UPDATE ka_collect_url SET is_used = ?, testimonial_type = ?, testimonial_path = ?, rating_score = ?, rating_summary = ?, client_profilepic = ?, client_name = ?, reviewed_on = ?, referr_header = ? WHERE unique_uid = ?`,
             [
                 1,
-                data.project_folio_status,
                 data.testimonial_type,
                 data.testimonial_path,
                 data.rating_score,
@@ -62,8 +61,9 @@ module.exports = {
                 data.client_profilepic,
                 data.client_name,
                 data.reviewed_on,
-                data.review_id,
-                data.referr_header
+                data.referr_header,
+                data.review_id
+                
             ],
             (error,results,fields) =>
             {
@@ -71,7 +71,20 @@ module.exports = {
                 {
                     callback(error);
                 }
-                return callback(null,results);
+                pool.query(
+                    `UPDATE ka_collect_folios SET is_verified = ? WHERE unique_id = ?`,
+                    [
+                        1,
+                        data.review_id
+                    ],
+                    (error,results,fields) => {
+                        if(error)
+                        {
+                            callback(error);
+                        }
+                        return callback(null,results);
+                    }
+                );
             }
         )
     },
