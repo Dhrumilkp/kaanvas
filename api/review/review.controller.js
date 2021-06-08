@@ -6,7 +6,8 @@ const {
     Getratingforuserbyusername,
     GetallTestimonialdatafromdb,
     GetReviewDataInDetail,
-    GetallCountsDataUser
+    GetallCountsDataUser,
+    GetportfoliosForReview
 } = require('./review.service');
 const { sign } = require("jsonwebtoken");
 
@@ -45,15 +46,25 @@ module.exports = {
                     message: "We cannot find such review url"
                 });
             }
-            const jsontoken = sign({result:results},process.env.JWT_KEY,{
-                expiresIn: "1h"
-            });
-            return res.status(200).json({
-                status: "success",
-                message: "Fetched review data",
-                temp_token : jsontoken,
-                data : results,
-                is_pro : results.is_pro
+            GetportfoliosForReview(review_id,(err,foli_data) => {
+                if(err)
+                {
+                    return res.status(500).json({
+                        status: "err",
+                        message: "Internal server err, please reach out to our support team on support@onelink.cards"
+                    });
+                }
+                const jsontoken = sign({result:results},process.env.JWT_KEY,{
+                    expiresIn: "1h"
+                });
+                return res.status(200).json({
+                    status: "success",
+                    message: "Fetched review data",
+                    temp_token : jsontoken,
+                    data : results,
+                    folio_data:foli_data,
+                    is_pro : results.is_pro
+                });
             });
         })
     },
