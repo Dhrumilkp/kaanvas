@@ -4,7 +4,7 @@ const pool = require('../../config/database');
 module.exports = {
     GetportfoliosForReview:(review_id,callback) => {
         pool.query(
-            `SELECT folio_url,folio_type FROM ka_collect_folios WHERE unique_id = ?`,
+            `SELECT folio_url,folio_type,is_pushed_cloud FROM ka_collect_folios WHERE unique_id = ?`,
             [
                 review_id
             ],
