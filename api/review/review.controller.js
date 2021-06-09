@@ -7,7 +7,8 @@ const {
     GetallTestimonialdatafromdb,
     GetReviewDataInDetail,
     GetallCountsDataUser,
-    GetportfoliosForReview
+    GetportfoliosForReview,
+    GetAllUsersFolio
 } = require('./review.service');
 const { sign } = require("jsonwebtoken");
 
@@ -95,6 +96,36 @@ module.exports = {
         body.page = page;
         body.limit = limit;
         GetallreviewUserData(body,(err,results) =>{
+            if(err)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: err
+                });
+            }
+            if(results == "false")
+            {
+                return res.status(200).json({
+                    status: "reachedmax-results",
+                    message: "No more results to show!"
+                });  
+            }
+            return res.status(200).json({
+                status: "success",
+                message: "Fetch success",
+                results : results
+            });
+        });
+    },
+    GetusersFolioData:(req,res) => {
+        const u_username = req.params.username;
+        const page = parseInt(req.query.page);
+        const limit = parseInt(req.query.limit);
+        const body = req.body;
+        body.u_username = u_username;
+        body.page = page;
+        body.limit = limit;
+        GetAllUsersFolio(body,(err,results) => {
             if(err)
             {
                 return res.status(500).json({

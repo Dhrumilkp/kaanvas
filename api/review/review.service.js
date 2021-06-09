@@ -142,6 +142,60 @@ module.exports = {
             }
         )  
     },
+    GetAllUsersFolio:(body,callback) => {
+       const startIndex = (body.page - 1) * body.limit;
+        const endIndex = body.page * body.limit;
+        const returnresults = {};
+        pool.query(
+            `SELECT id FROM ka_user WHERE u_username = ?`,
+            [
+                body.u_username
+            ],
+            (error,results,fields) =>{
+                if(error)
+                {
+                    callback(error)
+                }
+                const u_uid = results[0]['id'];
+                pool.query(
+                    `select unique_id,group_concat(concat(folio_url," -- ",folio_type)) as folio_data from ka_collect_folios where u_uid = ? and is_verified = ? group by unique_id`,
+                    [
+                        u_uid,
+                        1,
+                        startIndex,
+                        endIndex
+                    ],
+                    (error,results,fields) =>{
+                        if(error)
+                        {
+                           callback(error);
+                        }
+                        const resultUsers = results.slice(startIndex,endIndex);
+                        if(!resultUsers[0])
+                        {
+                            return callback(null,"false"); 
+                        }
+                        returnresults.data = resultUsers;
+                        if(endIndex < resultUsers.length)
+                        {
+                            returnresults.next = {
+                                page : page + 1,
+                                limit : body.limit
+                            }
+                        }
+                        if(startIndex > 0)
+                        {
+                            returnresults.previous = {
+                                page : page - 1,
+                                limit : body.limit
+                            }
+                        }
+                        return callback(null,returnresults);
+                    }
+                )
+            }
+        )   
+    },
     GetallTestimonialdatafromdb:(body,callback) => {
         const startIndex = (body.page - 1) * body.limit;
         const endIndex = body.page * body.limit;
