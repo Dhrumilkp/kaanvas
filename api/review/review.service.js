@@ -158,7 +158,7 @@ module.exports = {
                 }
                 const u_uid = results[0]['id'];
                 pool.query(
-                    `select unique_id,group_concat(concat(folio_url,"--",folio_type)) as folio_data from ka_collect_folios where u_uid = ? and is_verified = ? group by unique_id`,
+                    `select unique_id,u_uid,group_concat(concat(folio_url,"--",folio_type)) as folio_data from ka_collect_folios where u_uid = ? and is_verified = ? group by unique_id`,
                     [
                         u_uid,
                         1,
