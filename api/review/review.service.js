@@ -159,7 +159,7 @@ module.exports = {
                 }
                 const u_uid = results[0]['id'];
                 pool.query(
-                    `select unique_id,u_uid,group_concat(concat(folio_url,"--",folio_type)) as folio_data from ka_collect_folios where u_uid = ? and is_verified = ? group by unique_id`,
+                    `select * from ka_collect_folios where u_uid = ? and is_verified = ? group by unique_id`,
                     [
                         u_uid,
                         1,
@@ -172,8 +172,6 @@ module.exports = {
                            callback(error);
                         }
                         const resultUsers = results.slice(startIndex,endIndex);
-                        console.log(startIndex);
-                        console.log(endIndex);
                         if(!resultUsers[0])
                         {
                             return callback(null,"false"); 
