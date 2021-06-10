@@ -321,6 +321,56 @@ module.exports = {
                 {
                     callback(error);
                 }
+                pool.query(
+                    `SELECT u_email,u_firstname,u_lastname FROM ka_user WHERE id = ?`,
+                    [
+                        body.u_uid
+                    ],
+                    (err,results,fields) => {
+                        if(err)
+                        {
+                            callback(err);
+                        }
+                        var u_email = results[0]['u_email'];
+                        var u_firstname = results[0]['u_firstname'];
+                        var u_lastname = results[0]['u_lastname'];
+                        const request = mailjet
+                        .post("send", {'version': 'v3.1'})
+                        .request({
+                            "Messages":[
+                                {
+                                    "From": {
+                                        "Email": "support@onelink.cards",
+                                        "Name": "Onelink.cards"
+                                    },
+                                    "To": [
+                                        {
+                                            "Email": u_email,
+                                            "Name": ""+u_firstname+" "+u_lastname+""
+                                        }
+                                    ],
+                                    "TemplateID": 2950217,
+                                    "TemplateLanguage": true,
+                                    "Subject": "New Hire Request",
+                                    "Variables": {
+                                        "project_title": body.project_title,
+                                        "project_desc": body.project_details,
+                                        "budget": "$"+body.project_budget+"",
+                                        "client_name": body.client_name,
+                                        "email_address": body.client_email
+                                    }
+                                }
+                            ]
+                        })
+                        request
+                            .then((result) => {
+                                console.log(result.body)
+                            })
+                            .catch((err) => {
+                                console.log(err.statusCode)
+                            })
+                    }
+                )
                 return callback(null,results);
             }
         )
