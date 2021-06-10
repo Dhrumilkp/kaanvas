@@ -175,10 +175,11 @@ module.exports = {
                     message: err
                 });
             }
+            var rounded = Math.round(results * 10) / 10
             return res.status(200).json({
                 status: "success",
                 message: "Fetch success",
-                rating : results
+                rating : rounded
             });
         });
     },
