@@ -159,7 +159,7 @@ module.exports = {
                 }
                 const u_uid = results[0]['id'];
                 pool.query(
-                    `select * from ka_collect_folios where u_uid = ? and is_verified = ? group by unique_id`,
+                    `select * from ka_collect_folios where u_uid = ? and is_verified = ?`,
                     [
                         u_uid,
                         1,
