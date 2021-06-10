@@ -1,6 +1,6 @@
 const pool = require("../../config/database");
 const mailjet = require ('node-mailjet').connect(process.env.MJ_APIKEY_PUBLIC, process.env.MJ_APIKEY_PRIVATE);
-
+var uniqid = require('uniqid');
 module.exports = {
     getUserByid : (id,callback) => {
         pool.query(
@@ -351,7 +351,7 @@ module.exports = {
                                     ],
                                     "TemplateID": 2950217,
                                     "TemplateLanguage": true,
-                                    "Subject": "New Hire Request",
+                                    "Subject": "[[data:firstname:"+u_firstname+"]] , you have a new hire request",
                                     "Variables": {
                                         "project_title": body.project_title,
                                         "project_desc": body.project_details,
