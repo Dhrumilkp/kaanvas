@@ -122,17 +122,18 @@ module.exports = {
                             return callback(null,"false"); 
                         }
                         returnresults.data = resultUsers;
-                        if(endIndex < resultUsers.length)
+                        if(endIndex < results.length)
                         {
+                            console.log("Page is present");
                             returnresults.next = {
-                                page : page + 1,
+                                page : body.page + 1,
                                 limit : body.limit
                             }
                         }
                         if(startIndex > 0)
                         {
                             returnresults.previous = {
-                                page : page - 1,
+                                page : body.page - 1,
                                 limit : body.limit
                             }
                         }
@@ -171,22 +172,24 @@ module.exports = {
                            callback(error);
                         }
                         const resultUsers = results.slice(startIndex,endIndex);
+                        console.log(startIndex);
+                        console.log(endIndex);
                         if(!resultUsers[0])
                         {
                             return callback(null,"false"); 
                         }
                         returnresults.data = resultUsers;
-                        if(endIndex < resultUsers.length)
+                        if(endIndex < results.length)
                         {
                             returnresults.next = {
-                                page : page + 1,
+                                page : body.page + 1,
                                 limit : body.limit
                             }
                         }
                         if(startIndex > 0)
                         {
                             returnresults.previous = {
-                                page : page - 1,
+                                page : body.page - 1,
                                 limit : body.limit
                             }
                         }
