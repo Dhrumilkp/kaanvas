@@ -18,10 +18,11 @@ module.exports = {
         var default_root_code = '--body-bg: #1F2128;--profile-title-color: #fff;--profile-sub-title: #fff;--rating-color: #6C5DD3;--nav-border-bottom: #6C5DD3;--link-color: #fff;--link-color-active: #6C5DD3;--scroll-color: #fff;--location-color: #9e9ea7;--nav-part-lines: #6C5DD3;--card-border: #6C5DD3;--card-title: #fff;--pill-bg: #6C5DD3;--pill-color: #fff;--pill-bg-invserse: #191B20;--pill-color-inverse: #6C5DD3;--review-title: #6C5DD3;--card-line-height: 1.2em;--card-padding: 1em;--card-radius: 0.5em;--color-green: #6C5DD3;--color-gray: #6C5DD3;--color-dark-gray: #6C5DD3;--radio-border-width: 2px;--radio-size: 1.5em;--card-border:#6C5DD3;';
         if(data.login_type == "Google")
         {
+            console.log(data);
             pool.query(
                 // Your query
                 `insert into ka_user(login_type,u_firstname,u_profileroot_code,u_lastname,u_email,u_username,u_password,current_ip,current_useragent,u_default_profile_pic,u_profile_bg_default,u_profile_bg_settings,mailverify_status)
-                values(?,?,?,?,?,?,?,?,?,?,?,?)
+                values(?,?,?,?,?,?,?,?,?,?,?,?,?)
                 `,
                 [
                   data.login_type,
@@ -41,6 +42,7 @@ module.exports = {
                 (error,newuserresult,fields) => {
                     if(error)
                     {
+                        console.log(error);
                         callback(error);
                     }
                     if(refuser !== "0")
@@ -107,7 +109,7 @@ module.exports = {
             pool.query(
                 // Your query
                 `insert into ka_user(login_type,u_firstname,u_profileroot_code,u_lastname,u_email,u_username,u_password,current_ip,current_useragent,u_default_profile_pic,u_profile_bg_default,u_profile_bg_settings,mailverify_status)
-                values(?,?,?,?,?,?,?,?,?,?,?,?)
+                values(?,?,?,?,?,?,?,?,?,?,?,?,?)
                 `,
                 [
                   data.login_type,
@@ -127,6 +129,7 @@ module.exports = {
                 (error,newuserresult,fields) => {
                     if(error)
                     {
+                        console.log(error);
                         callback(error);
                     }
                     if(refuser !== "0")

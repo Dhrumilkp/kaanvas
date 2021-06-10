@@ -13,7 +13,7 @@ module.exports = {
         body.current_ip = req.ip;
         body.u_username = uniqueNamesGenerator({
             dictionaries: [adjectives, animals, colors,countries], // colors can be omitted here as not used
-            length: 3
+            length: 2
         });
         body.headers = req.headers;
         checkUser(body,(err,results) => {
