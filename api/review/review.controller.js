@@ -157,7 +157,7 @@ module.exports = {
                     message: err
                 });
             }
-            var rounded = Math.round(results * 10) / 10
+            var rounded = Math.round(results[0].rating_score * 10) / 10
             return res.status(200).json({
                 status: "success",
                 message: "Fetch success",
@@ -175,7 +175,7 @@ module.exports = {
                     message: err
                 });
             }
-            var rounded = Math.round(results * 10) / 10
+            var rounded = Math.round(results[0].rating_score * 10) / 10
             return res.status(200).json({
                 status: "success",
                 message: "Fetch success",
