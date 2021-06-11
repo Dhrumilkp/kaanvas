@@ -174,7 +174,7 @@ module.exports = {
         )  
     },
     GetAllUsersFolio:(body,callback) => {
-       const startIndex = (body.page - 1) * body.limit;
+        const startIndex = (body.page - 1) * body.limit;
         const endIndex = body.page * body.limit;
         const returnresults = {};
         pool.query(
@@ -190,6 +190,60 @@ module.exports = {
                 const u_uid = results[0]['id'];
                 pool.query(
                     `select * from ka_collect_folios where u_uid = ? and is_verified = ?`,
+                    [
+                        u_uid,
+                        1,
+                        startIndex,
+                        endIndex
+                    ],
+                    (error,results,fields) =>{
+                        if(error)
+                        {
+                           callback(error);
+                        }
+                        const resultUsers = results.slice(startIndex,endIndex);
+                        if(!resultUsers[0])
+                        {
+                            return callback(null,"false"); 
+                        }
+                        returnresults.data = resultUsers;
+                        if(endIndex < results.length)
+                        {
+                            returnresults.next = {
+                                page : body.page + 1,
+                                limit : body.limit
+                            }
+                        }
+                        if(startIndex > 0)
+                        {
+                            returnresults.previous = {
+                                page : body.page - 1,
+                                limit : body.limit
+                            }
+                        }
+                        return callback(null,returnresults);
+                    }
+                )
+            }
+        )   
+    },
+    FetchAllTestiUser:(body,callback) => {
+        const startIndex = (body.page - 1) * body.limit;
+        const endIndex = body.page * body.limit;
+        const returnresults = {};
+        pool.query(
+            `SELECT id FROM ka_user WHERE u_username = ?`,
+            [
+                body.u_username
+            ],
+            (error,results,fields) =>{
+                if(error)
+                {
+                    callback(error)
+                }
+                const u_uid = results[0]['id'];
+                pool.query(
+                    `select * from ka_collect_testi where u_uid = ?`,
                     [
                         u_uid,
                         1,

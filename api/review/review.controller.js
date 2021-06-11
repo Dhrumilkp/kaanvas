@@ -8,7 +8,8 @@ const {
     GetReviewDataInDetail,
     GetallCountsDataUser,
     GetportfoliosForReview,
-    GetAllUsersFolio
+    GetAllUsersFolio,
+    FetchAllTestiUser
 } = require('./review.service');
 const { sign } = require("jsonwebtoken");
 
@@ -147,6 +148,36 @@ module.exports = {
             });
         });
     },
+    GetallTestimonialUser:(req,res) => {
+        const u_username = req.params.username;
+        const page = parseInt(req.query.page);
+        const limit = parseInt(req.query.limit);
+        const body = req.body;
+        body.u_username = u_username;
+        body.page = page;
+        body.limit = limit;
+        FetchAllTestiUser(body,(err,results) => {
+            if(err)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: err
+                });
+            }
+            if(results == "false")
+            {
+                return res.status(200).json({
+                    status: "reachedmax-results",
+                    message: "No more results to show!"
+                });  
+            }
+            return res.status(200).json({
+                status: "success",
+                message: "Fetch success",
+                results : results
+            });
+        });
+    },  
     GetratingAvg:(req,res) => {
         const u_uid  = req.params.id;
         GetReviewsAvgRating(u_uid,(err,results) =>{ 
