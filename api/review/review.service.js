@@ -50,6 +50,7 @@ module.exports = {
         )
     },
     UpdateReviewWithResponse:(data,callback) => {
+        return callback(null,data);
         pool.query(
             `UPDATE ka_collect_url SET is_used = ?, testimonial_type = ?, testimonial_path = ?, rating_score = ?, rating_summary = ?, client_profilepic = ?, client_name = ?, reviewed_on = ?, referr_header = ? WHERE unique_uid = ?`,
             [
