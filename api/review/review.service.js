@@ -72,17 +72,47 @@ module.exports = {
                     callback(error);
                 }
                 pool.query(
-                    `UPDATE ka_collect_folios SET is_verified = ? WHERE unique_id = ?`,
+                    `SELECT u_uid FROM ka_collect_url WHERE unique_id = ?`,
                     [
-                        1,
                         data.review_id
                     ],
-                    (error,results,fields) => {
-                        if(error)
+                    (err,results,fields) => {
+                        if(err)
                         {
-                            callback(error);
+                            callback(err);
                         }
-                        return callback(null,results);
+                        var u_uid = results[0]['u_uid'];
+                        pool.query(
+                            `INSERT INTO ka_collect_testi (unique_id,u_uid,testimonial_path,testimonial_type,created_on)
+                            VALUES (?,?,?,?,?)`,
+                            [
+                                data.review_id,
+                                u_uid,
+                                data.testimonial_path,
+                                data.testimonial_type,
+                                Date.now()
+                            ],
+                            (err,results,fields) => {
+                                if(err)
+                                {
+                                    callback(err);
+                                }
+                                pool.query(
+                                    `UPDATE ka_collect_folios SET is_verified = ? WHERE unique_id = ?`,
+                                    [
+                                        1,
+                                        data.review_id
+                                    ],
+                                    (error,results,fields) => {
+                                        if(error)
+                                        {
+                                            callback(error);
+                                        }
+                                        return callback(null,results);
+                                    }
+                                );
+                            }
+                        )
                     }
                 );
             }
