@@ -375,11 +375,9 @@ module.exports = {
                                 }
                                 returnresults.folio_count = results[0]['folio_count'];
                                 pool.query(
-                                    `SELECT count(*) as testimonial_count from ka_collect_url where u_uid = ? and is_used = ? AND testimonial_path != ?`,
+                                    `SELECT count(*) as testimonial_count from ka_collect_testi where u_uid = ?`,
                                     [
-                                        u_uid,
-                                        1,
-                                        0
+                                        u_uid
                                     ],
                                     (error,results,fields) => {
                                         if(error)
