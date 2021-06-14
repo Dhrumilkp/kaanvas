@@ -462,6 +462,7 @@ module.exports = {
                 0
             ],
             (err,results,fields) => {
+                console.log(results);
                 if(err)
                 {
                     callback(err);
@@ -471,7 +472,7 @@ module.exports = {
                     return callback(null,false);
                 }
                 pool.query(
-                    `UPDATE ka_emailvalidate SET u_otp =?, is_used = ? WHERE u_email = ?`,
+                    `UPDATE ka_emailvalidate SET is_used = ? WHERE u_email = ?`,
                     [
                         body.otp,
                         1,
