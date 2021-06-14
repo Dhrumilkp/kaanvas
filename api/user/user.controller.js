@@ -177,6 +177,13 @@ module.exports = {
                     message: "Internal server err, please reach out to our support team on support@onelink.cards"
                 });
             }
+            if(!results[0])
+            {
+                return res.status(200).json({
+                    status: "err",
+                    message: "No accounts associated with this email address found"
+                });  
+            }
             if(results == false)
             {
                 return res.status(200).json({
