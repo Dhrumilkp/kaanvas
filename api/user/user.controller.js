@@ -181,7 +181,7 @@ module.exports = {
             {
                 return res.status(200).json({
                     status: "err",
-                    message: "This email uses google login as the primary authentication method, you can change this from your setting once you login"
+                    message: "This email uses google login as the primary authentication method, login with google to access your account"
                 });
             }
             return res.status(200).json({
