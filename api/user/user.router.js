@@ -48,5 +48,5 @@ router.get("/reviewcount/:id",checkToken,GetotalReviewCount);
 router.get("/reviewusername/:username",GetreviewCountbyUsername);
 router.post("/new-message/:id",SendMessageToUser);
 router.get("/forgot/:email",forgot_ratelimit,CheckForEmail);
-router.post("/verify-otp/:email/:otp",checkToken,VerifyOTPReset);
+router.post("/verify-otp/:email",forgot_ratelimit,checkToken,VerifyOTPReset);
 module.exports = router;

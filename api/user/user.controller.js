@@ -170,10 +170,10 @@ module.exports = {
     },
     VerifyOTPReset:(req,res) => {
         const u_email = req.params.email;
-        const otp = req.params.otp;
+        const body = req.body;
         return res.status(200).json({
             status: "success",
-            message: "email is : "+email+" & OTP "+otp+""
+            message: "email is : "+u_email+" & OTP "+body+""
         });
     },
     CheckForEmail:(req,res) => {
