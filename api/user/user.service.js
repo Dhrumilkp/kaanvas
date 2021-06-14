@@ -474,7 +474,6 @@ module.exports = {
                 pool.query(
                     `UPDATE ka_emailvalidate SET is_used = ? WHERE u_email = ?`,
                     [
-                        body.otp,
                         1,
                         body.email
                     ],
