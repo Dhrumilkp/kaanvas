@@ -193,13 +193,14 @@ module.exports = {
                 });
             }
             const jsontoken = sign({result:results},process.env.JWT_KEY,{
-                expiresIn: 60
+                expiresIn: "1h"
             });
             return res.status(200).json({
                 status  :   "success",
                 message :   "Verification otp sent, expires in 1 minutes",
                 response_json : results,
-                temp_token : jsontoken
+                temp_token : jsontoken,
+                email_to_verify: u_email
             });
         });
     },
