@@ -25,7 +25,13 @@ const message_ratelimit = rateLimit({
 const forgot_ratelimit = rateLimit({
     windowMs: 60 * 60 * 1000, // 1 hour window
     max: 4, // start blocking after 5 requests
-    message: "Too many accounts created from this IP, please try again after an hour"
+    message: "Too many accounts created from this IP, please try again after an hour",
+    onLimitReached: function(req, res /*, next*/) {
+        return res.status(200).json({
+            status: "err",
+            message: "Too many request in one hour window!"
+        });
+    },
 });
 router.get("/:id",checkToken,GetUser);
 router.get("/profile/:username",CheckProfileExsist);
