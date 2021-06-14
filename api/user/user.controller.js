@@ -16,6 +16,7 @@ const {
     CheckForEmailUser
 } = require("./user.service");
 const stripe = require('stripe')(process.env.STRIP_SK);
+const { sign } = require("jsonwebtoken");
 module.exports = {
     GetUser:(req,res) => {
         const body = req.body;
@@ -191,10 +192,14 @@ module.exports = {
                     message: "This email uses google login as the primary authentication method, login with google to access your account"
                 });
             }
+            const jsontoken = sign({result:results},process.env.JWT_KEY,{
+                expiresIn: 60
+            });
             return res.status(200).json({
                 status  :   "success",
-                message :   "Verification otp sent",
-                response_json : results
+                message :   "Verification otp sent, expires in 1 minutes",
+                response_json : results,
+                temp_token : jsontoken
             });
         });
     },
