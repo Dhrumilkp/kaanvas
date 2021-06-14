@@ -177,7 +177,7 @@ module.exports = {
                     message: "Internal server err, please reach out to our support team on support@onelink.cards"
                 });
             }
-            if(!results[0])
+            if(!results)
             {
                 return res.status(200).json({
                     status: "err",
