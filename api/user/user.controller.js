@@ -12,7 +12,8 @@ const {
     Getloginhistorydata,
     Getreviewdata,
     PostMessageToUser,
-    GetReviewCount
+    GetReviewCount,
+    CheckForEmailUser
 } = require("./user.service");
 const stripe = require('stripe')(process.env.STRIP_SK);
 module.exports = {
@@ -163,6 +164,30 @@ module.exports = {
             return res.status(200).json({
                 status  :   "success",
                 message :   "Profile Bg Updated"
+            });
+        });
+    },
+    CheckForEmail:(req,res) => {
+        const u_email = req.params.email;
+        CheckForEmailUser(u_email,(err,results) => {
+            if(err)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: "Internal server err, please reach out to our support team on support@onelink.cards"
+                });
+            }
+            if(results == false)
+            {
+                return res.status(404).json({
+                    status: "err",
+                    message: "This email uses google login as the primary authentication method, you can change this from your setting once you login"
+                });
+            }
+            return res.status(200).json({
+                status  :   "success",
+                message :   "Verification otp sent",
+                response_json : results
             });
         });
     },

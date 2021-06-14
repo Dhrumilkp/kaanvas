@@ -11,7 +11,8 @@ const {
     Getloginhistory,
     GetotalReviewCount,
     SendMessageToUser,
-    GetreviewCountbyUsername
+    GetreviewCountbyUsername,
+    CheckForEmail
 } = require('./user.controller');
 const router = require("express").Router();
 const rateLimit = require("express-rate-limit");
@@ -19,6 +20,11 @@ const {checkToken} = require("../../auth/token_validation");
 const message_ratelimit = rateLimit({
     windowMs: 60 * 60 * 1000, // 1 hour window
     max: 1, // start blocking after 5 requests
+    message: "Too many accounts created from this IP, please try again after an hour"
+});
+const forgot_ratelimit = rateLimit({
+    windowMs: 60 * 60 * 1000, // 1 hour window
+    max: 4, // start blocking after 5 requests
     message: "Too many accounts created from this IP, please try again after an hour"
 });
 router.get("/:id",checkToken,GetUser);
@@ -34,4 +40,5 @@ router.get("/loginhistory/:username",checkToken,Getloginhistory);
 router.get("/reviewcount/:id",checkToken,GetotalReviewCount);
 router.get("/reviewusername/:username",GetreviewCountbyUsername);
 router.post("/new-message/:id",SendMessageToUser);
+router.get("/forgot/:email",forgot_ratelimit,CheckForEmail);
 module.exports = router;

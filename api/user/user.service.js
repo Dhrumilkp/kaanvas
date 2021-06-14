@@ -1,6 +1,7 @@
 const pool = require("../../config/database");
 const mailjet = require ('node-mailjet').connect(process.env.MJ_APIKEY_PUBLIC, process.env.MJ_APIKEY_PRIVATE);
 var uniqid = require('uniqid');
+var speakeasy = require("speakeasy");
 module.exports = {
     getUserByid : (id,callback) => {
         pool.query(
@@ -372,6 +373,82 @@ module.exports = {
                     }
                 )
                 return callback(null,results);
+            }
+        )
+    },
+    CheckForEmailUser:(body,callback) => {
+        pool.query(
+            `SELECT * FROM ka_user WHERE u_email = ?`,
+            [
+                body
+            ],
+            (err,resultsuser,fields) => {
+                if(err)
+                {
+                    callback(err);
+                }
+                var login_type = resultsuser[0]['login_type'];
+                if(login_type == "Google")
+                {
+                    callback(null,false);
+                }
+                else
+                {
+                    var secret = speakeasy.generateSecret({length: 20});
+                    var otp = speakeasy.totp({
+                        secret: secret.base32,
+                        encoding: 'base32',
+                        digits:4,
+                        step: 60,
+                        window:10
+                    });
+                    pool.query(
+                        `UPDATE ka_emailvalidate SET u_otp =? WHERE u_email = ?`,
+                        [
+                            otp,
+                            body
+                        ],
+                        (error,results,fields) => {
+                            if(error)
+                            {
+                                callback(error)
+                            }
+                            // Send email with email template
+                            const request = mailjet
+                                .post("send", {'version': 'v3.1'})
+                                .request({
+                                    "Messages":[
+                                        {
+                                            "From": {
+                                                "Email": "support@onelink.cards",
+                                                "Name": "Onelink.cards"
+                                            },
+                                            "To": [
+                                                {
+                                                    "Email": resultsuser[0].u_email,
+                                                    "Name": resultsuser[0].u_firstname +' '+ resultsuser[0].u_lastname
+                                                }
+                                            ],
+                                            "TemplateID": 2922706,
+                                            "TemplateLanguage": true,
+                                            "Subject": "[[data:firstname:"+resultsuser[0].u_firstname+"]] , your verification code is [[data:OTP:"+otp+"]]",
+                                            "Variables": {
+                                                "OTP": otp
+                                            }
+                                        }
+                                    ]
+                                })
+                                request
+                                    .then((result) => {
+                                        return callback(null,result.body);
+                                    })
+                                    .catch((err) => {
+                                        return callback(err.statusCode);
+                                    })
+                            
+                        }
+                    );
+                }
             }
         )
     }

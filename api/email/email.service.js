@@ -45,7 +45,7 @@ module.exports = {
                                 "Messages":[
                                     {
                                         "From": {
-                                            "Email": "security-noreply@onelink.cards",
+                                            "Email": "supporty@onelink.cards",
                                             "Name": "Onelink.cards"
                                         },
                                         "To": [
