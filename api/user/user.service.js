@@ -403,9 +403,10 @@ module.exports = {
                         window:10
                     });
                     pool.query(
-                        `UPDATE ka_emailvalidate SET u_otp =? WHERE u_email = ?`,
+                        `UPDATE ka_emailvalidate SET u_otp =?, is_used = ? WHERE u_email = ?`,
                         [
                             otp,
+                            0,
                             body
                         ],
                         (error,results,fields) => {
@@ -451,5 +452,40 @@ module.exports = {
                 }
             }
         )
+    },
+    VerifyOtpwithEmail:(body,callback) => {
+        pool.query(
+            `SELECT * FROM ka_emailvalidate WHERE u_email = ? AND u_otp = ? AND is_used = ?`,
+            [
+                body.email,
+                body.otp,
+                0
+            ],
+            (err,results,fields) => {
+                if(err)
+                {
+                    callback(err);
+                }
+                if(!results[0])
+                {
+                    return callback(null,false);
+                }
+                pool.query(
+                    `UPDATE ka_emailvalidate SET u_otp =?, is_used = ? WHERE u_email = ?`,
+                    [
+                        body.otp,
+                        1,
+                        body.email
+                    ],
+                    (err,results,fields) => {
+                        if(err)
+                        {
+                            callback(err);
+                        }
+                        return callback(results)
+                    }
+                )
+            }
+        );
     }
 }

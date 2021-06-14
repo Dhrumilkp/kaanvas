@@ -13,7 +13,8 @@ const {
     Getreviewdata,
     PostMessageToUser,
     GetReviewCount,
-    CheckForEmailUser
+    CheckForEmailUser,
+    VerifyOtpwithEmail
 } = require("./user.service");
 const stripe = require('stripe')(process.env.STRIP_SK);
 const { sign } = require("jsonwebtoken");
@@ -171,10 +172,30 @@ module.exports = {
     VerifyOTPReset:(req,res) => {
         const u_email = req.params.email;
         const body = req.body;
-        return res.status(200).json({
-            status: "success",
-            message: "email is : "+u_email+"",
-            body:body
+        body.u_email = u_email;
+        VerifyOtpwithEmail(body,(err,results) => {
+            if(err)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: "Internal server err, please reach out to our support team on support@onelink.cards"
+                });
+            }
+            if(results == false)
+            {
+                return res.status(200).json({
+                    status: "err",
+                    message: "Wrong otp!"
+                });
+            }
+            const jsontoken = sign({result:results},process.env.JWT_KEY,{
+                expiresIn: "1h"
+            });
+            return res.status(200).json({
+                status  :   "success",
+                message :   "OTP verified set new password!",
+                temp_token : jsontoken
+            });
         });
     },
     CheckForEmail:(req,res) => {
