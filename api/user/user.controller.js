@@ -168,6 +168,14 @@ module.exports = {
             });
         });
     },
+    VerifyOTPReset:(req,res) => {
+        const u_email = req.params.email;
+        const otp = req.params.otp;
+        return res.status(200).json({
+            status: "success",
+            message: "email is : "+email+" & OTP "+otp+""
+        });
+    },
     CheckForEmail:(req,res) => {
         const u_email = req.params.email;
         CheckForEmailUser(u_email,(err,results) => {
