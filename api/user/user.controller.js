@@ -179,7 +179,7 @@ module.exports = {
             }
             if(results == false)
             {
-                return res.status(404).json({
+                return res.status(500).json({
                     status: "err",
                     message: "This email uses google login as the primary authentication method, you can change this from your setting once you login"
                 });
