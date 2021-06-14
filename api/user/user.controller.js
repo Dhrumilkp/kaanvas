@@ -173,7 +173,8 @@ module.exports = {
         const body = req.body;
         return res.status(200).json({
             status: "success",
-            message: "email is : "+u_email+" & OTP "+body+""
+            message: "email is : "+u_email+"",
+            body:body
         });
     },
     CheckForEmail:(req,res) => {
