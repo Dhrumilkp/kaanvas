@@ -455,11 +455,10 @@ module.exports = {
     },
     VerifyOtpwithEmail:(body,callback) => {
         pool.query(
-            `SELECT * FROM ka_emailvalidate WHERE u_email = ? AND u_otp = ? AND is_used = ?`,
+            `SELECT * FROM ka_emailvalidate WHERE u_email = ? AND u_otp = ?`,
             [
                 body.email,
-                body.otp,
-                0
+                body.otp
             ],
             (err,results,fields) => {
                 console.log(results);
