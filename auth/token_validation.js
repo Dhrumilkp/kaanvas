@@ -56,11 +56,11 @@ module.exports = {
                         message : "Something went wrong, reach out to our support executive on support@Onelink.cards.com"
                     });
                 }
-                if(!results[0])
+                if(results.length == 0)
                 {
                     // Check if the user has pass thresold 
                     pool.query(
-                        `SELECT count(*) as counturl WHERE u_uid = ? AND is_used = ?`,
+                        `SELECT count(*) as counturl FROM ka_collect_url WHERE u_uid = ? AND is_used = ?`,
                         [
                            u_uid,
                            0 
@@ -73,9 +73,13 @@ module.exports = {
                                     message : "Something went wrong, reach out to our support executive on support@Onelink.cards.com"
                                 });
                             }
-                            if(results[0])
+                            if(results == undefined)
                             {
-                                if(results[0]['counturl'] < 10)
+                               next();
+                            }
+                            else
+                            {
+                                if(results[0]['counturl'] < 3)
                                 {
                                     next();
                                 }
@@ -90,8 +94,9 @@ module.exports = {
                         }
                     )
                 }
-                if(results[0])
+                if(results.length > 0)
                 {
+                    console.log("you are a pro!");
                     next();
                 }
             }
