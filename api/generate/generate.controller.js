@@ -23,6 +23,12 @@ module.exports = {
             });
         });
     },
+    ReturnNature:(req,res) => {
+        return res.status(200).json({
+            status: "success",
+            message : "Yes you can generate urls!"
+        });
+    },
     GetCollectCount:(req,res) => {
         const u_uid = req.params.id;
         GetCollectData(u_uid,(err,results) => {
