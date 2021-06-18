@@ -79,7 +79,7 @@ module.exports = {
                             }
                             else
                             {
-                                if(results[0]['counturl'] < 3)
+                                if(results[0]['counturl'] < 2)
                                 {
                                     next();
                                 }
