@@ -12,6 +12,7 @@ const GenerateRouter = require('./api/generate/generate.router');
 const GetCat = require('./api/cat/cat.router');
 const ReviewRouter = require('./api/review/review.router');
 const CronRouter = require('./api/cron/cron.router');
+const InboxRouter = require('./api/inbox/inbox.router');
 // SET JSON BODY AS DEFAULT
 app.use(express.json());
 app.use(function (req, res, next) {
@@ -47,6 +48,7 @@ app.use("/api/gen",GenerateRouter);
 app.use("/api/cat/",GetCat);
 app.use("/api/review/",ReviewRouter);
 app.use("/api/sync/",CronRouter);
+app.use("/api/inbox/",InboxRouter);
 // Port
 const port = process.env.PORT || 3000;
 app.listen(port,() =>{
