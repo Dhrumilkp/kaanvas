@@ -124,7 +124,7 @@ module.exports = {
                   u_default_profile_pic,
                   u_default_profile_bg,
                   bg_default_settings,
-                  1
+                  0
                 ],
                 (error,newuserresult,fields) => {
                     if(error)
