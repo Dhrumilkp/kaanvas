@@ -22,12 +22,13 @@ module.exports = {
                 var parse_json = JSON.parse(body.project_folio);
                 parse_json.forEach(element => {
                     pool.query(
-                        `INSERT INTO ka_collect_folios (unique_id,folio_url,folio_type,created_on,u_uid)
-                        values (?,?,?,?,?)`,
+                        `INSERT INTO ka_collect_folios (unique_id,folio_url,folio_type,is_pushed_cloud,created_on,u_uid)
+                        values (?,?,?,?,?,?)`,
                         [
                             uniqueid,
-                            element.file_name,
+                            element.file_path,
                             element.type,
+                            1,
                             Date.now(),
                             body.u_uid
                         ],
