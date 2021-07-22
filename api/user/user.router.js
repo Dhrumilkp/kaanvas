@@ -14,7 +14,8 @@ const {
     GetreviewCountbyUsername,
     CheckForEmail,
     VerifyOTPReset,
-    UpdateUsersCoverImg
+    UpdateUsersCoverImg,
+    ChangeThemeMode
 } = require('./user.controller');
 const router = require("express").Router();
 const rateLimit = require("express-rate-limit");
@@ -37,6 +38,7 @@ const forgot_ratelimit = rateLimit({
 });
 router.get("/:id",checkToken,GetUser);
 router.get("/profile/:username",CheckProfileExsist);
+router.post("/profile/changetheme/:id",checkToken,ChangeThemeMode);
 router.post("/profile/updateusercover/:id",checkToken,UpdateUsersCoverImg);
 router.post("/basicprofileupdate/:id",checkToken,UpdateUser);
 router.post("/profilepic/:id",checkToken,UpdateUserProfilePic);

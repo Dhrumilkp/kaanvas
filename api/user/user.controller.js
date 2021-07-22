@@ -15,7 +15,8 @@ const {
     GetReviewCount,
     CheckForEmailUser,
     VerifyOtpwithEmail,
-    UpdateUsersCoverImageData
+    UpdateUsersCoverImageData,
+    UpdateThemeModeProfile
 } = require("./user.service");
 const stripe = require('stripe')(process.env.STRIP_SK);
 const { sign } = require("jsonwebtoken");
@@ -133,6 +134,24 @@ module.exports = {
             return res.status(200).json({
                 status  :   "success",
                 message :   "Cover picture updated"
+            });
+        });
+    },
+    ChangeThemeMode:(req,res) => {
+        const body = req.body;
+        const id = req.params.id;
+        body.u_uid = id;
+        UpdateThemeModeProfile(body,(err,results)=> {
+            if(err)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: "Internal server err, please reach out to our support team on support@onelink.cards"
+                });
+            }
+            return res.status(200).json({
+                status  :   "success",
+                message :   "Theme Updated"
             });
         });
     },

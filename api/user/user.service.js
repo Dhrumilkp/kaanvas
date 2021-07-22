@@ -128,6 +128,23 @@ module.exports = {
             }
         )
     },
+    UpdateThemeModeProfile:(data,callback) => {
+        console.log(data);
+        pool.query(
+            `UPDATE ka_user SET profile_theme_mode = ? WHERE id = ?`,
+            [
+                data.theme_mode,
+                data.u_uid
+            ],
+            (error,results,fields) => {
+                if(error)
+                {
+                    callback(error);
+                }
+                return callback(null,results);
+            }
+        )
+    },
     UpdateThemeForUser:(data,callback) => {
         pool.query(
             `UPDATE ka_user SET u_profileroot_code = ?,u_profile_bg = ?,tag_line = ?,custom_rule = ?,u_profile_bg_settings = ? WHERE id = ?`,
