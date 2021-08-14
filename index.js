@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(function (req, res, next) {
     // Website you wish to allow to connect
     if (req.hostname.endsWith('onelink.cards')) {
-        res.setHeader('Access-Control-Allow-Origin', 'http://' + req.hostname);
+        res.setHeader('Access-Control-Allow-Origin', '*');
         res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type');
         res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
     }
