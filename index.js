@@ -16,11 +16,12 @@ const InboxRouter = require('./api/inbox/inbox.router');
 // SET JSON BODY AS DEFAULT
 app.use(express.json());
 app.use(function (req, res, next) {
-    if (req.hostname.endsWith('onelink.cards')) {
-        res.setHeader('Access-Control-Allow-Origin', 'http://' + req.hostname);
-        res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,Content-Type');
-        res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
-    }
+    // Website you wish to allow to connect
+    res.setHeader('Access-Control-Allow-Origin', 'https://onelink.cards');
+    res.setHeader('Access-Control-Allow-Origin', 'https://*.onelink.cards');
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    // Request methods you wish to allow
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
     res.setHeader('accept-ranges','bytes');
     res.setHeader('content-type','application/json');
     res.setHeader('referrer-policy','origin-when-cross-origin');
