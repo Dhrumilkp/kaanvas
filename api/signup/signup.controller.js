@@ -12,7 +12,8 @@ module.exports = {
         body.u_password = hashSync(body.u_password, salt);
         body.current_ip = req.ip;
         body.u_username = uniqueNamesGenerator({
-            dictionaries: [adjectives, animals, colors,countries], // colors can be omitted here as not used
+            dictionaries: [animals, colors], // colors can be omitted here as not used
+            separator: '_',
             length: 2
         });
         body.headers = req.headers;

@@ -78,28 +78,37 @@ module.exports = {
                 });
             }
         )
-        Updateuserprofile(body,(err,results) => {
-            if(err)
-            {
-                return res.status(500).json({
-                    status: "err",
-                    erorreport : err,
-                    message: "Internal server err, please reach out to our support team on support@onelink.cards"
-                });
-            }
-            if(results == false)
-            {
-                return res.status(500).json({
-                    status: "err",
-                    message: "Username already taken!"
-                });
-            }
-            return res.status(200).json({
-                status  :   "success",
-                message :   "Users data updated",
-                data   :    body
+        var username = body.u_username;
+        var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+        if(format.test(username)){
+            return res.status(500).json({
+                status: "err",
+                message: "Username cannot have any special character"
             });
-        });
+        } else {
+            Updateuserprofile(body,(err,results) => {
+                if(err)
+                {
+                    return res.status(500).json({
+                        status: "err",
+                        erorreport : err,
+                        message: "Internal server err, please reach out to our support team on support@onelink.cards"
+                    });
+                }
+                if(results == false)
+                {
+                    return res.status(500).json({
+                        status: "err",
+                        message: "Username already taken!"
+                    });
+                }
+                return res.status(200).json({
+                    status  :   "success",
+                    message :   "Users data updated",
+                    data   :    body
+                });
+            });
+        }
     },
     UpdateUserProfilePic:(req,res) => {
         const body = req.body;
