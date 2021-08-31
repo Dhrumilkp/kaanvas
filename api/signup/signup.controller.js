@@ -58,6 +58,13 @@ module.exports = {
                 message: "Username cannot have any special character"
             });
         }
+        if (/\s/.test(username)) {
+            // It has any kind of whitespace
+            return res.status(500).json({
+                status: "err",
+                message: "Username cannot have white spaces"
+            });
+        }
         else
         {
             CheckForUsername(id,(err,results) => {
