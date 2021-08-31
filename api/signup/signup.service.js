@@ -293,5 +293,18 @@ module.exports = {
                 return callback(null,results[0]);
             }
         )
+    },
+    CheckForUsername:(data,callback) => {
+        pool.query(
+            `select * from ka_user WHERE u_username = ?`,
+            [data],
+            (error,results,fields) => {
+                if(error)
+                {
+                    callback(error);
+                }
+                return callback(null,results[0]);
+            }
+        )
     }
 };

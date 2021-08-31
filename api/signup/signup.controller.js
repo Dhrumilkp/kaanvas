@@ -1,4 +1,4 @@
-const { create, checkUser } = require("./signup.service");
+const { create, checkUser,CheckForUsername } = require("./signup.service");
 const { genSaltSync,hashSync } = require("bcryptjs");
 const {OAuth2Client} = require('google-auth-library');
 const { sign } = require("jsonwebtoken");
@@ -11,11 +11,7 @@ module.exports = {
         const salt = genSaltSync(10);
         body.u_password = hashSync(body.u_password, salt);
         body.current_ip = req.ip;
-        body.u_username = uniqueNamesGenerator({
-            dictionaries: [animals, colors], // colors can be omitted here as not used
-            separator: '_',
-            length: 2
-        });
+        body.u_username = body.username;
         body.headers = req.headers;
         checkUser(body,(err,results) => {
             if(err)
@@ -52,6 +48,40 @@ module.exports = {
             });
         });
     },
+    checkUsername:(req,res) => {
+        const id = req.params.id;
+        var username = id;
+        var format = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]+/;
+        if(format.test(username)){
+            return res.status(500).json({
+                status: "err",
+                message: "Username cannot have any special character"
+            });
+        }
+        else
+        {
+            CheckForUsername(id,(err,results) => {
+                if(err)
+                {
+                    return res.status(500).json({
+                        status: "err",
+                        message: "Internal server err, please reach out to our support team on support@onelink.cards"
+                    });
+                }
+                if(results)
+                {
+                    return res.status(500).json({
+                        status: "err",
+                        message: "Subdomain already registered!"
+                    });
+                }
+                return res.status(200).json({
+                    status: "success",
+                    message: "You can use this subdomain"
+                });
+            });
+        }
+    },
     gcreateUser:(req,res) => {
         const body = req.body;
         const payload =  client.verifyIdToken({
@@ -73,10 +103,7 @@ module.exports = {
         verify().then(() => {
             user.headers = req.headers;
             user.current_ip = req.ip;
-            user.u_username = uniqueNamesGenerator({
-                dictionaries: [adjectives, animals, colors,countries], // colors can be omitted here as not used
-                length: 3
-            });
+            user.u_username = body.username;
             user.login_type = "Google";
             checkUser(user,(err,results) => {
                 if(err)
