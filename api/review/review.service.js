@@ -391,6 +391,21 @@ module.exports = {
             }
         )
     },
+    GetportfoliosForReview:(unique_id,callback) => {
+        pool.query(
+            'SELECT * FROM ka_collect_folios WHERE unique_id = ?',
+            [
+                unique_id
+            ],
+            (error,results,fields) =>{
+                if(error)
+                {
+                    callback(error);
+                }
+                return callback(null,results);
+            }
+        )
+    },
     GetallCountsDataUser:(u_username,callback) => {
         const returnresults = {};
         pool.query(
