@@ -391,7 +391,7 @@ module.exports = {
             }
         )
     },
-    GetportfoliosForReview:(unique_id,callback) => {
+    GetportfoliosForReviewDATA:(unique_id,callback) => {
         pool.query(
             'SELECT * FROM ka_collect_folios WHERE unique_id = ?',
             [
