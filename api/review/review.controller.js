@@ -9,7 +9,8 @@ const {
     GetallCountsDataUser,
     GetportfoliosForReview,
     GetAllUsersFolio,
-    FetchAllTestiUser
+    FetchAllTestiUser,
+    GetportfoliosForReview
 } = require('./review.service');
 const { sign } = require("jsonwebtoken");
 
@@ -247,11 +248,28 @@ module.exports = {
                     message: err
                 });
             }
-            return res.status(200).json({
-                status: "success",
-                message: "Fetch success",
-                results : results
+            // Get portfolio data
+            GetportfoliosForReview(unique_id,(err,results_folio) => {
+                if(err)
+                {
+                    return res.status(200).json({
+                        status: "success",
+                        message: "Fetch success",
+                        results : results,
+                        portfolio_data : ""
+                    });
+                }
+                else
+                {
+                    return res.status(200).json({
+                        status: "success",
+                        message: "Fetch success",
+                        results : results,
+                        portfolio_data : results_folio
+                    });
+                }
             });
+           
         });
     }
 }
