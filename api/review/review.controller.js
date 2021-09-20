@@ -10,7 +10,7 @@ const {
     GetportfoliosForReview,
     GetAllUsersFolio,
     FetchAllTestiUser,
-    GetportfoliosForReview
+    GetportfoliosForReviewDATA
 } = require('./review.service');
 const { sign } = require("jsonwebtoken");
 
@@ -249,7 +249,7 @@ module.exports = {
                 });
             }
             // Get portfolio data
-            GetportfoliosForReview(unique_id,(err,results_folio) => {
+            GetportfoliosForReviewDATA(unique_id,(err,results_folio) => {
                 if(err)
                 {
                     return res.status(200).json({
