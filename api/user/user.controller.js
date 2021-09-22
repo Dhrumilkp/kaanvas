@@ -17,7 +17,8 @@ const {
     VerifyOtpwithEmail,
     UpdateUsersCoverImageData,
     UpdateThemeModeProfile,
-    UpdateTagLineDb
+    UpdateTagLineDb,
+    CheckIfUserTrialIsDone
 } = require("./user.service");
 const stripe = require('stripe')(process.env.STRIP_SK);
 const { sign } = require("jsonwebtoken");
@@ -522,6 +523,52 @@ module.exports = {
                 status : "success",
                 message : tagline
             });
+        });
+    },
+    CheckistrialDone:(req,res) => {
+        var username = req.params.username;
+        CheckIfUserTrialIsDone(username,(err,results) => {
+            if(err)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: err
+                });
+            }
+            if(results)
+            {
+                console.log(results[0]['is_pro']);
+                if(results[0]['is_pro'] == 1)
+                {
+                    return res.status(200).json({
+                        status : "success",
+                        message : "you can use subdomain"
+                    });
+                }
+                else
+                {
+                    var now = new Date();
+                    var then = new Date(results[0]['u_join']);
+                    var diff = (now - then)/1000/60/60/24;
+                    var round = Math.round(diff);
+                    var int = parseInt(round);
+                    console.log(int);
+                    if(int > 15)
+                    {
+                        return res.status(200).json({
+                            status : "err",
+                            message : "Upgarde to pro"
+                        });
+                    }
+                    else
+                    {
+                        return res.status(200).json({
+                            status : "success",
+                            message : "you can use subdomain"
+                        });
+                    }
+                }
+            }
         });
     }
 }

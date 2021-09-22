@@ -519,5 +519,23 @@ module.exports = {
                 return callback(null,results);
             }
         )
+    },
+    CheckIfUserTrialIsDone:(username,callback) => {
+        pool.query(
+            'SELECT * FROM ka_user WHERE u_username = ?',
+            [
+                username 
+            ],
+            (err,results,fields) => {
+                if(err)
+                {
+                    callback(err);
+                }
+                if(results)
+                {
+                    callback(null,results);
+                }
+            }
+        )
     }
 }
