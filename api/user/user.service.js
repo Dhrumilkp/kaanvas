@@ -503,5 +503,21 @@ module.exports = {
                 )
             }
         );
+    },
+    UpdateTagLineDb:(body,callback) => {
+        pool.query(
+            'UPDATE ka_user SET tag_line = ? WHERE u_username = ?',
+            [
+                body.tagline,
+                body.username
+            ],
+            (err,results,fields) => {
+                if(err)
+                {
+                    callback(err);
+                }
+                return callback(results);
+            }
+        )
     }
 }

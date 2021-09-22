@@ -16,7 +16,8 @@ const {
     CheckForEmailUser,
     VerifyOtpwithEmail,
     UpdateUsersCoverImageData,
-    UpdateThemeModeProfile
+    UpdateThemeModeProfile,
+    UpdateTagLineDb
 } = require("./user.service");
 const stripe = require('stripe')(process.env.STRIP_SK);
 const { sign } = require("jsonwebtoken");
@@ -500,6 +501,26 @@ module.exports = {
             return res.status(200).json({
                 status  :   "success",
                 message :   results
+            });
+        });
+    },
+    UpdateTagline:(req,res) => {
+        var username = req.params.username;
+        var tagline = req.params.tagline;
+        const body = req.body;
+        body.username = username;
+        body.tagline = tagline;
+        UpdateTagLineDb(body,(err,results) => {
+            if(err)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: err
+                });
+            }
+            return res.status(200).json({
+                status : "success",
+                message : tagline
             });
         });
     }
