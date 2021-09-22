@@ -54,5 +54,5 @@ router.get("/reviewusername/:username",GetreviewCountbyUsername);
 router.post("/new-message/:id",SendMessageToUser);
 router.get("/forgot/:email",forgot_ratelimit,CheckForEmail);
 router.post("/verify-otp/:email",forgot_ratelimit,checkToken,VerifyOTPReset);
-router.get("/updatetagline/:username",UpdateTagline);
+router.get("/updatetagline/:username/:tagline",UpdateTagline);
 module.exports = router;
