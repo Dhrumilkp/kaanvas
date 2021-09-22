@@ -516,7 +516,7 @@ module.exports = {
                 {
                     callback(err);
                 }
-                return callback(results);
+                return callback(null,results);
             }
         )
     }
