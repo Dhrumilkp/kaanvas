@@ -520,6 +520,22 @@ module.exports = {
             }
         )
     },
+    UpdatePerHourCostDb:(body,callback) => {
+        pool.query(
+            'UPDATE ka_user SET per_hour = ? WHERE u_username = ?',
+            [
+                body.cost,
+                body.username
+            ],
+            (err,results,fields) => {
+                if(err)
+                {
+                    callback(err)
+                }
+                return callback(null,results);
+            }
+        )
+    },
     CheckIfUserTrialIsDone:(username,callback) => {
         pool.query(
             'SELECT * FROM ka_user WHERE u_username = ?',
