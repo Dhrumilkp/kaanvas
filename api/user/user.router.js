@@ -17,7 +17,8 @@ const {
     UpdateUsersCoverImg,
     ChangeThemeMode,
     UpdateTagline,
-    CheckistrialDone
+    CheckistrialDone,
+    UpdatePerHourCost
 } = require('./user.controller');
 const router = require("express").Router();
 const rateLimit = require("express-rate-limit");
@@ -57,4 +58,5 @@ router.get("/forgot/:email",forgot_ratelimit,CheckForEmail);
 router.post("/verify-otp/:email",forgot_ratelimit,checkToken,VerifyOTPReset);
 router.get("/updatetagline/:username/:tagline",UpdateTagline);
 router.get("/checkstatus/:username",CheckistrialDone);
+router.get("/updatehourlycost/:username/:cost",UpdatePerHourCost);
 module.exports = router;
