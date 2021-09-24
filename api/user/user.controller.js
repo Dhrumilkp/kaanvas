@@ -559,7 +559,13 @@ module.exports = {
             }
             if(results)
             {
-                console.log(results[0]['is_pro']);
+                if(results.length === 0)
+                {
+                    return res.status(404).json({
+                        status: "err",
+                        message: "profile not found"
+                    });
+                }
                 if(results[0]['is_pro'] == 1)
                 {
                     return res.status(200).json({
