@@ -19,7 +19,8 @@ const {
     UpdateThemeModeProfile,
     UpdateTagLineDb,
     CheckIfUserTrialIsDone,
-    UpdatePerHourCostDb
+    UpdatePerHourCostDb,
+    UpdateUsersSocialProfilesdb
 } = require("./user.service");
 const stripe = require('stripe')(process.env.STRIP_SK);
 const { sign } = require("jsonwebtoken");
@@ -590,6 +591,28 @@ module.exports = {
                     }
                 }
             }
+        });
+    },
+    UpdateUserSocialProfile:(req,res) => {
+        var body = req.body;
+        body.facebook = req.query.fb;
+        body.github = req.query.git;
+        body.linkedin = req.query.lin;
+        body.dribbble = req.query.dri;
+        body.instagram = req.query.ins;
+        body.username = req.params.username;
+        UpdateUsersSocialProfilesdb(body,(err,results) => {
+            if(err)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: err
+                });
+            }
+            return res.status(200).json({
+                status : "success",
+                message : "Social profile updated"
+            });
         });
     }
 }

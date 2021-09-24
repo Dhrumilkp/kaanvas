@@ -553,5 +553,24 @@ module.exports = {
                 }
             }
         )
+    },
+    UpdateUsersSocialProfilesdb:(body,callback) => {
+        pool.query(
+            'UPDATE ka_user SET u_linkedin_url = ? , u_facebook_url = ?, u_github_url = ?, u_dribbble_url = ?, u_instagram_url = ? WHERE u_username = ?',
+            [
+                body.linkedin,
+                body.facebook,
+                body.github,
+                body.dribbble,
+                body.instagram,
+                body.u_username
+            ],
+            (err,results,fields) => {
+                if(err){
+                    callback(err);
+                }
+                return callback(null,results);
+            }
+        )
     }
 }
