@@ -60,5 +60,5 @@ router.post("/verify-otp/:email",forgot_ratelimit,checkToken,VerifyOTPReset);
 router.get("/updatetagline/:username/:tagline",UpdateTagline);
 router.get("/checkstatus/:username",CheckistrialDone);
 router.get("/updatehourlycost/:username/:cost",UpdatePerHourCost);
-router.get("/updatesocialprofile",UpdateUserSocialProfile);
+router.get("/updatesocialprofile/:username",UpdateUserSocialProfile);
 module.exports = router;
