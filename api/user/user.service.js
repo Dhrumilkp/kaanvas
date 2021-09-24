@@ -563,7 +563,7 @@ module.exports = {
                 body.github,
                 body.dribbble,
                 body.instagram,
-                body.u_username
+                body.username
             ],
             (err,results,fields) => {
                 if(err){
