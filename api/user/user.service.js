@@ -5,7 +5,7 @@ var speakeasy = require("speakeasy");
 module.exports = {
     getUserByid : (id,callback) => {
         pool.query(
-            `SELECT profile_theme_mode,per_hour,u_state,u_line2_add,u_line1_add,u_postal_code,u_country_iso,u_firstname,u_lastname,u_email,u_username,onboarding_status,mailverify_status,u_join,u_profilepic_webp,u_profilepic_jpeg,u_coverpic_webp,u_coverpic_jpeg,u_verified,u_country,u_city,is_profile_complete,u_level,is_pro,customer_id,u_website_url,u_dribbble_url,u_github_url,u_default_profile_pic,u_profile_bg_default,u_profile_bg,u_profile_bg_settings,u_profileroot_code FROM ka_user WHERE id = ?`,
+            `SELECT u_facebook_url,u_github_url,u_dribbble_url,u_instagram_url,u_linkedin_url,profile_theme_mode,per_hour,u_state,u_line2_add,u_line1_add,u_postal_code,u_country_iso,u_firstname,u_lastname,u_email,u_username,onboarding_status,mailverify_status,u_join,u_profilepic_webp,u_profilepic_jpeg,u_coverpic_webp,u_coverpic_jpeg,u_verified,u_country,u_city,is_profile_complete,u_level,is_pro,customer_id,u_website_url,u_dribbble_url,u_github_url,u_default_profile_pic,u_profile_bg_default,u_profile_bg,u_profile_bg_settings,u_profileroot_code FROM ka_user WHERE id = ?`,
             [
                 id
             ],
@@ -83,7 +83,7 @@ module.exports = {
     },
     CheckForProfile:(data,callback) => {
         pool.query(
-            `SELECT profile_theme_mode,per_hour,custom_rule,id as u_uid,u_firstname,u_lastname,u_email,u_username,onboarding_status,mailverify_status,u_join,u_profilepic_webp,u_profilepic_jpeg,u_coverpic_webp,u_coverpic_jpeg,u_verified,u_country,u_city,is_profile_complete,u_level,is_pro,customer_id,u_website_url,u_dribbble_url,u_github_url,u_default_profile_pic,u_profile_bg_default,u_profile_bg,u_profile_bg_settings,u_profileroot_code,tag_line FROM ka_user WHERE u_username = ?`,
+            `SELECT u_facebook_url,u_github_url,u_dribbble_url,u_instagram_url,u_linkedin_url,profile_theme_mode,per_hour,custom_rule,id as u_uid,u_firstname,u_lastname,u_email,u_username,onboarding_status,mailverify_status,u_join,u_profilepic_webp,u_profilepic_jpeg,u_coverpic_webp,u_coverpic_jpeg,u_verified,u_country,u_city,is_profile_complete,u_level,is_pro,customer_id,u_website_url,u_dribbble_url,u_github_url,u_default_profile_pic,u_profile_bg_default,u_profile_bg,u_profile_bg_settings,u_profileroot_code,tag_line FROM ka_user WHERE u_username = ?`,
             [
                 data.username
             ],
