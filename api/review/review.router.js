@@ -8,7 +8,8 @@ const {
     GetReviewReaddata,
     GetallcountsUser,
     GetusersFolioData,
-    GetallTestimonialUser
+    GetallTestimonialUser,
+    GetFolioForUnique
 } = require('./review.controller');
 const router = require("express").Router();
 const {checkToken} = require("../../auth/token_validation");
@@ -23,4 +24,5 @@ router.get("/gettestimonial/:username",GetallTestimonial);
 router.get("/read/:id",GetReviewReaddata);
 router.get("/folios/:username",GetusersFolioData);
 router.get("/testi/:username",GetallTestimonialUser);
+router.get("/getfolio/:id",GetFolioForUnique);
 module.exports = router;

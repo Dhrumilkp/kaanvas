@@ -271,6 +271,23 @@ module.exports = {
             });
            
         });
+    },
+    GetFolioForUnique:(req,res) => {
+        const unique_id = req.params.id;
+        GetportfoliosForReviewDATA(unique_id,(err,results) => {
+            if(err)
+            {
+                return res.status(500).json({
+                    status: "err",
+                    message: err
+                });
+            }
+            return res.status(200).json({
+                status: "success",
+                message: "Fetch success",
+                portfolio_data : results
+            });
+        });
     }
 }
 
