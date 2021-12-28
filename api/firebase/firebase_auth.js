@@ -15,3 +15,5 @@ if(!firebase.app.length > 0)
     firebase.initialize.app(app);
     console.log("Firebase has been initalized");
 }
+
+export module firebase;
