@@ -26,44 +26,6 @@ module.exports = {
             });
         });
     },
-    checkEmailUsed : (req,res) => {
-        const body = req.body;
-        const App_id = body.App_id;
-        CheckEmailForDuplication(body,(err,results) => {
-            if(err)
-            {
-                return res.status(500).json({
-                    status : "err",
-                    message : "This email is already registered with us!"
-                });
-                if(!results[0])
-                {
-                    return res.status(404).json({
-                        status : "err",
-                        message : "We are not able to find such email in our system, you can reach out to customer support on "+support_email+"";
-                    });
-                }
-            }
-        });
-    },
-    CheckForUniqueStringmethod : (req,res) => {
-        const body = req.body;
-        CheckMethodToSignup(body,(err,results) => {
-            if(err)
-            {
-                return res.status(500).json({
-                    status : "err",
-                    message : 'Internal server error, please reach out on support@onelink.cards'
-                });
-                if(!results[0])
-                {
-                    return res.status(404).json({
-
-                    });
-                }
-            }
-        });
-    },
     verifyEmailOtp: (req,res) => {
         const body = req.body;
         verifyEmailuser(body,(err,results) => {

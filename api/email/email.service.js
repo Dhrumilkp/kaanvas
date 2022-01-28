@@ -119,27 +119,5 @@ module.exports = {
                 return callback(null,results);
             }
         );
-    },
-    CheckEmailForDuplication : (data,callback) => {
-        pool.query(
-            'SELECT * FROM fa_users WHERE u.email = ? AND u.id = ?',
-            [
-                data.u_email,
-                data.u_id
-            ],
-            (error,results,fields) => {
-                if(error)
-                {
-                    callback(error);
-                }
-                if(results)
-                {
-                    const users_paylod = results.data.users_array();
-                    // Sending users payload data over the method with back bone 
-                    return callback(null,users_paylod);
-                }
-                
-            }
-        )
     }
 }
